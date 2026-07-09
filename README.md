@@ -1,5 +1,7 @@
 # 就地开饭 WokLocal
 
+就地开饭，让留子在世界各地吃上饭。
+
 面向刚到海外、几乎零烹饪基础的中国留学生的本地化厨房知识库。每道菜除了标准做法，还会按地区展示当地超市能买到的替代食材、购买位置和味道差异。
 
 ## 技术栈
@@ -40,6 +42,7 @@ npm run build
 - `data/substitutions/*.yaml`：共享食材替代库。
 - `data/equipment/*.yaml`：厨具库。
 - `data/guides/*.yaml`：地区落地快速入门宝典。
+- `data/starter-packs/*.yaml`：第一周采购清单。
 
 菜谱通过 `ingredient_id` 引用替代库，通过 `equipment.required_ids` 引用厨具库。普通本地食材可以直接在菜谱里写 `name_zh` 和 `name_en`；调料、香料或海外难找的食材应优先进入共享替代库。
 

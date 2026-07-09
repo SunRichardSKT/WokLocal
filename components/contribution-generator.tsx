@@ -143,6 +143,14 @@ function validateUrl(value: string) {
   return !value.trim() || /^https?:\/\/\S+$/i.test(value.trim());
 }
 
+function firstNonEmpty(...values: string[]) {
+  return values.map((value) => value.trim()).find(Boolean) ?? "";
+}
+
+function generatedId(...values: string[]) {
+  return slugify(firstNonEmpty(...values));
+}
+
 function addError(sectionErrors: Partial<Record<SectionKey, string[]>>, section: SectionKey, message: string) {
   sectionErrors[section] = [...(sectionErrors[section] ?? []), message];
 }
@@ -393,7 +401,11 @@ export function ContributionGenerator({ ingredients: ingredientLibrary, equipmen
     let totalRequired = 0;
 
     if (kind === "recipe") {
-      const id = slugify(recipe.id || recipe.nameEn);
+      const id = generatedId(recipe.pinyin, recipe.id, recipe.nameEn) || "new-recipe";
+      const displayName = firstNonEmpty(recipe.nameZh, recipe.nameEn, "未命名菜谱");
+      const recipePinyin = firstNonEmpty(recipe.pinyin, recipe.nameEn, recipe.nameZh, "未填写");
+      const recipeNameEn = firstNonEmpty(recipe.nameEn, recipe.nameZh, recipe.pinyin, "Untitled recipe");
+      const cuisine = firstNonEmpty(recipe.cuisine, "留学生厨房菜");
       const tags = splitList(recipe.tags);
       const selectedEquipment = equipmentItems.filter((item) => selectedEquipmentIds.includes(item.equipment_id));
       const equipmentNames = selectedEquipment.map((item) => item.name_zh);
@@ -404,35 +416,27 @@ export function ContributionGenerator({ ingredients: ingredientLibrary, equipmen
       const numericDifficulty = Number(recipe.difficulty);
       const numericTime = Number(recipe.timeMinutes);
       const numericServings = Number(recipe.servings);
-      const usableIngredients = ingredients.filter((item) => item.ingredientId.trim() && item.amount.trim());
+      const usableIngredients = ingredients.filter((item) => item.amount.trim() && (item.source === "library" ? item.ingredientId.trim() : item.nameZh.trim() || item.nameEn.trim()));
       const usableSteps = steps.filter((item) => item.instruction.trim());
 
       const requiredChecks = [
-        id && isValidId(id),
-        recipe.nameZh.trim(),
-        recipe.pinyin.trim(),
-        recipe.nameEn.trim(),
+        recipe.nameZh.trim() || recipe.nameEn.trim(),
         recipe.description.trim(),
         Number.isInteger(numericDifficulty) && numericDifficulty >= 1 && numericDifficulty <= 5,
         Number.isInteger(numericTime) && numericTime > 0,
         Number.isInteger(numericServings) && numericServings > 0,
-        recipe.cuisine.trim(),
         recipe.recipeType,
         recipe.budgetLevel,
         tags.length > 0,
         recipeScenarios.length > 0,
         selectedEquipmentIds.length > 0,
         usableIngredients.length > 0,
-        usableSteps.length > 0,
-        mistakes.length > 0
+        usableSteps.length > 0
       ];
       totalRequired = requiredChecks.length;
       completedRequired = countFilled(requiredChecks);
 
-      if (!id || !isValidId(id)) addError(sectionErrors, "basic", "菜谱 ID 只能使用小写字母、数字和短横线。");
-      if (!recipe.nameZh.trim()) addError(sectionErrors, "basic", "中文名不能为空。");
-      if (!recipe.pinyin.trim()) addError(sectionErrors, "basic", "拼音不能为空。");
-      if (!recipe.nameEn.trim()) addError(sectionErrors, "basic", "英文名不能为空。");
+      if (!recipe.nameZh.trim() && !recipe.nameEn.trim()) addError(sectionErrors, "basic", "中文名和英文名至少填写一个。");
       if (!recipe.description.trim()) addError(sectionErrors, "basic", "简介不能为空。");
       if (!Number.isInteger(numericDifficulty) || numericDifficulty < 1 || numericDifficulty > 5) addError(sectionErrors, "basic", "难度必须是 1-5 的整数。");
       if (!Number.isInteger(numericTime) || numericTime <= 0) addError(sectionErrors, "basic", "耗时必须是正整数。");
@@ -442,28 +446,29 @@ export function ContributionGenerator({ ingredients: ingredientLibrary, equipmen
       if (selectedEquipmentIds.length === 0) addError(sectionErrors, "equipment", "至少选择一个厨具。");
       if (usableIngredients.length === 0) addError(sectionErrors, "ingredients", "至少填写一个食材。");
       ingredients.forEach((item, index) => {
-        if (item.source === "custom" && item.ingredientId.trim() && (!item.nameZh.trim() || !item.nameEn.trim())) {
-          addError(sectionErrors, "ingredients", `第 ${index + 1} 个临时食材需要填写中文名和英文名。`);
+        if (item.source === "custom" && item.amount.trim() && !item.nameZh.trim() && !item.nameEn.trim()) {
+          addError(sectionErrors, "ingredients", `第 ${index + 1} 个临时食材需要填写中文名或英文名。`);
         }
       });
       if (usableSteps.length === 0) addError(sectionErrors, "steps", "至少填写一个步骤。");
-      if (mistakes.length === 0) addError(sectionErrors, "mistakes", "至少填写一个新手踩坑提示。");
       if (!validateUrl(recipe.videoUrl)) addError(sectionErrors, "basic", "视频链接必须是 http 或 https URL。");
 
-      targetPath = `data/recipes/${id || "new-recipe"}.yaml`;
-      issueTitle = `新菜谱：${recipe.nameZh || "未命名菜谱"}`;
+      targetPath = `data/recipes/${id}.yaml`;
+      issueTitle = `新菜谱：${displayName}`;
       const videoBlock = recipe.videoUrl.trim()
         ? `video_links:
   - platform: other
-    title: ${quote(`观看 ${recipe.nameZh} 参考视频`)}
+    title: ${quote(`观看 ${displayName} 参考视频`)}
     url: ${quote(recipe.videoUrl.trim())}`
         : "video_links: []";
       const ingredientBlock = usableIngredients
-        .map((item) => {
-          const lines = [`  - ingredient_id: ${slugify(item.ingredientId) || item.ingredientId}`, `    amount: ${quote(item.amount)}`];
+        .map((item, index) => {
+          const ingredientId = item.source === "library" ? item.ingredientId : generatedId(item.nameEn, item.ingredientId, item.nameZh) || `custom-ingredient-${index + 1}`;
+          const fallbackName = firstNonEmpty(item.nameZh, item.nameEn, `临时食材 ${index + 1}`);
+          const lines = [`  - ingredient_id: ${ingredientId}`, `    amount: ${quote(item.amount)}`];
           if (item.source === "custom") {
-            lines.splice(1, 0, `    name_zh: ${quote(item.nameZh)}`);
-            lines.splice(2, 0, `    name_en: ${quote(item.nameEn)}`);
+            lines.splice(1, 0, `    name_zh: ${quote(firstNonEmpty(item.nameZh, item.nameEn, fallbackName))}`);
+            lines.splice(2, 0, `    name_en: ${quote(firstNonEmpty(item.nameEn, item.nameZh, fallbackName))}`);
           }
           if (item.optional) lines.push("    optional: true");
           if (item.note.trim()) lines.push(`    note: ${quote(item.note)}`);
@@ -478,16 +483,16 @@ export function ContributionGenerator({ ingredients: ingredientLibrary, equipmen
         })
         .join("\n");
 
-      yaml = `id: ${id || "new-recipe"}
+      yaml = `id: ${id}
 name:
-  zh: ${quote(recipe.nameZh)}
-  pinyin: ${quote(recipe.pinyin)}
-  en: ${quote(recipe.nameEn)}
+  zh: ${quote(firstNonEmpty(recipe.nameZh, recipe.nameEn, "未命名菜谱"))}
+  pinyin: ${quote(recipePinyin)}
+  en: ${quote(recipeNameEn)}
 description: ${quote(recipe.description)}
 difficulty: ${numericDifficulty || 2}
 time_minutes: ${numericTime || 20}
 servings: ${numericServings || 1}
-cuisine: ${recipe.cuisine}
+cuisine: ${cuisine}
 recipe_type: ${recipe.recipeType}
 budget_level: ${recipe.budgetLevel}
 scenarios: [${recipeScenarios.join(", ")}]
@@ -501,94 +506,81 @@ ${ingredientBlock || "  - ingredient_id: example\n    amount: \"适量\""}
 steps:
 ${stepBlock || "  - order: 1\n    instruction: \"写清楚第一步。\""}
 ${videoBlock}
-common_mistakes:
-${mistakes.length > 0 ? mistakes.map((mistake) => `  - ${quote(mistake)}`).join("\n") : '  - "写一个最容易失败的点。"'}
+common_mistakes: ${mistakes.length > 0 ? `\n${mistakes.map((mistake) => `  - ${quote(mistake)}`).join("\n")}` : "[]"}
 `;
     } else if (kind === "substitution") {
-      const id = slugify(substitution.id || substitution.nameEn);
+      const id = generatedId(substitution.pinyin, substitution.nameEn, substitution.id) || "new-ingredient";
+      const substitutionName = firstNonEmpty(substitution.nameZh, substitution.nameEn, "未命名食材");
+      const substitutionNameZh = firstNonEmpty(substitution.nameZh, substitution.nameEn, "未命名食材");
+      const substitutionNameEn = firstNonEmpty(substitution.nameEn, substitution.nameZh, "Unnamed ingredient");
+      const category = firstNonEmpty(substitution.category, "未分类");
+      const keywords = splitList(substitution.keywords);
+      const searchKeywords = keywords.length > 0 ? keywords : [substitutionNameZh, substitutionNameEn].filter(Boolean);
       const similarity = Number(substitution.similarity);
+      const hasRegionInfo = Boolean(substitution.substitute.trim() || substitution.where.trim() || substitution.note.trim());
+      const regionBlock = hasRegionInfo
+        ? `regions:
+  ${substitution.region}:
+    substitute: ${quote(firstNonEmpty(substitution.substitute, "待补充替代方案"))}
+    where_to_buy: ${quote(firstNonEmpty(substitution.where, "待补充购买地点"))}
+    usage_note: ${quote(substitution.note)}
+    similarity: ${Number.isInteger(similarity) && similarity >= 1 && similarity <= 5 ? similarity : 4}`
+        : "regions: {}";
       const requiredChecks = [
-        id && isValidId(id),
-        substitution.nameZh.trim(),
-        substitution.nameEn.trim(),
-        substitution.pinyin.trim(),
-        substitution.category.trim(),
-        splitList(substitution.keywords).length > 0,
-        substitution.region,
-        substitution.substitute.trim(),
-        substitution.where.trim(),
-        Number.isInteger(similarity) && similarity >= 1 && similarity <= 5
+        substitution.nameZh.trim() || substitution.nameEn.trim()
       ];
       totalRequired = requiredChecks.length;
       completedRequired = countFilled(requiredChecks);
 
-      if (!id || !isValidId(id)) addError(sectionErrors, "basic", "食材 ID 只能使用小写字母、数字和短横线。");
-      if (!substitution.nameZh.trim()) addError(sectionErrors, "basic", "中文名不能为空。");
-      if (!substitution.nameEn.trim()) addError(sectionErrors, "basic", "英文名不能为空。");
-      if (!substitution.pinyin.trim()) addError(sectionErrors, "basic", "拼音不能为空。");
-      if (!substitution.category.trim()) addError(sectionErrors, "basic", "分类不能为空。");
-      if (splitList(substitution.keywords).length === 0) addError(sectionErrors, "basic", "搜索关键词不能为空。");
-      if (!substitution.substitute.trim()) addError(sectionErrors, "region", "替代方案不能为空。");
-      if (!substitution.where.trim()) addError(sectionErrors, "region", "购买地点不能为空。");
-      if (!Number.isInteger(similarity) || similarity < 1 || similarity > 5) addError(sectionErrors, "region", "相似度必须是 1-5 的整数。");
+      if (!substitution.nameZh.trim() && !substitution.nameEn.trim()) addError(sectionErrors, "basic", "中文名和英文名至少填写一个。");
+      if (substitution.similarity.trim() && (!Number.isInteger(similarity) || similarity < 1 || similarity > 5)) addError(sectionErrors, "region", "相似度如果填写，必须是 1-5 的整数。");
 
-      targetPath = `data/substitutions/${id || "new-ingredient"}.yaml`;
-      issueTitle = `地区替代：${substitution.nameZh || "未命名食材"}`;
-      yaml = `ingredient_id: ${id || "new-ingredient"}
-name_zh: ${quote(substitution.nameZh)}
-name_en: ${quote(substitution.nameEn)}
-pinyin: ${quote(substitution.pinyin)}
-category: ${substitution.category}
+      targetPath = `data/substitutions/${id}.yaml`;
+      issueTitle = `食材建议：${substitutionName}`;
+      yaml = `ingredient_id: ${id}
+name_zh: ${quote(substitutionNameZh)}
+name_en: ${quote(substitutionNameEn)}
+${substitution.pinyin.trim() ? `pinyin: ${quote(substitution.pinyin)}\n` : ""}category: ${category}
 aliases_zh: ${yamlList(splitList(substitution.aliasesZh))}
 aliases_en: ${yamlList(splitList(substitution.aliasesEn))}
 aliases_pinyin: ${yamlList(splitList(substitution.aliasesPinyin))}
-search_keywords: ${yamlList(splitList(substitution.keywords))}
+search_keywords: ${yamlList(searchKeywords)}
 common_uses: ${yamlList(splitList(substitution.uses))}
-regions:
-  ${substitution.region}:
-    substitute: ${quote(substitution.substitute)}
-    where_to_buy: ${quote(substitution.where)}
-    usage_note: ${quote(substitution.note)}
-    similarity: ${similarity || 4}
+${regionBlock}
 `;
     } else {
-      const id = slugify(equipment.id || equipment.nameEn);
+      const id = generatedId(equipment.nameEn, equipment.id, equipment.nameZh) || "new-equipment";
+      const equipmentName = firstNonEmpty(equipment.nameZh, equipment.nameEn, "未命名厨具");
+      const equipmentNameZh = firstNonEmpty(equipment.nameZh, equipment.nameEn, "未命名厨具");
+      const equipmentNameEn = firstNonEmpty(equipment.nameEn, equipment.nameZh, "Unnamed equipment");
+      const useCases = splitList(equipment.uses);
+      const hasEquipmentRegion = Boolean(equipment.where.trim() || equipment.priceRange.trim() || equipment.note.trim());
+      const equipmentRegionBlock = hasEquipmentRegion
+        ? `regions:
+  ${equipment.region}:
+    where_to_buy: ${quote(firstNonEmpty(equipment.where, "待补充购买地点"))}
+    price_range: ${quote(firstNonEmpty(equipment.priceRange, "待补充价格"))}
+    notes: ${quote(equipment.note)}`
+        : "regions: {}";
       const requiredChecks = [
-        id && isValidId(id),
-        equipment.nameZh.trim(),
-        equipment.nameEn.trim(),
-        equipment.category,
-        equipment.budgetLevel,
-        splitList(equipment.uses).length > 0,
-        equipment.region,
-        equipment.where.trim(),
-        equipment.priceRange.trim()
+        equipment.nameZh.trim() || equipment.nameEn.trim()
       ];
       totalRequired = requiredChecks.length;
       completedRequired = countFilled(requiredChecks);
 
-      if (!id || !isValidId(id)) addError(sectionErrors, "basic", "厨具 ID 只能使用小写字母、数字和短横线。");
-      if (!equipment.nameZh.trim()) addError(sectionErrors, "basic", "中文名不能为空。");
-      if (!equipment.nameEn.trim()) addError(sectionErrors, "basic", "英文名不能为空。");
-      if (splitList(equipment.uses).length === 0) addError(sectionErrors, "basic", "至少填写一个使用场景。");
-      if (!equipment.where.trim()) addError(sectionErrors, "region", "购买地点不能为空。");
-      if (!equipment.priceRange.trim()) addError(sectionErrors, "region", "价格区间不能为空。");
+      if (!equipment.nameZh.trim() && !equipment.nameEn.trim()) addError(sectionErrors, "basic", "中文名和英文名至少填写一个。");
 
-      targetPath = `data/equipment/${id || "new-equipment"}.yaml`;
-      issueTitle = `厨具建议：${equipment.nameZh || "未命名厨具"}`;
-      yaml = `equipment_id: ${id || "new-equipment"}
-name_zh: ${quote(equipment.nameZh)}
-name_en: ${quote(equipment.nameEn)}
+      targetPath = `data/equipment/${id}.yaml`;
+      issueTitle = `厨具建议：${equipmentName}`;
+      yaml = `equipment_id: ${id}
+name_zh: ${quote(equipmentNameZh)}
+name_en: ${quote(equipmentNameEn)}
 category: ${equipment.category}
 budget_level: ${equipment.budgetLevel}
 is_essential: ${equipment.essential}
-use_cases: ${yamlList(splitList(equipment.uses))}
+use_cases: ${yamlList(useCases.length > 0 ? useCases : [equipmentName])}
 substitutes_if_missing: ${yamlList(splitList(equipment.substitutes))}
-regions:
-  ${equipment.region}:
-    where_to_buy: ${quote(equipment.where)}
-    price_range: ${quote(equipment.priceRange)}
-    notes: ${quote(equipment.note)}
+${equipmentRegionBlock}
 `;
     }
 
@@ -697,17 +689,17 @@ regions:
             <>
               <SectionPanel title="基础信息" errors={generated.sectionErrors.basic}>
                 <div className="grid gap-3 md:grid-cols-3">
-                  <TextInput label="中文名" value={recipe.nameZh} onChange={(value) => setRecipe({ ...recipe, nameZh: value })} />
-                  <TextInput label="拼音" value={recipe.pinyin} onChange={(value) => setRecipe({ ...recipe, pinyin: value })} />
-                  <TextInput label="英文名" value={recipe.nameEn} onChange={(value) => setRecipe({ ...recipe, nameEn: value })} />
+                  <TextInput label="中文名" required={false} value={recipe.nameZh} onChange={(value) => setRecipe({ ...recipe, nameZh: value })} hint="中文名和英文名至少填一个。" />
+                  <TextInput label="拼音" required={false} value={recipe.pinyin} onChange={(value) => setRecipe({ ...recipe, pinyin: value })} hint="选填；填写后会优先用于自动生成菜谱 ID。" />
+                  <TextInput label="英文名" required={false} value={recipe.nameEn} onChange={(value) => setRecipe({ ...recipe, nameEn: value })} hint="选填；没有英文名时会用中文名兜底。" />
                 </div>
-                <TextInput label="菜谱 ID" value={recipe.id} onChange={(value) => setRecipe({ ...recipe, id: value })} hint="用于文件名和 URL，只用小写字母、数字和短横线。" />
+                <TextInput label="自定义菜谱 ID" required={false} value={recipe.id} onChange={(value) => setRecipe({ ...recipe, id: value })} hint="选填；留空时优先用拼音自动生成文件名和 URL。" />
                 <TextArea label="简介" value={recipe.description} onChange={(value) => setRecipe({ ...recipe, description: value })} />
                 <div className="grid gap-3 md:grid-cols-4">
                   <TextInput label="难度 1-5" value={recipe.difficulty} onChange={(value) => setRecipe({ ...recipe, difficulty: value })} />
                   <TextInput label="耗时/分钟" value={recipe.timeMinutes} onChange={(value) => setRecipe({ ...recipe, timeMinutes: value })} />
                   <TextInput label="份量" value={recipe.servings} onChange={(value) => setRecipe({ ...recipe, servings: value })} />
-                  <TextInput label="菜系" value={recipe.cuisine} onChange={(value) => setRecipe({ ...recipe, cuisine: value })} />
+                  <TextInput label="菜系" required={false} value={recipe.cuisine} onChange={(value) => setRecipe({ ...recipe, cuisine: value })} hint="选填；留空默认留学生厨房菜。" />
                 </div>
                 <div className="grid gap-3 md:grid-cols-3">
                   <label className="grid gap-1 text-sm text-ink-300">
@@ -820,9 +812,9 @@ regions:
                           />
                         ) : (
                           <div className="grid gap-3 md:grid-cols-3">
-                            <TextInput label="食材 ID" value={ingredient.ingredientId} onChange={(value) => setIngredients(ingredients.map((item, i) => (i === index ? { ...item, ingredientId: value } : item)))} />
-                            <TextInput label="中文名" value={ingredient.nameZh} onChange={(value) => setIngredients(ingredients.map((item, i) => (i === index ? { ...item, nameZh: value } : item)))} />
-                            <TextInput label="英文名" value={ingredient.nameEn} onChange={(value) => setIngredients(ingredients.map((item, i) => (i === index ? { ...item, nameEn: value } : item)))} />
+                            <TextInput label="食材 ID" required={false} value={ingredient.ingredientId} onChange={(value) => setIngredients(ingredients.map((item, i) => (i === index ? { ...item, ingredientId: value } : item)))} hint="选填；留空会自动生成。" />
+                            <TextInput label="中文名" required={false} value={ingredient.nameZh} onChange={(value) => setIngredients(ingredients.map((item, i) => (i === index ? { ...item, nameZh: value } : item)))} hint="中文名和英文名至少填一个。" />
+                            <TextInput label="英文名" required={false} value={ingredient.nameEn} onChange={(value) => setIngredients(ingredients.map((item, i) => (i === index ? { ...item, nameEn: value } : item)))} hint="选填；没有英文名时会用中文名兜底。" />
                           </div>
                         )}
                         <div className="grid gap-3 md:grid-cols-[1fr_1fr_auto]">
@@ -862,32 +854,32 @@ regions:
                 </div>
               </SectionPanel>
 
-              <SectionPanel title="新手踩坑" errors={generated.sectionErrors.mistakes}>
-                <TextArea label="踩坑提示，每行一个" value={recipe.mistakes} onChange={(value) => setRecipe({ ...recipe, mistakes: value })} />
+              <SectionPanel title="新手踩坑" errors={generated.sectionErrors.mistakes} optional>
+                <TextArea label="踩坑提示，每行一个" required={false} value={recipe.mistakes} onChange={(value) => setRecipe({ ...recipe, mistakes: value })} />
               </SectionPanel>
             </>
           ) : kind === "substitution" ? (
             <>
               <SectionPanel title="食材基础信息" errors={generated.sectionErrors.basic}>
                 <div className="grid gap-3 md:grid-cols-3">
-                  <TextInput label="中文名" value={substitution.nameZh} onChange={(value) => setSubstitution({ ...substitution, nameZh: value })} />
-                  <TextInput label="英文名" value={substitution.nameEn} onChange={(value) => setSubstitution({ ...substitution, nameEn: value })} />
-                  <TextInput label="拼音" value={substitution.pinyin} onChange={(value) => setSubstitution({ ...substitution, pinyin: value })} />
+                  <TextInput label="中文名" required={false} value={substitution.nameZh} onChange={(value) => setSubstitution({ ...substitution, nameZh: value })} hint="中文名和英文名至少填一个。" />
+                  <TextInput label="英文名" required={false} value={substitution.nameEn} onChange={(value) => setSubstitution({ ...substitution, nameEn: value })} hint="选填；没有英文名时会用中文名兜底。" />
+                  <TextInput label="拼音" required={false} value={substitution.pinyin} onChange={(value) => setSubstitution({ ...substitution, pinyin: value })} hint="选填；填写后会优先用于自动生成食材 ID。" />
                 </div>
                 <div className="grid gap-3 md:grid-cols-2">
-                  <TextInput label="食材 ID" value={substitution.id} onChange={(value) => setSubstitution({ ...substitution, id: value })} />
-                  <TextInput label="分类" value={substitution.category} onChange={(value) => setSubstitution({ ...substitution, category: value })} />
+                  <TextInput label="自定义食材 ID" required={false} value={substitution.id} onChange={(value) => setSubstitution({ ...substitution, id: value })} hint="选填；留空自动生成。" />
+                  <TextInput label="分类" required={false} value={substitution.category} onChange={(value) => setSubstitution({ ...substitution, category: value })} hint="选填；留空为未分类。" />
                 </div>
-                <TextInput label="搜索关键词，逗号分隔" value={substitution.keywords} onChange={(value) => setSubstitution({ ...substitution, keywords: value })} />
+                <TextInput label="搜索关键词，逗号分隔" required={false} value={substitution.keywords} onChange={(value) => setSubstitution({ ...substitution, keywords: value })} hint="选填；留空会用名称生成基础关键词。" />
                 <TextInput label="中文别名，逗号分隔" required={false} value={substitution.aliasesZh} onChange={(value) => setSubstitution({ ...substitution, aliasesZh: value })} />
                 <TextInput label="英文别名，逗号分隔" required={false} value={substitution.aliasesEn} onChange={(value) => setSubstitution({ ...substitution, aliasesEn: value })} />
                 <TextInput label="拼音别名，逗号分隔" required={false} value={substitution.aliasesPinyin} onChange={(value) => setSubstitution({ ...substitution, aliasesPinyin: value })} />
                 <TextInput label="常见用途，逗号分隔" required={false} value={substitution.uses} onChange={(value) => setSubstitution({ ...substitution, uses: value })} />
               </SectionPanel>
-              <SectionPanel title="地区替代信息" errors={generated.sectionErrors.region}>
+              <SectionPanel title="地区替代信息" errors={generated.sectionErrors.region} optional>
                 <div className="grid gap-3 md:grid-cols-[10rem_1fr]">
                   <label className="grid gap-1 text-sm text-ink-300">
-                    <RequiredLabel label="地区" />
+                    <RequiredLabel label="地区" required={false} />
                     <select className="control" value={substitution.region} onChange={(event) => setSubstitution({ ...substitution, region: event.target.value })}>
                       {regionOptions.map((region) => (
                         <option value={region} key={region}>
@@ -896,24 +888,24 @@ regions:
                       ))}
                     </select>
                   </label>
-                  <TextInput label="替代方案" value={substitution.substitute} onChange={(value) => setSubstitution({ ...substitution, substitute: value })} />
+                  <TextInput label="替代方案" required={false} value={substitution.substitute} onChange={(value) => setSubstitution({ ...substitution, substitute: value })} />
                 </div>
-                <TextInput label="哪里买" value={substitution.where} onChange={(value) => setSubstitution({ ...substitution, where: value })} />
+                <TextInput label="哪里买" required={false} value={substitution.where} onChange={(value) => setSubstitution({ ...substitution, where: value })} />
                 <TextArea label="使用差异" required={false} value={substitution.note} onChange={(value) => setSubstitution({ ...substitution, note: value })} />
-                <TextInput label="相似度 1-5" value={substitution.similarity} onChange={(value) => setSubstitution({ ...substitution, similarity: value })} />
+                <TextInput label="相似度 1-5" required={false} value={substitution.similarity} onChange={(value) => setSubstitution({ ...substitution, similarity: value })} />
               </SectionPanel>
             </>
           ) : (
             <>
               <SectionPanel title="厨具基础信息" errors={generated.sectionErrors.basic}>
                 <div className="grid gap-3 md:grid-cols-3">
-                  <TextInput label="厨具 ID" value={equipment.id} onChange={(value) => setEquipment({ ...equipment, id: value })} />
-                  <TextInput label="中文名" value={equipment.nameZh} onChange={(value) => setEquipment({ ...equipment, nameZh: value })} />
-                  <TextInput label="英文名" value={equipment.nameEn} onChange={(value) => setEquipment({ ...equipment, nameEn: value })} />
+                  <TextInput label="自定义厨具 ID" required={false} value={equipment.id} onChange={(value) => setEquipment({ ...equipment, id: value })} hint="选填；留空自动生成。" />
+                  <TextInput label="中文名" required={false} value={equipment.nameZh} onChange={(value) => setEquipment({ ...equipment, nameZh: value })} hint="中文名和英文名至少填一个。" />
+                  <TextInput label="英文名" required={false} value={equipment.nameEn} onChange={(value) => setEquipment({ ...equipment, nameEn: value })} hint="选填；没有英文名时会用中文名兜底。" />
                 </div>
                 <div className="grid gap-3 md:grid-cols-3">
                   <label className="grid gap-1 text-sm text-ink-300">
-                    <RequiredLabel label="分类" />
+                    <RequiredLabel label="分类" required={false} />
                     <select className="control" value={equipment.category} onChange={(event) => setEquipment({ ...equipment, category: event.target.value })}>
                       <option value="must_have">必买</option>
                       <option value="optional_upgrade">可选升级</option>
@@ -922,7 +914,7 @@ regions:
                     </select>
                   </label>
                   <label className="grid gap-1 text-sm text-ink-300">
-                    <RequiredLabel label="预算" />
+                    <RequiredLabel label="预算" required={false} />
                     <select className="control" value={equipment.budgetLevel} onChange={(event) => setEquipment({ ...equipment, budgetLevel: event.target.value as BudgetLevel })}>
                       <option value="low">低</option>
                       <option value="medium">中</option>
@@ -934,13 +926,13 @@ regions:
                     是否必买（选填）
                   </label>
                 </div>
-                <TextInput label="使用场景，逗号分隔" value={equipment.uses} onChange={(value) => setEquipment({ ...equipment, uses: value })} />
+                <TextInput label="使用场景，逗号分隔" required={false} value={equipment.uses} onChange={(value) => setEquipment({ ...equipment, uses: value })} hint="选填；留空会用厨具名称兜底。" />
                 <TextInput label="没有时可替代，逗号分隔" required={false} value={equipment.substitutes} onChange={(value) => setEquipment({ ...equipment, substitutes: value })} />
               </SectionPanel>
-              <SectionPanel title="地区购买信息" errors={generated.sectionErrors.region}>
+              <SectionPanel title="地区购买信息" errors={generated.sectionErrors.region} optional>
                 <div className="grid gap-3 md:grid-cols-[10rem_1fr_12rem]">
                   <label className="grid gap-1 text-sm text-ink-300">
-                    <RequiredLabel label="地区" />
+                    <RequiredLabel label="地区" required={false} />
                     <select className="control" value={equipment.region} onChange={(event) => setEquipment({ ...equipment, region: event.target.value })}>
                       {regionOptions.map((region) => (
                         <option value={region} key={region}>
@@ -949,8 +941,8 @@ regions:
                       ))}
                     </select>
                   </label>
-                  <TextInput label="哪里买" value={equipment.where} onChange={(value) => setEquipment({ ...equipment, where: value })} />
-                  <TextInput label="价格区间" value={equipment.priceRange} onChange={(value) => setEquipment({ ...equipment, priceRange: value })} />
+                  <TextInput label="哪里买" required={false} value={equipment.where} onChange={(value) => setEquipment({ ...equipment, where: value })} />
+                  <TextInput label="价格区间" required={false} value={equipment.priceRange} onChange={(value) => setEquipment({ ...equipment, priceRange: value })} />
                 </div>
                 <TextArea label="购买建议" required={false} value={equipment.note} onChange={(value) => setEquipment({ ...equipment, note: value })} />
               </SectionPanel>

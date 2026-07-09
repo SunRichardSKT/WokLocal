@@ -16,7 +16,7 @@ export default function ContributePage() {
         <p className="text-sm font-medium text-scallion">No-code Contribution</p>
         <h1 className="mt-2 text-3xl font-semibold tracking-normal text-ink-100 sm:text-4xl">补充内容</h1>
         <p className="mt-3 max-w-2xl text-sm leading-6 text-ink-300">
-          分享一道你做成功过的菜、一个靠谱替代食材，或者一条厨具购买经验。页面会帮你整理成可提交的内容草稿，不会直接上传或改动仓库。
+          分享一道你做成功过的菜、一个靠谱替代食材，或者一条厨具购买经验。页面会帮你整理成可提交的内容草稿，不会直接上传或改动仓库；没有 GitHub 账号也可以复制内容后发邮件到 guyanrichard@qq.com。
         </p>
       </section>
       <ContributionGenerator ingredients={ingredients} equipmentItems={equipmentItems} />

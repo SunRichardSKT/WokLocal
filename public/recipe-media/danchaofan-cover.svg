@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Egg fried rice cover placeholder</title>
+  <desc id="desc">Dark illustrated cover for egg fried rice.</desc>
+  <rect width="1200" height="675" fill="#0f1115"/>
+  <circle cx="620" cy="360" r="245" fill="#171b22"/>
+  <circle cx="620" cy="360" r="205" fill="#242b35"/>
+  <ellipse cx="620" cy="390" rx="280" ry="78" fill="#090a0d" opacity=".45"/>
+  <circle cx="500" cy="300" r="58" fill="#f1c766"/>
+  <circle cx="720" cy="292" r="50" fill="#f1c766"/>
+  <g fill="#e8d8b7">
+    <circle cx="555" cy="390" r="18"/>
+    <circle cx="610" cy="330" r="15"/>
+    <circle cx="670" cy="405" r="17"/>
+    <circle cx="755" cy="365" r="15"/>
+    <circle cx="470" cy="410" r="14"/>
+    <circle cx="690" cy="330" r="12"/>
+  </g>
+  <g fill="#8ecf9e">
+    <rect x="455" y="340" width="62" height="18" rx="9" transform="rotate(-18 486 349)"/>
+    <rect x="730" y="420" width="80" height="18" rx="9" transform="rotate(16 770 429)"/>
+    <rect x="605" y="445" width="74" height="18" rx="9" transform="rotate(-8 642 454)"/>
+  </g>
+  <text x="72" y="104" fill="#eef1f5" font-family="Arial, sans-serif" font-size="54" font-weight="700">Dan Chao Fan</text>
+  <text x="75" y="154" fill="#8ecf9e" font-family="Arial, sans-serif" font-size="24">WokLocal recipe cover</text>
+</svg>

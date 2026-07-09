@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { RecipeDetail } from "@/components/recipe-detail";
-import { getRecipeById, getRecipes, getSubstitutions } from "@/lib/data";
+import { getEquipment, getRecipeById, getRecipes, getSubstitutions } from "@/lib/data";
 
 type RecipePageProps = {
   params: {
@@ -35,6 +35,7 @@ export default function RecipePage({ params }: RecipePageProps) {
   }
 
   const substitutions = Object.fromEntries(getSubstitutions().map((item) => [item.ingredient_id, item]));
+  const equipment = Object.fromEntries(getEquipment().map((item) => [item.equipment_id, item]));
 
-  return <RecipeDetail recipe={recipe} substitutions={substitutions} />;
+  return <RecipeDetail recipe={recipe} substitutions={substitutions} equipment={equipment} />;
 }

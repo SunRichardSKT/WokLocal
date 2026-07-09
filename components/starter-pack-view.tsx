@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CheckCircle2, MapPin, UploadCloud, WalletCards } from "lucide-react";
+import { getStoredRegion, setStoredRegion, subscribeToRegionChange } from "@/components/region-selector";
 import { regions, supportedRegionKeys, type RegionKey } from "@/lib/regions";
 import type { StarterPack } from "@/lib/schemas";
 
@@ -19,6 +20,19 @@ const priorityLabels: Record<StarterPack["sections"][number]["priority"], string
 export function StarterPackView({ packs }: StarterPackViewProps) {
   const [selectedRegion, setSelectedRegion] = useState<RegionKey>((packs[0]?.region as RegionKey | undefined) ?? "uk");
   const visiblePacks = useMemo(() => packs.filter((pack) => pack.region === selectedRegion), [packs, selectedRegion]);
+
+  useEffect(() => {
+    const storedRegion = getStoredRegion();
+    if (storedRegion) {
+      setSelectedRegion(storedRegion);
+    }
+
+    return subscribeToRegionChange((region) => {
+      if (region) {
+        setSelectedRegion(region);
+      }
+    });
+  }, []);
 
   if (packs.length === 0) {
     return <UploadStarterPackGuide selectedRegion="uk" />;
@@ -41,7 +55,10 @@ export function StarterPackView({ packs }: StarterPackViewProps) {
                     : "rounded-md border border-white/10 bg-white/[0.035] px-3 py-2 text-sm text-ink-300 hover:border-scallion/40"
                 }
                 key={regionKey}
-                onClick={() => setSelectedRegion(regionKey)}
+                onClick={() => {
+                  setStoredRegion(regionKey);
+                  setSelectedRegion(regionKey);
+                }}
                 type="button"
               >
                 {regions[regionKey]}

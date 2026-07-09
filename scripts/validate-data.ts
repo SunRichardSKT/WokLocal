@@ -130,6 +130,21 @@ for (const file of yamlFiles(recipesDir)) {
     }
   }
 
+  const recipeIngredientIds = new Set(parsed.data.base_ingredients.map((ingredient) => ingredient.ingredient_id));
+  const recipeEquipmentIds = new Set(parsed.data.equipment.required_ids);
+
+  for (const step of parsed.data.steps) {
+    for (const highlight of step.highlights) {
+      if (highlight.type === "ingredient" && !recipeIngredientIds.has(highlight.id) && !substitutions.has(highlight.id)) {
+        issues.push({ file, message: `Step ${step.order} highlights missing ingredient_id "${highlight.id}"` });
+      }
+
+      if (highlight.type === "equipment" && !recipeEquipmentIds.has(highlight.id) && !equipment.has(highlight.id)) {
+        issues.push({ file, message: `Step ${step.order} highlights missing equipment_id "${highlight.id}"` });
+      }
+    }
+  }
+
   for (const equipmentId of parsed.data.equipment.required_ids) {
     if (!equipment.has(equipmentId)) {
       issues.push({ file, message: `Recipe references missing equipment_id "${equipmentId}"` });

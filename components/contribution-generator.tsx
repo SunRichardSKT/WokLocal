@@ -5,11 +5,12 @@ import { Clipboard, Download, ExternalLink, Plus, RotateCcw, Search, Trash2 } fr
 import { scenarioDefinitions } from "@/lib/recommendations";
 import type { Equipment, RecommendationScenario, Substitution } from "@/lib/schemas";
 
-type ContributionKind = "recipe" | "substitution" | "equipment";
+type ContributionKind = "recipe" | "substitution" | "equipment" | "starter";
 type RecipeType = "chinese" | "fusion" | "local_adapted";
 type BudgetLevel = "low" | "medium" | "high";
 type IngredientSource = "library" | "custom";
 type SectionKey = "basic" | "scenarios" | "equipment" | "ingredients" | "steps" | "mistakes" | "region";
+type StarterPriority = "today" | "three_days" | "optional";
 
 type RecipeIngredientDraft = {
   source: IngredientSource;
@@ -46,7 +47,8 @@ type ContributionGeneratorProps = {
 const tabs: Array<{ id: ContributionKind; label: string }> = [
   { id: "recipe", label: "新增菜谱" },
   { id: "substitution", label: "新增食材替代" },
-  { id: "equipment", label: "新增厨具建议" }
+  { id: "equipment", label: "新增厨具建议" },
+  { id: "starter", label: "落地清单" }
 ];
 
 const regionOptions = ["uk", "north_america", "europe", "australia", "japan_korea"];
@@ -110,6 +112,15 @@ const defaultEquipment = {
   where: "Argos、Amazon UK、Currys、大型超市厨具区",
   priceRange: "£35-£80",
   note: "宿舍先确认是否允许使用高功率电器。"
+};
+
+const defaultStarterPack = {
+  id: "uk-first-week-community",
+  region: "uk",
+  title: "英国落地清单与注意事项",
+  summary: "刚落地先按优先级买齐能做饭的基础物品，其他内容慢慢补。",
+  content:
+    "## 今天就买\n- 不粘平底锅：IKEA、Argos、Tesco Extra 或 Amazon UK，约 £10-£25。24-28cm 最通用。\n- 洗碗套装：洗洁精、海绵、厨房纸先买齐。\n\n## 三天内补齐\n- 小电饭煲：Argos、Amazon UK 或亚超，约 £20-£45。一人食 0.6L-1L 足够。\n\n## 注意事项\n- 宿舍先确认是否允许使用电饭煲、空气炸锅等高功率电器。\n- 不确定会不会长期做饭时，先别一次买太多升级厨具。"
 };
 
 function slugify(value: string) {
@@ -372,6 +383,7 @@ export function ContributionGenerator({ ingredients: ingredientLibrary, equipmen
   const [steps, setSteps] = useState<RecipeStepDraft[]>(defaultSteps);
   const [substitution, setSubstitution] = useState(defaultSubstitution);
   const [equipment, setEquipment] = useState(defaultEquipment);
+  const [starterPack, setStarterPack] = useState(defaultStarterPack);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -390,6 +402,7 @@ export function ContributionGenerator({ ingredients: ingredientLibrary, equipmen
     setSteps(defaultSteps);
     setSubstitution(defaultSubstitution);
     setEquipment(defaultEquipment);
+    setStarterPack(defaultStarterPack);
   }
 
   const generated = useMemo<GeneratedContribution>(() => {
@@ -548,7 +561,7 @@ search_keywords: ${yamlList(searchKeywords)}
 common_uses: ${yamlList(splitList(substitution.uses))}
 ${regionBlock}
 `;
-    } else {
+    } else if (kind === "equipment") {
       const id = generatedId(equipment.nameEn, equipment.id, equipment.nameZh) || "new-equipment";
       const equipmentName = firstNonEmpty(equipment.nameZh, equipment.nameEn, "未命名厨具");
       const equipmentNameZh = firstNonEmpty(equipment.nameZh, equipment.nameEn, "未命名厨具");
@@ -582,16 +595,44 @@ use_cases: ${yamlList(useCases.length > 0 ? useCases : [equipmentName])}
 substitutes_if_missing: ${yamlList(splitList(equipment.substitutes))}
 ${equipmentRegionBlock}
 `;
+    } else {
+      const id = generatedId(starterPack.id, starterPack.title, starterPack.region) || "new-starter-pack";
+      const title = firstNonEmpty(starterPack.title, `${starterPack.region} 落地清单与注意事项`);
+      const summary = firstNonEmpty(starterPack.summary, "按优先级整理刚落地做饭需要购买的物品和注意事项。");
+      const content = firstNonEmpty(starterPack.content);
+      const requiredChecks = [title, starterPack.region, content];
+      totalRequired = requiredChecks.length;
+      completedRequired = countFilled(requiredChecks);
+
+      if (!starterPack.title.trim()) addError(sectionErrors, "basic", "清单标题不能为空。");
+      if (!content) addError(sectionErrors, "basic", "主要内容不能为空。");
+
+      targetPath = `data/starter-packs/${id}.yaml`;
+      issueTitle = `落地清单：${title}`;
+      yaml = `pack_id: ${id}
+region: ${starterPack.region}
+title: ${quote(title)}
+summary: ${quote(summary)}
+sections:
+  - title: "主要内容"
+    priority: today
+    items:
+      - name: "自由格式落地经验"
+        category: "落地清单"
+        where_to_buy: ["见备注"]
+        estimated_budget: "见备注"
+        note: ${quote(content || "请补充主要内容。")}
+`;
     }
 
     const validationErrors = Object.values(sectionErrors).flat();
     const issueBody = `目标文件：\`${targetPath}\`\n\n请审阅下面的 YAML：\n\n\`\`\`yaml\n${yaml}\`\`\``;
     return { targetPath, fileName: targetPath.split("/").pop() ?? "contribution.yaml", yaml, issueTitle, issueBody, validationErrors, sectionErrors, completedRequired, totalRequired };
-  }, [equipment, equipmentItems, ingredients, kind, recipe, recipeScenarios, selectedEquipmentIds, steps, substitution]);
+  }, [equipment, equipmentItems, ingredients, kind, recipe, recipeScenarios, selectedEquipmentIds, starterPack, steps, substitution]);
 
   const issueUrl =
     generated.validationErrors.length === 0
-      ? buildIssueUrl(generated.issueTitle, generated.issueBody, [kind === "recipe" ? "recipe" : kind === "substitution" ? "substitution" : "equipment"])
+      ? buildIssueUrl(generated.issueTitle, generated.issueBody, [kind === "recipe" ? "recipe" : kind === "substitution" ? "substitution" : kind === "equipment" ? "equipment" : "starter-pack"])
       : "";
 
   async function copyYaml() {
@@ -656,7 +697,7 @@ ${equipmentRegionBlock}
   return (
     <div className="space-y-5">
       <div className="surface rounded-md p-2">
-        <div className="grid gap-2 sm:grid-cols-3">
+        <div className="grid gap-2 sm:grid-cols-4">
           {tabs.map((tab) => (
             <button
               className={tab.id === kind ? "rounded-md bg-scallion px-3 py-2 text-sm font-semibold text-ink-950" : "rounded-md px-3 py-2 text-sm text-ink-300 hover:bg-white/[0.06]"}
@@ -895,7 +936,7 @@ ${equipmentRegionBlock}
                 <TextInput label="相似度 1-5" required={false} value={substitution.similarity} onChange={(value) => setSubstitution({ ...substitution, similarity: value })} />
               </SectionPanel>
             </>
-          ) : (
+          ) : kind === "equipment" ? (
             <>
               <SectionPanel title="厨具基础信息" errors={generated.sectionErrors.basic}>
                 <div className="grid gap-3 md:grid-cols-3">
@@ -945,6 +986,42 @@ ${equipmentRegionBlock}
                   <TextInput label="价格区间" required={false} value={equipment.priceRange} onChange={(value) => setEquipment({ ...equipment, priceRange: value })} />
                 </div>
                 <TextArea label="购买建议" required={false} value={equipment.note} onChange={(value) => setEquipment({ ...equipment, note: value })} />
+              </SectionPanel>
+            </>
+          ) : (
+            <>
+              <SectionPanel title="清单基础信息" errors={generated.sectionErrors.basic}>
+                <div className="grid gap-3 md:grid-cols-[1fr_10rem]">
+                  <TextInput label="清单标题" value={starterPack.title} onChange={(value) => setStarterPack({ ...starterPack, title: value })} placeholder="英国落地清单与注意事项" />
+                  <label className="grid gap-1 text-sm text-ink-300">
+                    <RequiredLabel label="地区" />
+                    <select className="control" value={starterPack.region} onChange={(event) => setStarterPack({ ...starterPack, region: event.target.value })}>
+                      {regionOptions.map((region) => (
+                        <option value={region} key={region}>
+                          {region}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                </div>
+                <TextInput label="自定义清单 ID" required={false} value={starterPack.id} onChange={(value) => setStarterPack({ ...starterPack, id: value })} hint="选填；用于文件名，留空也会自动生成。" />
+                <TextArea label="清单简介" required={false} value={starterPack.summary} onChange={(value) => setStarterPack({ ...starterPack, summary: value })} hint="选填；说明这个地区刚落地时最重要的购买策略和注意事项。" />
+              </SectionPanel>
+
+              <SectionPanel title="主要内容" errors={generated.sectionErrors.basic}>
+                <p className="text-sm leading-6 text-ink-300">
+                  这里可以自由写 Markdown，不需要拆成固定条目。建议写清地区、购买地点、价格、优先级和注意事项；维护者后续会整理成结构化清单。
+                </p>
+                <TextArea
+                  label="主要内容（Markdown）"
+                  value={starterPack.content}
+                  onChange={(value) => setStarterPack({ ...starterPack, content: value })}
+                  hint="支持 ## 标题、- 列表、普通段落。"
+                />
+                <div className="rounded-md border border-white/10 bg-ink-950 p-3">
+                  <p className="text-sm font-semibold text-ink-100">Markdown 预览</p>
+                  <pre className="mt-3 max-h-72 overflow-auto whitespace-pre-wrap text-sm leading-6 text-ink-300">{starterPack.content || "还没有填写主要内容。"}</pre>
+                </div>
               </SectionPanel>
             </>
           )}

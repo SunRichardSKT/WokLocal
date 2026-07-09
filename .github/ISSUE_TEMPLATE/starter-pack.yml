@@ -1,0 +1,34 @@
+name: 补充落地清单与注意事项
+description: 为某个地区补充刚落地后的采购清单、做饭环境搭建和注意事项
+title: "落地清单："
+labels: ["starter-pack"]
+body:
+  - type: input
+    id: region
+    attributes:
+      label: 地区
+      placeholder: 英国 / 伦敦 / 北美 / 悉尼
+    validations:
+      required: true
+  - type: textarea
+    id: today
+    attributes:
+      label: 今天就买
+      placeholder: 写出刚到第一天最值得买的厨具、食材、调料或清洁用品
+    validations:
+      required: true
+  - type: textarea
+    id: three-days
+    attributes:
+      label: 三天内补齐
+      placeholder: 写出稳定做饭后建议补齐的东西
+  - type: textarea
+    id: optional
+    attributes:
+      label: 有预算再买
+      placeholder: 写出升级件、可选厨具或改善生活质量的东西
+  - type: textarea
+    id: notes
+    attributes:
+      label: 注意事项
+      placeholder: 宿舍电器限制、交通成本、退换货、二手平台、线上采购坑点等

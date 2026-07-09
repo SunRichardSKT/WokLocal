@@ -30,6 +30,13 @@ export const videoLinkSchema = z.object({
   url: z.string().url()
 });
 
+export const imageAssetSchema = z.object({
+  src: z.string().min(1),
+  alt: z.string().min(1),
+  caption: z.string().min(1).optional(),
+  credit: z.string().min(1).optional()
+});
+
 export const ingredientRefSchema = z
   .object({
     ingredient_id: z.string().min(1).regex(/^[a-z0-9-]+$/),
@@ -46,7 +53,17 @@ export const ingredientRefSchema = z
 export const recipeStepSchema = z.object({
   order: z.number().int().positive(),
   instruction: z.string().min(1),
-  tip: z.string().min(1).optional()
+  tip: z.string().min(1).optional(),
+  image: imageAssetSchema.optional(),
+  highlights: z
+    .array(
+      z.object({
+        type: z.enum(["ingredient", "equipment"]),
+        id: z.string().min(1).regex(/^[a-z0-9-]+$/),
+        label: z.string().min(1).optional()
+      })
+    )
+    .default([])
 });
 
 export const recommendationScenarioSchema = z.enum(["quick_15", "low_budget", "pan_only", "tesco_friendly", "meal_prep", "low_smoke"]);
@@ -59,6 +76,7 @@ export const recipeSchema = z.object({
     en: z.string().min(1)
   }),
   description: z.string().min(1),
+  cover_image: imageAssetSchema.optional(),
   difficulty: z.number().int().min(1).max(5),
   time_minutes: z.number().int().positive(),
   servings: z.number().int().positive(),
@@ -134,6 +152,7 @@ export const starterPackSchema = z.object({
 export type SubstitutionRegion = z.infer<typeof substitutionRegionSchema>;
 export type Substitution = z.infer<typeof substitutionSchema>;
 export type VideoLink = z.infer<typeof videoLinkSchema>;
+export type ImageAsset = z.infer<typeof imageAssetSchema>;
 export type RecommendationScenario = z.infer<typeof recommendationScenarioSchema>;
 export type IngredientRef = z.infer<typeof ingredientRefSchema>;
 export type RecipeStep = z.infer<typeof recipeStepSchema>;

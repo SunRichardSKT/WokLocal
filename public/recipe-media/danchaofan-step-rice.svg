@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" role="img" aria-labelledby="title desc">
+  <title id="title">Break up cooked rice before frying</title>
+  <desc id="desc">Dark placeholder showing cooked rice prepared for frying.</desc>
+  <rect width="900" height="520" fill="#101217"/>
+  <rect x="70" y="70" width="760" height="380" rx="28" fill="#171b22" stroke="#2a303c" stroke-width="2"/>
+  <ellipse cx="450" cy="285" rx="260" ry="110" fill="#242b35"/>
+  <g fill="#e8d8b7">
+    <circle cx="330" cy="270" r="16"/>
+    <circle cx="374" cy="320" r="13"/>
+    <circle cx="428" cy="252" r="15"/>
+    <circle cx="480" cy="322" r="17"/>
+    <circle cx="535" cy="270" r="12"/>
+    <circle cx="590" cy="315" r="14"/>
+    <circle cx="456" cy="288" r="12"/>
+    <circle cx="520" cy="350" r="11"/>
+  </g>
+  <path d="M612 176 L705 107" stroke="#8ecf9e" stroke-width="16" stroke-linecap="round"/>
+  <path d="M560 228 C610 210 650 188 690 140" stroke="#8ecf9e" stroke-width="20" fill="none" stroke-linecap="round"/>
+  <text x="100" y="130" fill="#eef1f5" font-family="Arial, sans-serif" font-size="34" font-weight="700">Step 1</text>
+  <text x="100" y="170" fill="#aab2bf" font-family="Arial, sans-serif" font-size="22">Break up the rice before it goes into the pan.</text>
+</svg>

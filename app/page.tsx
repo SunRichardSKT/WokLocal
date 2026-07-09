@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, ClipboardList, Clock3, Flame, ShoppingBasket, Sparkles, Wrench, Wheat } from "lucide-react";
 import { RegionAwarePanel } from "@/components/region-aware-panel";
+import { RecipeCover } from "@/components/recipe-cover";
 import { getEquipment, getIngredients, getRecipes } from "@/lib/data";
 
 export default function HomePage() {
@@ -86,9 +87,7 @@ export default function HomePage() {
         <div className="grid gap-4 md:grid-cols-3">
           {featured.map((recipe) => (
             <Link className="surface group rounded-md p-4 transition hover:border-scallion/40" href={`/recipes/${recipe.id}/`} key={recipe.id}>
-              <div className="h-28 rounded-md border border-white/10 bg-[linear-gradient(135deg,#151820,#2a303c_52%,#0f1115)] p-3">
-                <span className="rounded-md bg-ink-950/75 px-2 py-1 text-xs text-ink-300">{recipe.cuisine}</span>
-              </div>
+              <RecipeCover recipe={recipe} className="h-32" compact />
               <h3 className="mt-4 text-lg font-semibold text-ink-100">{recipe.name.zh}</h3>
               <p className="mt-1 text-sm text-ink-300">{recipe.name.en}</p>
               <div className="mt-3 flex flex-wrap gap-2">

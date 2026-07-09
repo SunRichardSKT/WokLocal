@@ -4,6 +4,10 @@ name:
   pinyin: Dan Chao Fan
   en: Egg Fried Rice
 description: "处理剩饭最稳的一餐，一口锅完成，适合宿舍厨房。"
+cover_image:
+  src: /recipe-media/danchaofan-cover.svg
+  alt: 蛋炒饭封面图
+  caption: 蛋炒饭
 difficulty: 2
 time_minutes: 12
 servings: 1
@@ -43,12 +47,47 @@ steps:
   - order: 1
     instruction: "隔夜饭用勺子压散；鸡蛋打散。"
     tip: "新煮的饭水汽重，摊开放凉 10 分钟会更好炒。"
+    image:
+      src: /recipe-media/danchaofan-step-rice.svg
+      alt: 米饭下锅前先压散
+      caption: 下锅前先把米饭压散，炒起来更不容易结块。
+    highlights:
+      - type: ingredient
+        id: mifan
+        label: 隔夜饭
+      - type: ingredient
+        id: jidan
+        label: 鸡蛋
   - order: 2
     instruction: "锅热后放油，倒入鸡蛋炒到半凝固。"
+    highlights:
+      - type: equipment
+        id: nonstick-pan
+        label: 锅
+      - type: ingredient
+        id: jidan
+        label: 鸡蛋
   - order: 3
     instruction: "加入米饭和青豆，中高火翻炒到米粒松散。"
+    highlights:
+      - type: ingredient
+        id: mifan
+        label: 米饭
+      - type: ingredient
+        id: qingdou
+        label: 青豆
   - order: 4
     instruction: "沿锅边淋生抽，补盐，关火后滴香油。"
+    highlights:
+      - type: ingredient
+        id: shengchou
+        label: 生抽
+      - type: ingredient
+        id: yan
+        label: 盐
+      - type: ingredient
+        id: xiangyou
+        label: 香油
 video_links:
   - platform: bilibili
     title: "去 Bilibili 看蛋炒饭基础手法"

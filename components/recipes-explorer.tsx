@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { Clock3, Flame, Search, SlidersHorizontal, Star } from "lucide-react";
+import { RecipeCover } from "@/components/recipe-cover";
 import { scenarioLabelMap } from "@/lib/recommendations";
 import type { Recipe } from "@/lib/schemas";
 
@@ -112,6 +113,7 @@ export function RecipesExplorer({ recipes, cuisines, tags, recipeTypes }: Recipe
       <section className="grid gap-4 md:grid-cols-2">
         {filteredRecipes.map((recipe) => (
           <Link href={`/recipes/${recipe.id}/`} className="surface group rounded-md p-4 transition hover:border-scallion/40" key={recipe.id}>
+            <RecipeCover recipe={recipe} className="mb-4 aspect-[16/8]" compact />
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
                 <h2 className="truncate text-lg font-semibold text-ink-100">{recipe.name.zh}</h2>

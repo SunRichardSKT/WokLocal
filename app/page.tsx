@@ -13,10 +13,10 @@ export default function HomePage() {
     <div className="mx-auto max-w-6xl px-4 py-6 sm:py-10">
       <section className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-end">
         <div className="py-4">
-          <p className="text-sm font-medium text-scallion">海外生活厨房指南</p>
+          <p className="text-sm font-medium text-scallion">给刚到海外的萌新留子</p>
           <h1 className="mt-3 max-w-3xl text-4xl font-semibold tracking-normal text-ink-100 sm:text-5xl">就地开饭 WokLocal</h1>
           <p className="mt-5 max-w-2xl text-base leading-7 text-ink-300">
-            给留学生、交换生和刚搬到国外的人用。这里整理了快手菜谱、当地超市替代食材、基础厨具和第一周采购清单，帮你用买得到的东西先把饭做起来。
+            每道菜保留标准做法，并给出当地超市能买到的替代食材、购买位置和味道差异。欢迎世界各地留子慢慢补齐更多信息。
           </p>
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
             <Link className="inline-flex items-center justify-center gap-2 rounded-md bg-scallion px-4 py-3 text-sm font-semibold text-ink-950 transition hover:bg-scallion/90" href="/recipes/">
@@ -39,8 +39,8 @@ export default function HomePage() {
       <section className="mt-8 grid gap-3 sm:grid-cols-3">
         <Link href="/starter/" className="surface rounded-md p-4 transition hover:border-scallion/40">
           <ClipboardList className="text-scallion" size={20} aria-hidden="true" />
-          <p className="mt-3 text-2xl font-semibold text-ink-100">第一周清单</p>
-          <p className="mt-1 text-sm leading-6 text-ink-300">按优先级买厨具、调料和基础食材。</p>
+          <p className="mt-3 text-2xl font-semibold text-ink-100">落地清单与注意事项</p>
+          <p className="mt-1 text-sm leading-6 text-ink-300">按地区整理刚落地要买什么、去哪买、哪些先别急。</p>
         </Link>
         <Link href="/ingredients/" className="surface rounded-md p-4 transition hover:border-scallion/40">
           <Wheat className="text-scallion" size={20} aria-hidden="true" />

@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description: "给海外留学生和刚搬到国外的人用的厨房指南：查菜谱、找本地替代食材、买基础厨具，先把饭做起来。",
   openGraph: {
     title: "就地开饭 WokLocal",
-    description: "从第一周采购清单到快手菜谱，帮你用当地超市买得到的东西做出熟悉的一餐。",
+    description: "从落地清单到快手菜谱，帮你用当地超市买得到的东西做出熟悉的一餐。",
     type: "website",
     locale: "zh_CN"
   },

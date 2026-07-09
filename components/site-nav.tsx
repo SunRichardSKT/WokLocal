@@ -8,12 +8,12 @@ import clsx from "clsx";
 const navItems = [
   { href: "/", label: "首页", icon: Home },
   { href: "/today/", label: "今天吃什么", icon: Sparkles },
-  { href: "/starter/", label: "第一周清单", icon: ClipboardList },
+  { href: "/starter/", label: "落地清单与注意事项", icon: ClipboardList },
   { href: "/recipes/", label: "菜谱", icon: BookOpen },
   { href: "/ingredients/", label: "食材对照", icon: Wheat },
   { href: "/equipment/", label: "厨具", icon: Wrench },
   { href: "/guides/", label: "宝典", icon: ChefHat },
-  { href: "/about/", label: "关于/贡献", icon: Github }
+  { href: "/about/", label: "上传指南", icon: Github }
 ];
 
 function isActive(pathname: string, href: string) {

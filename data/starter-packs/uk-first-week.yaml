@@ -1,7 +1,7 @@
 pack_id: uk-first-week
 region: uk
-title: 英国新生第一周采购清单
-summary: "按优先级和购买地点整理，目标是用最低成本搭出能煮饭、煮面、做盖饭和带饭的基础厨房。"
+title: 英国落地清单与注意事项
+summary: "按优先级和购买地点整理，目标是用最低成本搭出能煮饭、煮面、做盖饭和带饭的基础厨房，同时避开刚落地最常见的采购坑。"
 sections:
   - title: 今天就买
     priority: today

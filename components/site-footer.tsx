@@ -13,13 +13,13 @@ export function SiteFooter() {
             今天吃什么
           </Link>
           <Link className="text-scallion hover:text-scallion/80" href="/starter/">
-            第一周清单
+            落地清单
           </Link>
           <Link className="text-scallion hover:text-scallion/80" href="/contribute/">
             补充内容
           </Link>
           <Link className="text-scallion hover:text-scallion/80" href="/about/">
-            关于/贡献
+            上传指南
           </Link>
           <Link className="text-scallion hover:text-scallion/80" href="/ingredients/">
             食材对照

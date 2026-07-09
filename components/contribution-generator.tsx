@@ -1,20 +1,24 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Clipboard, Download, ExternalLink, Plus, Trash2 } from "lucide-react";
+import { Clipboard, Download, ExternalLink, Plus, RotateCcw, Search, Trash2 } from "lucide-react";
 import { scenarioDefinitions } from "@/lib/recommendations";
-import type { RecommendationScenario } from "@/lib/schemas";
+import type { Equipment, RecommendationScenario, Substitution } from "@/lib/schemas";
 
 type ContributionKind = "recipe" | "substitution" | "equipment";
 type RecipeType = "chinese" | "fusion" | "local_adapted";
 type BudgetLevel = "low" | "medium" | "high";
+type IngredientSource = "library" | "custom";
+type SectionKey = "basic" | "scenarios" | "equipment" | "ingredients" | "steps" | "mistakes" | "region";
 
 type RecipeIngredientDraft = {
+  source: IngredientSource;
   ingredientId: string;
   nameZh: string;
   nameEn: string;
   amount: string;
   optional: boolean;
+  note: string;
 };
 
 type RecipeStepDraft = {
@@ -29,6 +33,14 @@ type GeneratedContribution = {
   issueTitle: string;
   issueBody: string;
   validationErrors: string[];
+  sectionErrors: Partial<Record<SectionKey, string[]>>;
+  completedRequired: number;
+  totalRequired: number;
+};
+
+type ContributionGeneratorProps = {
+  ingredients: Substitution[];
+  equipmentItems: Equipment[];
 };
 
 const tabs: Array<{ id: ContributionKind; label: string }> = [
@@ -38,6 +50,67 @@ const tabs: Array<{ id: ContributionKind; label: string }> = [
 ];
 
 const regionOptions = ["uk", "north_america", "europe", "australia", "japan_korea"];
+
+const defaultRecipe = {
+  id: "tomato-cheese-rice",
+  nameZh: "番茄芝士焖饭",
+  pinyin: "Fanqie Zhishi Menfan",
+  nameEn: "Tomato Cheese Rice",
+  description: "用普通英国超市食材做一顿低门槛热饭。",
+  difficulty: "2",
+  timeMinutes: "20",
+  servings: "1",
+  cuisine: "留学生厨房菜",
+  recipeType: "fusion" as RecipeType,
+  budgetLevel: "low" as BudgetLevel,
+  tags: "一锅出, 融合菜, 低预算",
+  equipmentSubstitute: "没有不粘锅时用深一点的平底锅。",
+  videoUrl: "",
+  mistakes: "盐不要一次放太多。\n收汁时注意别糊底。"
+};
+
+const defaultIngredients: RecipeIngredientDraft[] = [
+  { source: "custom", ingredientId: "xihongshi", nameZh: "番茄", nameEn: "Tomato", amount: "1 个", optional: false, note: "" },
+  { source: "custom", ingredientId: "cheddar", nameZh: "切达奶酪", nameEn: "Cheddar cheese", amount: "一小把", optional: false, note: "" }
+];
+
+const defaultSteps: RecipeStepDraft[] = [
+  { instruction: "把主要食材切好。", tip: "新手先把所有食材放在手边。" },
+  { instruction: "按顺序下锅，调味后出锅。", tip: "" }
+];
+
+const defaultSubstitution = {
+  id: "cheddar",
+  nameZh: "切达奶酪",
+  nameEn: "Cheddar cheese",
+  pinyin: "qieda-nailao",
+  category: "奶制品",
+  aliasesZh: "芝士, 奶酪",
+  aliasesEn: "Cheddar, Cheese",
+  aliasesPinyin: "zhishi, nailao",
+  keywords: "切达奶酪, cheddar, cheese, 芝士",
+  uses: "焖饭, 三明治, 卷饼",
+  region: "uk",
+  substitute: "Mature cheddar 或 mild cheddar",
+  where: "Tesco、Sainsbury's、Lidl、Aldi 奶酪冷藏区",
+  note: "mature cheddar 味道更重，mild cheddar 更温和。",
+  similarity: "5"
+};
+
+const defaultEquipment = {
+  id: "air-fryer",
+  nameZh: "空气炸锅",
+  nameEn: "Air fryer",
+  category: "optional_upgrade",
+  budgetLevel: "medium" as BudgetLevel,
+  essential: false,
+  uses: "烤鸡翅, 复热炸物, 烤蔬菜",
+  substitutes: "烤箱, 平底锅小火煎",
+  region: "uk",
+  where: "Argos、Amazon UK、Currys、大型超市厨具区",
+  priceRange: "£35-£80",
+  note: "宿舍先确认是否允许使用高功率电器。"
+};
 
 function slugify(value: string) {
   return value
@@ -70,6 +143,14 @@ function validateUrl(value: string) {
   return !value.trim() || /^https?:\/\/\S+$/i.test(value.trim());
 }
 
+function addError(sectionErrors: Partial<Record<SectionKey, string[]>>, section: SectionKey, message: string) {
+  sectionErrors[section] = [...(sectionErrors[section] ?? []), message];
+}
+
+function countFilled(values: Array<boolean | string | number>) {
+  return values.filter(Boolean).length;
+}
+
 function deriveIssueBaseUrl() {
   if (typeof window === "undefined") return "";
 
@@ -94,22 +175,35 @@ function buildIssueUrl(title: string, body: string, labels: string[]) {
   return `${base}?${params.toString()}`;
 }
 
+function RequiredLabel({ label, required = true }: { label: string; required?: boolean }) {
+  return (
+    <span className="flex items-center gap-2">
+      <span>{label}</span>
+      <span className={required ? "rounded-full bg-chili/[0.14] px-2 py-0.5 text-[11px] text-chili" : "rounded-full bg-white/[0.06] px-2 py-0.5 text-[11px] text-ink-500"}>
+        {required ? "必填" : "选填"}
+      </span>
+    </span>
+  );
+}
+
 function TextInput({
   label,
   value,
   onChange,
+  required = true,
   hint,
   placeholder
 }: {
   label: string;
   value: string;
   onChange: (value: string) => void;
+  required?: boolean;
   hint?: string;
   placeholder?: string;
 }) {
   return (
     <label className="grid gap-1 text-sm text-ink-300">
-      {label}
+      <RequiredLabel label={label} required={required} />
       <input className="control" value={value} onChange={(event) => onChange(event.target.value)} placeholder={placeholder} />
       {hint ? <span className="text-xs text-ink-500">{hint}</span> : null}
     </label>
@@ -120,88 +214,156 @@ function TextArea({
   label,
   value,
   onChange,
+  required = true,
   hint
 }: {
   label: string;
   value: string;
   onChange: (value: string) => void;
+  required?: boolean;
   hint?: string;
 }) {
   return (
     <label className="grid gap-1 text-sm text-ink-300">
-      {label}
+      <RequiredLabel label={label} required={required} />
       <textarea className="control min-h-24" value={value} onChange={(event) => onChange(event.target.value)} />
       {hint ? <span className="text-xs text-ink-500">{hint}</span> : null}
     </label>
   );
 }
 
-export function ContributionGenerator() {
+function SectionPanel({
+  title,
+  children,
+  errors = [],
+  optional = false
+}: {
+  title: string;
+  children: React.ReactNode;
+  errors?: string[];
+  optional?: boolean;
+}) {
+  return (
+    <details className="rounded-md border border-white/10 bg-white/[0.035] p-3" open>
+      <summary className="cursor-pointer select-none text-sm font-semibold text-ink-100">
+        <span className="inline-flex items-center gap-2">
+          {title}
+          <span className={optional ? "rounded-full bg-white/[0.06] px-2 py-0.5 text-[11px] text-ink-500" : "rounded-full bg-chili/[0.14] px-2 py-0.5 text-[11px] text-chili"}>
+            {optional ? "含选填" : "含必填"}
+          </span>
+          {errors.length > 0 ? <span className="rounded-full bg-chili/[0.16] px-2 py-0.5 text-[11px] text-chili">{errors.length} 个问题</span> : null}
+        </span>
+      </summary>
+      {errors.length > 0 ? (
+        <div className="mt-3 rounded-md border border-chili/25 bg-chili/[0.08] p-3 text-sm leading-6 text-ink-300">
+          {errors.map((error) => (
+            <p key={error}>{error}</p>
+          ))}
+        </div>
+      ) : null}
+      <div className="mt-4 grid gap-4">{children}</div>
+    </details>
+  );
+}
+
+function CompletionSummary({ generated }: { generated: GeneratedContribution }) {
+  const complete = generated.validationErrors.length === 0;
+
+  return (
+    <section className={complete ? "rounded-md border border-scallion/25 bg-scallion/[0.08] p-3" : "rounded-md border border-chili/25 bg-chili/[0.08] p-3"}>
+      <p className={complete ? "text-sm font-semibold text-scallion" : "text-sm font-semibold text-chili"}>
+        {generated.completedRequired}/{generated.totalRequired} 必填项已完成
+      </p>
+      <p className="mt-1 text-sm leading-6 text-ink-300">
+        {complete ? "格式看起来可以提交。复制 YAML 或 Issue 内容后发给维护者即可。" : `还有 ${generated.validationErrors.length} 个问题需要修正。`}
+      </p>
+    </section>
+  );
+}
+
+function ingredientSearchText(item: Substitution) {
+  return [
+    item.ingredient_id,
+    item.name_zh,
+    item.name_en,
+    item.pinyin ?? "",
+    item.category,
+    ...item.aliases_zh,
+    ...item.aliases_en,
+    ...item.aliases_pinyin,
+    ...item.search_keywords,
+    ...item.common_uses
+  ]
+    .join(" ")
+    .toLowerCase();
+}
+
+function IngredientPicker({
+  library,
+  value,
+  onSelect
+}: {
+  library: Substitution[];
+  value: RecipeIngredientDraft;
+  onSelect: (ingredient: RecipeIngredientDraft) => void;
+}) {
+  const [query, setQuery] = useState("");
+  const matches = useMemo(() => {
+    const normalized = query.trim().toLowerCase();
+    if (!normalized) return library.slice(0, 8);
+    return library.filter((item) => ingredientSearchText(item).includes(normalized)).slice(0, 8);
+  }, [library, query]);
+
+  return (
+    <div className="grid gap-2">
+      <label className="relative block">
+        <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-ink-500" size={16} aria-hidden="true" />
+        <input className="control w-full pl-9" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="搜索已有食材：生抽 / soy sauce / shengchou" />
+      </label>
+      <div className="grid max-h-44 gap-2 overflow-auto rounded-md border border-white/10 bg-ink-950 p-2">
+        {matches.map((item) => {
+          const active = value.source === "library" && value.ingredientId === item.ingredient_id;
+          return (
+            <button
+              className={active ? "rounded-md border border-scallion bg-scallion/[0.12] p-2 text-left" : "rounded-md border border-white/10 bg-white/[0.035] p-2 text-left hover:border-scallion/40"}
+              key={item.ingredient_id}
+              onClick={() =>
+                onSelect({
+                  ...value,
+                  source: "library",
+                  ingredientId: item.ingredient_id,
+                  nameZh: item.name_zh,
+                  nameEn: item.name_en
+                })
+              }
+              type="button"
+            >
+              <span className="block text-sm font-medium text-ink-100">{item.name_zh}</span>
+              <span className="mt-1 block text-xs text-ink-500">
+                {item.ingredient_id} · {item.name_en}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+export function ContributionGenerator({ ingredients: ingredientLibrary, equipmentItems }: ContributionGeneratorProps) {
   const [kind, setKind] = useState<ContributionKind>("recipe");
   const [copied, setCopied] = useState(false);
+  const [copiedPath, setCopiedPath] = useState(false);
   const [copiedIssue, setCopiedIssue] = useState(false);
+  const [previewOpen, setPreviewOpen] = useState(false);
 
-  const [recipe, setRecipe] = useState({
-    id: "tomato-cheese-rice",
-    nameZh: "番茄芝士焖饭",
-    pinyin: "Fanqie Zhishi Menfan",
-    nameEn: "Tomato Cheese Rice",
-    description: "用普通英国超市食材做一顿低门槛热饭。",
-    difficulty: "2",
-    timeMinutes: "20",
-    servings: "1",
-    cuisine: "留学生厨房菜",
-    recipeType: "fusion" as RecipeType,
-    budgetLevel: "low" as BudgetLevel,
-    tags: "一锅出, 融合菜, 低预算",
-    equipmentIds: "nonstick-pan, spatula",
-    equipmentRequired: "不粘锅, 锅铲",
-    equipmentSubstitute: "没有不粘锅时用深一点的平底锅。",
-    videoUrl: "",
-    mistakes: "盐不要一次放太多。\n收汁时注意别糊底。"
-  });
+  const [recipe, setRecipe] = useState(defaultRecipe);
   const [recipeScenarios, setRecipeScenarios] = useState<RecommendationScenario[]>(["low_budget", "tesco_friendly"]);
-  const [ingredients, setIngredients] = useState<RecipeIngredientDraft[]>([
-    { ingredientId: "xihongshi", nameZh: "番茄", nameEn: "Tomato", amount: "1 个", optional: false },
-    { ingredientId: "cheddar", nameZh: "切达奶酪", nameEn: "Cheddar cheese", amount: "一小把", optional: false }
-  ]);
-  const [steps, setSteps] = useState<RecipeStepDraft[]>([
-    { instruction: "把主要食材切好。", tip: "新手先把所有食材放在手边。" },
-    { instruction: "按顺序下锅，调味后出锅。", tip: "" }
-  ]);
-
-  const [substitution, setSubstitution] = useState({
-    id: "cheddar",
-    nameZh: "切达奶酪",
-    nameEn: "Cheddar cheese",
-    pinyin: "qieda-nailao",
-    category: "奶制品",
-    aliasesZh: "芝士, 奶酪",
-    aliasesEn: "Cheddar, Cheese",
-    aliasesPinyin: "zhishi, nailao",
-    keywords: "切达奶酪, cheddar, cheese, 芝士",
-    uses: "焖饭, 三明治, 卷饼",
-    region: "uk",
-    substitute: "Mature cheddar 或 mild cheddar",
-    where: "Tesco、Sainsbury's、Lidl、Aldi 奶酪冷藏区",
-    note: "mature cheddar 味道更重，mild cheddar 更温和。",
-    similarity: "5"
-  });
-
-  const [equipment, setEquipment] = useState({
-    id: "air-fryer",
-    nameZh: "空气炸锅",
-    nameEn: "Air fryer",
-    category: "optional_upgrade",
-    budgetLevel: "medium" as BudgetLevel,
-    essential: false,
-    uses: "烤鸡翅, 复热炸物, 烤蔬菜",
-    substitutes: "烤箱, 平底锅小火煎",
-    region: "uk",
-    where: "Argos、Amazon UK、Currys、大型超市厨具区",
-    priceRange: "£35-£80",
-    note: "宿舍先确认是否允许使用高功率电器。"
-  });
+  const [selectedEquipmentIds, setSelectedEquipmentIds] = useState<string[]>(["nonstick-pan", "spatula"]);
+  const [ingredients, setIngredients] = useState<RecipeIngredientDraft[]>(defaultIngredients);
+  const [steps, setSteps] = useState<RecipeStepDraft[]>(defaultSteps);
+  const [substitution, setSubstitution] = useState(defaultSubstitution);
+  const [equipment, setEquipment] = useState(defaultEquipment);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -212,17 +374,29 @@ export function ContributionGenerator() {
     }
   }, []);
 
+  function resetExample() {
+    setRecipe(defaultRecipe);
+    setRecipeScenarios(["low_budget", "tesco_friendly"]);
+    setSelectedEquipmentIds(["nonstick-pan", "spatula"]);
+    setIngredients(defaultIngredients);
+    setSteps(defaultSteps);
+    setSubstitution(defaultSubstitution);
+    setEquipment(defaultEquipment);
+  }
+
   const generated = useMemo<GeneratedContribution>(() => {
-    const errors: string[] = [];
+    const sectionErrors: Partial<Record<SectionKey, string[]>> = {};
     let yaml = "";
     let targetPath = "";
     let issueTitle = "";
+    let completedRequired = 0;
+    let totalRequired = 0;
 
     if (kind === "recipe") {
       const id = slugify(recipe.id || recipe.nameEn);
       const tags = splitList(recipe.tags);
-      const equipmentIds = splitList(recipe.equipmentIds);
-      const equipmentRequired = splitList(recipe.equipmentRequired);
+      const selectedEquipment = equipmentItems.filter((item) => selectedEquipmentIds.includes(item.equipment_id));
+      const equipmentNames = selectedEquipment.map((item) => item.name_zh);
       const mistakes = recipe.mistakes
         .split(/\n+/)
         .map((item) => item.trim())
@@ -233,24 +407,51 @@ export function ContributionGenerator() {
       const usableIngredients = ingredients.filter((item) => item.ingredientId.trim() && item.amount.trim());
       const usableSteps = steps.filter((item) => item.instruction.trim());
 
-      if (!id || !isValidId(id)) errors.push("菜谱 ID 只能使用小写字母、数字和短横线。");
-      if (!recipe.nameZh.trim()) errors.push("菜谱中文名不能为空。");
-      if (!recipe.pinyin.trim()) errors.push("菜谱拼音不能为空。");
-      if (!recipe.nameEn.trim()) errors.push("菜谱英文名不能为空。");
-      if (!recipe.description.trim()) errors.push("菜谱简介不能为空。");
-      if (!Number.isInteger(numericDifficulty) || numericDifficulty < 1 || numericDifficulty > 5) errors.push("难度必须是 1-5 的整数。");
-      if (!Number.isInteger(numericTime) || numericTime <= 0) errors.push("耗时必须是正整数。");
-      if (!Number.isInteger(numericServings) || numericServings <= 0) errors.push("份量必须是正整数。");
-      if (tags.length === 0) errors.push("至少填写一个标签。");
-      if (recipeScenarios.length === 0) errors.push("至少选择一个推荐场景。");
-      if (equipmentRequired.length === 0) errors.push("至少填写一个所需厨具名称。");
-      if (usableIngredients.length === 0) errors.push("至少填写一个食材。");
-      if (usableSteps.length === 0) errors.push("至少填写一个步骤。");
-      if (mistakes.length === 0) errors.push("至少填写一个新手踩坑提示。");
-      if (!validateUrl(recipe.videoUrl)) errors.push("视频链接必须是 http 或 https URL。");
+      const requiredChecks = [
+        id && isValidId(id),
+        recipe.nameZh.trim(),
+        recipe.pinyin.trim(),
+        recipe.nameEn.trim(),
+        recipe.description.trim(),
+        Number.isInteger(numericDifficulty) && numericDifficulty >= 1 && numericDifficulty <= 5,
+        Number.isInteger(numericTime) && numericTime > 0,
+        Number.isInteger(numericServings) && numericServings > 0,
+        recipe.cuisine.trim(),
+        recipe.recipeType,
+        recipe.budgetLevel,
+        tags.length > 0,
+        recipeScenarios.length > 0,
+        selectedEquipmentIds.length > 0,
+        usableIngredients.length > 0,
+        usableSteps.length > 0,
+        mistakes.length > 0
+      ];
+      totalRequired = requiredChecks.length;
+      completedRequired = countFilled(requiredChecks);
 
-      targetPath = `data/recipes/${id}.yaml`;
-      issueTitle = `新菜谱：${recipe.nameZh}`;
+      if (!id || !isValidId(id)) addError(sectionErrors, "basic", "菜谱 ID 只能使用小写字母、数字和短横线。");
+      if (!recipe.nameZh.trim()) addError(sectionErrors, "basic", "中文名不能为空。");
+      if (!recipe.pinyin.trim()) addError(sectionErrors, "basic", "拼音不能为空。");
+      if (!recipe.nameEn.trim()) addError(sectionErrors, "basic", "英文名不能为空。");
+      if (!recipe.description.trim()) addError(sectionErrors, "basic", "简介不能为空。");
+      if (!Number.isInteger(numericDifficulty) || numericDifficulty < 1 || numericDifficulty > 5) addError(sectionErrors, "basic", "难度必须是 1-5 的整数。");
+      if (!Number.isInteger(numericTime) || numericTime <= 0) addError(sectionErrors, "basic", "耗时必须是正整数。");
+      if (!Number.isInteger(numericServings) || numericServings <= 0) addError(sectionErrors, "basic", "份量必须是正整数。");
+      if (tags.length === 0) addError(sectionErrors, "basic", "至少填写一个标签。");
+      if (recipeScenarios.length === 0) addError(sectionErrors, "scenarios", "至少选择一个推荐场景。");
+      if (selectedEquipmentIds.length === 0) addError(sectionErrors, "equipment", "至少选择一个厨具。");
+      if (usableIngredients.length === 0) addError(sectionErrors, "ingredients", "至少填写一个食材。");
+      ingredients.forEach((item, index) => {
+        if (item.source === "custom" && item.ingredientId.trim() && (!item.nameZh.trim() || !item.nameEn.trim())) {
+          addError(sectionErrors, "ingredients", `第 ${index + 1} 个临时食材需要填写中文名和英文名。`);
+        }
+      });
+      if (usableSteps.length === 0) addError(sectionErrors, "steps", "至少填写一个步骤。");
+      if (mistakes.length === 0) addError(sectionErrors, "mistakes", "至少填写一个新手踩坑提示。");
+      if (!validateUrl(recipe.videoUrl)) addError(sectionErrors, "basic", "视频链接必须是 http 或 https URL。");
+
+      targetPath = `data/recipes/${id || "new-recipe"}.yaml`;
+      issueTitle = `新菜谱：${recipe.nameZh || "未命名菜谱"}`;
       const videoBlock = recipe.videoUrl.trim()
         ? `video_links:
   - platform: other
@@ -260,9 +461,12 @@ export function ContributionGenerator() {
       const ingredientBlock = usableIngredients
         .map((item) => {
           const lines = [`  - ingredient_id: ${slugify(item.ingredientId) || item.ingredientId}`, `    amount: ${quote(item.amount)}`];
-          if (item.nameZh.trim()) lines.splice(1, 0, `    name_zh: ${quote(item.nameZh)}`);
-          if (item.nameEn.trim()) lines.splice(item.nameZh.trim() ? 2 : 1, 0, `    name_en: ${quote(item.nameEn)}`);
+          if (item.source === "custom") {
+            lines.splice(1, 0, `    name_zh: ${quote(item.nameZh)}`);
+            lines.splice(2, 0, `    name_en: ${quote(item.nameEn)}`);
+          }
           if (item.optional) lines.push("    optional: true");
+          if (item.note.trim()) lines.push(`    note: ${quote(item.note)}`);
           return lines.join("\n");
         })
         .join("\n");
@@ -274,7 +478,7 @@ export function ContributionGenerator() {
         })
         .join("\n");
 
-      yaml = `id: ${id}
+      yaml = `id: ${id || "new-recipe"}
 name:
   zh: ${quote(recipe.nameZh)}
   pinyin: ${quote(recipe.pinyin)}
@@ -289,33 +493,48 @@ budget_level: ${recipe.budgetLevel}
 scenarios: [${recipeScenarios.join(", ")}]
 tags: ${yamlList(tags)}
 equipment:
-  required_ids: [${equipmentIds.join(", ")}]
-  required: ${yamlList(equipmentRequired)}
+  required_ids: [${selectedEquipmentIds.join(", ")}]
+  required: ${yamlList(equipmentNames)}
   substitutes_if_missing: ${quote(recipe.equipmentSubstitute)}
 base_ingredients:
-${ingredientBlock}
+${ingredientBlock || "  - ingredient_id: example\n    amount: \"适量\""}
 steps:
-${stepBlock}
+${stepBlock || "  - order: 1\n    instruction: \"写清楚第一步。\""}
 ${videoBlock}
 common_mistakes:
-${mistakes.map((mistake) => `  - ${quote(mistake)}`).join("\n")}
+${mistakes.length > 0 ? mistakes.map((mistake) => `  - ${quote(mistake)}`).join("\n") : '  - "写一个最容易失败的点。"'}
 `;
     } else if (kind === "substitution") {
       const id = slugify(substitution.id || substitution.nameEn);
       const similarity = Number(substitution.similarity);
-      if (!id || !isValidId(id)) errors.push("食材 ID 只能使用小写字母、数字和短横线。");
-      if (!substitution.nameZh.trim()) errors.push("食材中文名不能为空。");
-      if (!substitution.nameEn.trim()) errors.push("食材英文名不能为空。");
-      if (!substitution.pinyin.trim()) errors.push("拼音不能为空。");
-      if (!substitution.category.trim()) errors.push("分类不能为空。");
-      if (splitList(substitution.keywords).length === 0) errors.push("搜索关键词不能为空。");
-      if (!substitution.substitute.trim()) errors.push("替代方案不能为空。");
-      if (!substitution.where.trim()) errors.push("购买地点不能为空。");
-      if (!Number.isInteger(similarity) || similarity < 1 || similarity > 5) errors.push("相似度必须是 1-5 的整数。");
+      const requiredChecks = [
+        id && isValidId(id),
+        substitution.nameZh.trim(),
+        substitution.nameEn.trim(),
+        substitution.pinyin.trim(),
+        substitution.category.trim(),
+        splitList(substitution.keywords).length > 0,
+        substitution.region,
+        substitution.substitute.trim(),
+        substitution.where.trim(),
+        Number.isInteger(similarity) && similarity >= 1 && similarity <= 5
+      ];
+      totalRequired = requiredChecks.length;
+      completedRequired = countFilled(requiredChecks);
 
-      targetPath = `data/substitutions/${id}.yaml`;
-      issueTitle = `地区替代：${substitution.nameZh}`;
-      yaml = `ingredient_id: ${id}
+      if (!id || !isValidId(id)) addError(sectionErrors, "basic", "食材 ID 只能使用小写字母、数字和短横线。");
+      if (!substitution.nameZh.trim()) addError(sectionErrors, "basic", "中文名不能为空。");
+      if (!substitution.nameEn.trim()) addError(sectionErrors, "basic", "英文名不能为空。");
+      if (!substitution.pinyin.trim()) addError(sectionErrors, "basic", "拼音不能为空。");
+      if (!substitution.category.trim()) addError(sectionErrors, "basic", "分类不能为空。");
+      if (splitList(substitution.keywords).length === 0) addError(sectionErrors, "basic", "搜索关键词不能为空。");
+      if (!substitution.substitute.trim()) addError(sectionErrors, "region", "替代方案不能为空。");
+      if (!substitution.where.trim()) addError(sectionErrors, "region", "购买地点不能为空。");
+      if (!Number.isInteger(similarity) || similarity < 1 || similarity > 5) addError(sectionErrors, "region", "相似度必须是 1-5 的整数。");
+
+      targetPath = `data/substitutions/${id || "new-ingredient"}.yaml`;
+      issueTitle = `地区替代：${substitution.nameZh || "未命名食材"}`;
+      yaml = `ingredient_id: ${id || "new-ingredient"}
 name_zh: ${quote(substitution.nameZh)}
 name_en: ${quote(substitution.nameEn)}
 pinyin: ${quote(substitution.pinyin)}
@@ -334,16 +553,30 @@ regions:
 `;
     } else {
       const id = slugify(equipment.id || equipment.nameEn);
-      if (!id || !isValidId(id)) errors.push("厨具 ID 只能使用小写字母、数字和短横线。");
-      if (!equipment.nameZh.trim()) errors.push("厨具中文名不能为空。");
-      if (!equipment.nameEn.trim()) errors.push("厨具英文名不能为空。");
-      if (splitList(equipment.uses).length === 0) errors.push("至少填写一个使用场景。");
-      if (!equipment.where.trim()) errors.push("购买地点不能为空。");
-      if (!equipment.priceRange.trim()) errors.push("价格区间不能为空。");
+      const requiredChecks = [
+        id && isValidId(id),
+        equipment.nameZh.trim(),
+        equipment.nameEn.trim(),
+        equipment.category,
+        equipment.budgetLevel,
+        splitList(equipment.uses).length > 0,
+        equipment.region,
+        equipment.where.trim(),
+        equipment.priceRange.trim()
+      ];
+      totalRequired = requiredChecks.length;
+      completedRequired = countFilled(requiredChecks);
 
-      targetPath = `data/equipment/${id}.yaml`;
-      issueTitle = `厨具建议：${equipment.nameZh}`;
-      yaml = `equipment_id: ${id}
+      if (!id || !isValidId(id)) addError(sectionErrors, "basic", "厨具 ID 只能使用小写字母、数字和短横线。");
+      if (!equipment.nameZh.trim()) addError(sectionErrors, "basic", "中文名不能为空。");
+      if (!equipment.nameEn.trim()) addError(sectionErrors, "basic", "英文名不能为空。");
+      if (splitList(equipment.uses).length === 0) addError(sectionErrors, "basic", "至少填写一个使用场景。");
+      if (!equipment.where.trim()) addError(sectionErrors, "region", "购买地点不能为空。");
+      if (!equipment.priceRange.trim()) addError(sectionErrors, "region", "价格区间不能为空。");
+
+      targetPath = `data/equipment/${id || "new-equipment"}.yaml`;
+      issueTitle = `厨具建议：${equipment.nameZh || "未命名厨具"}`;
+      yaml = `equipment_id: ${id || "new-equipment"}
 name_zh: ${quote(equipment.nameZh)}
 name_en: ${quote(equipment.nameEn)}
 category: ${equipment.category}
@@ -359,9 +592,10 @@ regions:
 `;
     }
 
+    const validationErrors = Object.values(sectionErrors).flat();
     const issueBody = `目标文件：\`${targetPath}\`\n\n请审阅下面的 YAML：\n\n\`\`\`yaml\n${yaml}\`\`\``;
-    return { targetPath, fileName: targetPath.split("/").pop() ?? "contribution.yaml", yaml, issueTitle, issueBody, validationErrors: errors };
-  }, [equipment, ingredients, kind, recipe, recipeScenarios, steps, substitution]);
+    return { targetPath, fileName: targetPath.split("/").pop() ?? "contribution.yaml", yaml, issueTitle, issueBody, validationErrors, sectionErrors, completedRequired, totalRequired };
+  }, [equipment, equipmentItems, ingredients, kind, recipe, recipeScenarios, selectedEquipmentIds, steps, substitution]);
 
   const issueUrl =
     generated.validationErrors.length === 0
@@ -372,6 +606,12 @@ regions:
     await navigator.clipboard.writeText(generated.yaml);
     setCopied(true);
     window.setTimeout(() => setCopied(false), 1400);
+  }
+
+  async function copyPath() {
+    await navigator.clipboard.writeText(generated.targetPath);
+    setCopiedPath(true);
+    window.setTimeout(() => setCopiedPath(false), 1400);
   }
 
   async function copyIssueBody() {
@@ -390,6 +630,37 @@ regions:
     URL.revokeObjectURL(url);
   }
 
+  const disabled = generated.validationErrors.length > 0;
+
+  const previewActions = (
+    <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+      <button className="inline-flex items-center justify-center gap-2 rounded-md bg-scallion px-3 py-2 text-sm font-semibold text-ink-950 disabled:cursor-not-allowed disabled:opacity-45" disabled={disabled} onClick={copyYaml} type="button">
+        <Clipboard size={16} aria-hidden="true" />
+        {copied ? "已复制" : "复制 YAML"}
+      </button>
+      <button className="inline-flex items-center justify-center gap-2 rounded-md border border-white/10 px-3 py-2 text-sm font-semibold text-ink-100 hover:bg-white/[0.06]" onClick={copyPath} type="button">
+        <Clipboard size={16} aria-hidden="true" />
+        {copiedPath ? "已复制路径" : "复制目标路径"}
+      </button>
+      <button className="inline-flex items-center justify-center gap-2 rounded-md border border-white/10 px-3 py-2 text-sm font-semibold text-ink-100 hover:bg-white/[0.06] disabled:cursor-not-allowed disabled:opacity-45" disabled={disabled} onClick={copyIssueBody} type="button">
+        <Clipboard size={16} aria-hidden="true" />
+        {copiedIssue ? "已复制 Issue" : "复制 Issue 内容"}
+      </button>
+      <button className="inline-flex items-center justify-center gap-2 rounded-md border border-white/10 px-3 py-2 text-sm font-semibold text-ink-100 hover:bg-white/[0.06] disabled:cursor-not-allowed disabled:opacity-45" disabled={disabled} onClick={downloadYaml} type="button">
+        <Download size={16} aria-hidden="true" />
+        下载 YAML
+      </button>
+      {issueUrl ? (
+        <a className="inline-flex items-center justify-center gap-2 rounded-md border border-white/10 px-3 py-2 text-sm font-semibold text-ink-100 hover:bg-white/[0.06]" href={issueUrl} target="_blank" rel="noreferrer">
+          <ExternalLink size={16} aria-hidden="true" />
+          打开 Issue
+        </a>
+      ) : (
+        <span className="rounded-md border border-white/10 px-3 py-2 text-sm text-ink-500">部署到 GitHub Pages 后可生成 Issue 链接</span>
+      )}
+    </div>
+  );
+
   return (
     <div className="space-y-5">
       <div className="surface rounded-md p-2">
@@ -407,12 +678,24 @@ regions:
         </div>
       </div>
 
+      <CompletionSummary generated={generated} />
+
       <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(28rem,0.9fr)]">
-        <section className="surface rounded-md p-4">
-          <h2 className="text-lg font-semibold text-ink-100">可视化编辑</h2>
-          <div className="mt-4 grid gap-4">
-            {kind === "recipe" ? (
-              <>
+        <section className="space-y-4">
+          <div className="flex flex-col gap-3 rounded-md border border-white/10 bg-white/[0.035] p-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h2 className="text-lg font-semibold text-ink-100">可视化编辑</h2>
+              <p className="mt-1 text-sm leading-6 text-ink-300">不会直接上传，只生成可复制内容和 Issue 链接。</p>
+            </div>
+            <button className="inline-flex items-center justify-center gap-2 rounded-md border border-white/10 px-3 py-2 text-sm font-semibold text-ink-100 hover:bg-white/[0.06]" onClick={resetExample} type="button">
+              <RotateCcw size={16} aria-hidden="true" />
+              重置示例
+            </button>
+          </div>
+
+          {kind === "recipe" ? (
+            <>
+              <SectionPanel title="基础信息" errors={generated.sectionErrors.basic}>
                 <div className="grid gap-3 md:grid-cols-3">
                   <TextInput label="中文名" value={recipe.nameZh} onChange={(value) => setRecipe({ ...recipe, nameZh: value })} />
                   <TextInput label="拼音" value={recipe.pinyin} onChange={(value) => setRecipe({ ...recipe, pinyin: value })} />
@@ -428,7 +711,7 @@ regions:
                 </div>
                 <div className="grid gap-3 md:grid-cols-3">
                   <label className="grid gap-1 text-sm text-ink-300">
-                    类型
+                    <RequiredLabel label="类型" />
                     <select className="control" value={recipe.recipeType} onChange={(event) => setRecipe({ ...recipe, recipeType: event.target.value as RecipeType })}>
                       <option value="chinese">中餐</option>
                       <option value="fusion">融合菜</option>
@@ -436,7 +719,7 @@ regions:
                     </select>
                   </label>
                   <label className="grid gap-1 text-sm text-ink-300">
-                    预算
+                    <RequiredLabel label="预算" />
                     <select className="control" value={recipe.budgetLevel} onChange={(event) => setRecipe({ ...recipe, budgetLevel: event.target.value as BudgetLevel })}>
                       <option value="low">低</option>
                       <option value="medium">中</option>
@@ -445,87 +728,147 @@ regions:
                   </label>
                   <TextInput label="标签，逗号分隔" value={recipe.tags} onChange={(value) => setRecipe({ ...recipe, tags: value })} />
                 </div>
-                <section className="rounded-md border border-white/10 bg-white/[0.035] p-3">
-                  <p className="text-sm font-medium text-ink-100">推荐场景</p>
-                  <div className="mt-3 grid gap-2 sm:grid-cols-2">
-                    {scenarioDefinitions.map((scenario) => (
-                      <label className="flex items-center gap-2 text-sm text-ink-300" key={scenario.id}>
+                <TextInput label="视频链接" required={false} value={recipe.videoUrl} onChange={(value) => setRecipe({ ...recipe, videoUrl: value })} placeholder="https://..." />
+              </SectionPanel>
+
+              <SectionPanel title="推荐场景" errors={generated.sectionErrors.scenarios}>
+                <div className="grid gap-2 sm:grid-cols-2">
+                  {scenarioDefinitions.map((scenario) => (
+                    <label className="flex items-center gap-2 text-sm text-ink-300" key={scenario.id}>
+                      <input
+                        className="size-4 accent-scallion"
+                        type="checkbox"
+                        checked={recipeScenarios.includes(scenario.id)}
+                        onChange={(event) =>
+                          setRecipeScenarios((current) => (event.target.checked ? [...current, scenario.id] : current.filter((item) => item !== scenario.id)))
+                        }
+                      />
+                      {scenario.label}
+                    </label>
+                  ))}
+                </div>
+              </SectionPanel>
+
+              <SectionPanel title="厨具" errors={generated.sectionErrors.equipment}>
+                <div className="grid gap-2 sm:grid-cols-2">
+                  {equipmentItems.map((item) => (
+                    <label className="rounded-md border border-white/10 bg-white/[0.035] p-2 text-sm text-ink-300" key={item.equipment_id}>
+                      <span className="flex items-start gap-2">
                         <input
-                          className="size-4 accent-scallion"
-                          type="checkbox"
-                          checked={recipeScenarios.includes(scenario.id)}
+                          className="mt-0.5 size-4 accent-scallion"
+                          checked={selectedEquipmentIds.includes(item.equipment_id)}
                           onChange={(event) =>
-                            setRecipeScenarios((current) =>
-                              event.target.checked ? [...current, scenario.id] : current.filter((item) => item !== scenario.id)
+                            setSelectedEquipmentIds((current) =>
+                              event.target.checked ? [...current, item.equipment_id] : current.filter((id) => id !== item.equipment_id)
                             )
                           }
+                          type="checkbox"
                         />
-                        {scenario.label}
-                      </label>
-                    ))}
-                  </div>
-                </section>
-                <div className="grid gap-3 md:grid-cols-2">
-                  <TextInput label="厨具 ID，逗号分隔" value={recipe.equipmentIds} onChange={(value) => setRecipe({ ...recipe, equipmentIds: value })} />
-                  <TextInput label="厨具名称，逗号分隔" value={recipe.equipmentRequired} onChange={(value) => setRecipe({ ...recipe, equipmentRequired: value })} />
+                        <span>
+                          <span className="block font-medium text-ink-100">{item.name_zh}</span>
+                          <span className="mt-0.5 block text-xs text-ink-500">{item.equipment_id}</span>
+                        </span>
+                      </span>
+                    </label>
+                  ))}
                 </div>
-                <TextInput label="缺少厨具时怎么替代" value={recipe.equipmentSubstitute} onChange={(value) => setRecipe({ ...recipe, equipmentSubstitute: value })} />
+                <TextInput label="缺少厨具时怎么替代" required={false} value={recipe.equipmentSubstitute} onChange={(value) => setRecipe({ ...recipe, equipmentSubstitute: value })} />
+              </SectionPanel>
 
-                <section className="rounded-md border border-white/10 bg-white/[0.035] p-3">
-                  <div className="flex items-center justify-between gap-3">
-                    <p className="text-sm font-medium text-ink-100">食材</p>
-                    <button
-                      className="inline-flex items-center gap-1 rounded-md border border-white/10 px-2 py-1 text-xs text-ink-300 hover:bg-white/[0.06]"
-                      onClick={() => setIngredients([...ingredients, { ingredientId: "", nameZh: "", nameEn: "", amount: "", optional: false }])}
-                      type="button"
-                    >
-                      <Plus size={14} aria-hidden="true" />
-                      添加
-                    </button>
-                  </div>
-                  <div className="mt-3 space-y-3">
-                    {ingredients.map((ingredient, index) => (
-                      <div className="grid gap-2 rounded-md border border-white/10 p-3 md:grid-cols-[1fr_1fr_1fr_1fr_auto]" key={index}>
-                        <input className="control" value={ingredient.ingredientId} onChange={(event) => setIngredients(ingredients.map((item, i) => (i === index ? { ...item, ingredientId: event.target.value } : item)))} placeholder="ingredient_id" />
-                        <input className="control" value={ingredient.nameZh} onChange={(event) => setIngredients(ingredients.map((item, i) => (i === index ? { ...item, nameZh: event.target.value } : item)))} placeholder="中文名，可选" />
-                        <input className="control" value={ingredient.nameEn} onChange={(event) => setIngredients(ingredients.map((item, i) => (i === index ? { ...item, nameEn: event.target.value } : item)))} placeholder="英文名，可选" />
-                        <input className="control" value={ingredient.amount} onChange={(event) => setIngredients(ingredients.map((item, i) => (i === index ? { ...item, amount: event.target.value } : item)))} placeholder="用量" />
-                        <button className="flex size-10 items-center justify-center rounded-md border border-white/10 text-ink-300 hover:bg-white/[0.06]" onClick={() => setIngredients(ingredients.filter((_, i) => i !== index))} type="button" aria-label="删除食材">
-                          <Trash2 size={16} aria-hidden="true" />
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                </section>
-
-                <section className="rounded-md border border-white/10 bg-white/[0.035] p-3">
-                  <div className="flex items-center justify-between gap-3">
-                    <p className="text-sm font-medium text-ink-100">步骤</p>
-                    <button className="inline-flex items-center gap-1 rounded-md border border-white/10 px-2 py-1 text-xs text-ink-300 hover:bg-white/[0.06]" onClick={() => setSteps([...steps, { instruction: "", tip: "" }])} type="button">
-                      <Plus size={14} aria-hidden="true" />
-                      添加
-                    </button>
-                  </div>
-                  <div className="mt-3 space-y-3">
-                    {steps.map((step, index) => (
-                      <div className="rounded-md border border-white/10 p-3" key={index}>
-                        <div className="flex items-center justify-between gap-3">
-                          <p className="text-sm text-ink-300">步骤 {index + 1}</p>
-                          <button className="flex size-8 items-center justify-center rounded-md border border-white/10 text-ink-300 hover:bg-white/[0.06]" onClick={() => setSteps(steps.filter((_, i) => i !== index))} type="button" aria-label="删除步骤">
+              <SectionPanel title="食材" errors={generated.sectionErrors.ingredients}>
+                <div className="flex justify-end">
+                  <button
+                    className="inline-flex items-center gap-1 rounded-md border border-white/10 px-2 py-1 text-xs text-ink-300 hover:bg-white/[0.06]"
+                    onClick={() => setIngredients([...ingredients, { source: "library", ingredientId: "", nameZh: "", nameEn: "", amount: "", optional: false, note: "" }])}
+                    type="button"
+                  >
+                    <Plus size={14} aria-hidden="true" />
+                    添加食材
+                  </button>
+                </div>
+                <div className="space-y-4">
+                  {ingredients.map((ingredient, index) => (
+                    <div className="rounded-md border border-white/10 p-3" key={index}>
+                      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                        <p className="text-sm font-medium text-ink-100">食材 {index + 1}</p>
+                        <div className="flex flex-wrap gap-2">
+                          <button
+                            className={ingredient.source === "library" ? "rounded-md bg-scallion px-2 py-1 text-xs font-semibold text-ink-950" : "rounded-md border border-white/10 px-2 py-1 text-xs text-ink-300"}
+                            onClick={() => setIngredients(ingredients.map((item, i) => (i === index ? { ...item, source: "library" } : item)))}
+                            type="button"
+                          >
+                            从库选择
+                          </button>
+                          <button
+                            className={ingredient.source === "custom" ? "rounded-md bg-scallion px-2 py-1 text-xs font-semibold text-ink-950" : "rounded-md border border-white/10 px-2 py-1 text-xs text-ink-300"}
+                            onClick={() => setIngredients(ingredients.map((item, i) => (i === index ? { ...item, source: "custom" } : item)))}
+                            type="button"
+                          >
+                            未入库食材
+                          </button>
+                          <button className="flex size-8 items-center justify-center rounded-md border border-white/10 text-ink-300 hover:bg-white/[0.06]" onClick={() => setIngredients(ingredients.filter((_, i) => i !== index))} type="button" aria-label="删除食材">
                             <Trash2 size={15} aria-hidden="true" />
                           </button>
                         </div>
-                        <textarea className="control mt-2 min-h-20 w-full" value={step.instruction} onChange={(event) => setSteps(steps.map((item, i) => (i === index ? { ...item, instruction: event.target.value } : item)))} placeholder="步骤说明" />
-                        <input className="control mt-2 w-full" value={step.tip} onChange={(event) => setSteps(steps.map((item, i) => (i === index ? { ...item, tip: event.target.value } : item)))} placeholder="新手提示，可选" />
                       </div>
-                    ))}
-                  </div>
-                </section>
-                <TextArea label="新手踩坑，每行一个" value={recipe.mistakes} onChange={(value) => setRecipe({ ...recipe, mistakes: value })} />
-                <TextInput label="视频链接，可选" value={recipe.videoUrl} onChange={(value) => setRecipe({ ...recipe, videoUrl: value })} placeholder="https://..." />
-              </>
-            ) : kind === "substitution" ? (
-              <>
+                      <div className="mt-3 grid gap-3">
+                        {ingredient.source === "library" ? (
+                          <IngredientPicker
+                            library={ingredientLibrary}
+                            value={ingredient}
+                            onSelect={(next) => setIngredients(ingredients.map((item, i) => (i === index ? next : item)))}
+                          />
+                        ) : (
+                          <div className="grid gap-3 md:grid-cols-3">
+                            <TextInput label="食材 ID" value={ingredient.ingredientId} onChange={(value) => setIngredients(ingredients.map((item, i) => (i === index ? { ...item, ingredientId: value } : item)))} />
+                            <TextInput label="中文名" value={ingredient.nameZh} onChange={(value) => setIngredients(ingredients.map((item, i) => (i === index ? { ...item, nameZh: value } : item)))} />
+                            <TextInput label="英文名" value={ingredient.nameEn} onChange={(value) => setIngredients(ingredients.map((item, i) => (i === index ? { ...item, nameEn: value } : item)))} />
+                          </div>
+                        )}
+                        <div className="grid gap-3 md:grid-cols-[1fr_1fr_auto]">
+                          <TextInput label="用量" value={ingredient.amount} onChange={(value) => setIngredients(ingredients.map((item, i) => (i === index ? { ...item, amount: value } : item)))} />
+                          <TextInput label="备注" required={false} value={ingredient.note} onChange={(value) => setIngredients(ingredients.map((item, i) => (i === index ? { ...item, note: value } : item)))} />
+                          <label className="mt-6 flex items-center gap-2 text-sm text-ink-300">
+                            <input className="size-4 accent-scallion" checked={ingredient.optional} onChange={(event) => setIngredients(ingredients.map((item, i) => (i === index ? { ...item, optional: event.target.checked } : item)))} type="checkbox" />
+                            可选
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </SectionPanel>
+
+              <SectionPanel title="步骤" errors={generated.sectionErrors.steps}>
+                <div className="flex justify-end">
+                  <button className="inline-flex items-center gap-1 rounded-md border border-white/10 px-2 py-1 text-xs text-ink-300 hover:bg-white/[0.06]" onClick={() => setSteps([...steps, { instruction: "", tip: "" }])} type="button">
+                    <Plus size={14} aria-hidden="true" />
+                    添加步骤
+                  </button>
+                </div>
+                <div className="space-y-3">
+                  {steps.map((step, index) => (
+                    <div className="rounded-md border border-white/10 p-3" key={index}>
+                      <div className="flex items-center justify-between gap-3">
+                        <p className="text-sm text-ink-300">步骤 {index + 1}</p>
+                        <button className="flex size-8 items-center justify-center rounded-md border border-white/10 text-ink-300 hover:bg-white/[0.06]" onClick={() => setSteps(steps.filter((_, i) => i !== index))} type="button" aria-label="删除步骤">
+                          <Trash2 size={15} aria-hidden="true" />
+                        </button>
+                      </div>
+                      <TextArea label="步骤说明" value={step.instruction} onChange={(value) => setSteps(steps.map((item, i) => (i === index ? { ...item, instruction: value } : item)))} />
+                      <TextInput label="新手提示" required={false} value={step.tip} onChange={(value) => setSteps(steps.map((item, i) => (i === index ? { ...item, tip: value } : item)))} />
+                    </div>
+                  ))}
+                </div>
+              </SectionPanel>
+
+              <SectionPanel title="新手踩坑" errors={generated.sectionErrors.mistakes}>
+                <TextArea label="踩坑提示，每行一个" value={recipe.mistakes} onChange={(value) => setRecipe({ ...recipe, mistakes: value })} />
+              </SectionPanel>
+            </>
+          ) : kind === "substitution" ? (
+            <>
+              <SectionPanel title="食材基础信息" errors={generated.sectionErrors.basic}>
                 <div className="grid gap-3 md:grid-cols-3">
                   <TextInput label="中文名" value={substitution.nameZh} onChange={(value) => setSubstitution({ ...substitution, nameZh: value })} />
                   <TextInput label="英文名" value={substitution.nameEn} onChange={(value) => setSubstitution({ ...substitution, nameEn: value })} />
@@ -535,14 +878,16 @@ regions:
                   <TextInput label="食材 ID" value={substitution.id} onChange={(value) => setSubstitution({ ...substitution, id: value })} />
                   <TextInput label="分类" value={substitution.category} onChange={(value) => setSubstitution({ ...substitution, category: value })} />
                 </div>
-                <TextInput label="中文别名，逗号分隔" value={substitution.aliasesZh} onChange={(value) => setSubstitution({ ...substitution, aliasesZh: value })} />
-                <TextInput label="英文别名，逗号分隔" value={substitution.aliasesEn} onChange={(value) => setSubstitution({ ...substitution, aliasesEn: value })} />
-                <TextInput label="拼音别名，逗号分隔" value={substitution.aliasesPinyin} onChange={(value) => setSubstitution({ ...substitution, aliasesPinyin: value })} />
                 <TextInput label="搜索关键词，逗号分隔" value={substitution.keywords} onChange={(value) => setSubstitution({ ...substitution, keywords: value })} />
-                <TextInput label="常见用途，逗号分隔" value={substitution.uses} onChange={(value) => setSubstitution({ ...substitution, uses: value })} />
+                <TextInput label="中文别名，逗号分隔" required={false} value={substitution.aliasesZh} onChange={(value) => setSubstitution({ ...substitution, aliasesZh: value })} />
+                <TextInput label="英文别名，逗号分隔" required={false} value={substitution.aliasesEn} onChange={(value) => setSubstitution({ ...substitution, aliasesEn: value })} />
+                <TextInput label="拼音别名，逗号分隔" required={false} value={substitution.aliasesPinyin} onChange={(value) => setSubstitution({ ...substitution, aliasesPinyin: value })} />
+                <TextInput label="常见用途，逗号分隔" required={false} value={substitution.uses} onChange={(value) => setSubstitution({ ...substitution, uses: value })} />
+              </SectionPanel>
+              <SectionPanel title="地区替代信息" errors={generated.sectionErrors.region}>
                 <div className="grid gap-3 md:grid-cols-[10rem_1fr]">
                   <label className="grid gap-1 text-sm text-ink-300">
-                    地区
+                    <RequiredLabel label="地区" />
                     <select className="control" value={substitution.region} onChange={(event) => setSubstitution({ ...substitution, region: event.target.value })}>
                       {regionOptions.map((region) => (
                         <option value={region} key={region}>
@@ -554,11 +899,13 @@ regions:
                   <TextInput label="替代方案" value={substitution.substitute} onChange={(value) => setSubstitution({ ...substitution, substitute: value })} />
                 </div>
                 <TextInput label="哪里买" value={substitution.where} onChange={(value) => setSubstitution({ ...substitution, where: value })} />
-                <TextArea label="使用差异" value={substitution.note} onChange={(value) => setSubstitution({ ...substitution, note: value })} />
+                <TextArea label="使用差异" required={false} value={substitution.note} onChange={(value) => setSubstitution({ ...substitution, note: value })} />
                 <TextInput label="相似度 1-5" value={substitution.similarity} onChange={(value) => setSubstitution({ ...substitution, similarity: value })} />
-              </>
-            ) : (
-              <>
+              </SectionPanel>
+            </>
+          ) : (
+            <>
+              <SectionPanel title="厨具基础信息" errors={generated.sectionErrors.basic}>
                 <div className="grid gap-3 md:grid-cols-3">
                   <TextInput label="厨具 ID" value={equipment.id} onChange={(value) => setEquipment({ ...equipment, id: value })} />
                   <TextInput label="中文名" value={equipment.nameZh} onChange={(value) => setEquipment({ ...equipment, nameZh: value })} />
@@ -566,7 +913,7 @@ regions:
                 </div>
                 <div className="grid gap-3 md:grid-cols-3">
                   <label className="grid gap-1 text-sm text-ink-300">
-                    分类
+                    <RequiredLabel label="分类" />
                     <select className="control" value={equipment.category} onChange={(event) => setEquipment({ ...equipment, category: event.target.value })}>
                       <option value="must_have">必买</option>
                       <option value="optional_upgrade">可选升级</option>
@@ -575,7 +922,7 @@ regions:
                     </select>
                   </label>
                   <label className="grid gap-1 text-sm text-ink-300">
-                    预算
+                    <RequiredLabel label="预算" />
                     <select className="control" value={equipment.budgetLevel} onChange={(event) => setEquipment({ ...equipment, budgetLevel: event.target.value as BudgetLevel })}>
                       <option value="low">低</option>
                       <option value="medium">中</option>
@@ -584,14 +931,16 @@ regions:
                   </label>
                   <label className="mt-6 flex items-center gap-2 text-sm text-ink-300">
                     <input className="size-4 accent-scallion" checked={equipment.essential} onChange={(event) => setEquipment({ ...equipment, essential: event.target.checked })} type="checkbox" />
-                    是否必买
+                    是否必买（选填）
                   </label>
                 </div>
                 <TextInput label="使用场景，逗号分隔" value={equipment.uses} onChange={(value) => setEquipment({ ...equipment, uses: value })} />
-                <TextInput label="没有时可替代，逗号分隔" value={equipment.substitutes} onChange={(value) => setEquipment({ ...equipment, substitutes: value })} />
+                <TextInput label="没有时可替代，逗号分隔" required={false} value={equipment.substitutes} onChange={(value) => setEquipment({ ...equipment, substitutes: value })} />
+              </SectionPanel>
+              <SectionPanel title="地区购买信息" errors={generated.sectionErrors.region}>
                 <div className="grid gap-3 md:grid-cols-[10rem_1fr_12rem]">
                   <label className="grid gap-1 text-sm text-ink-300">
-                    地区
+                    <RequiredLabel label="地区" />
                     <select className="control" value={equipment.region} onChange={(event) => setEquipment({ ...equipment, region: event.target.value })}>
                       {regionOptions.map((region) => (
                         <option value={region} key={region}>
@@ -603,50 +952,25 @@ regions:
                   <TextInput label="哪里买" value={equipment.where} onChange={(value) => setEquipment({ ...equipment, where: value })} />
                   <TextInput label="价格区间" value={equipment.priceRange} onChange={(value) => setEquipment({ ...equipment, priceRange: value })} />
                 </div>
-                <TextArea label="购买建议" value={equipment.note} onChange={(value) => setEquipment({ ...equipment, note: value })} />
-              </>
-            )}
-          </div>
+                <TextArea label="购买建议" required={false} value={equipment.note} onChange={(value) => setEquipment({ ...equipment, note: value })} />
+              </SectionPanel>
+            </>
+          )}
         </section>
 
-        <section className="surface rounded-md p-4">
+        <aside className="surface rounded-md p-4 xl:sticky xl:top-20 xl:self-start">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <h2 className="text-lg font-semibold text-ink-100">YAML 预览</h2>
-            <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
-              <button className="inline-flex items-center justify-center gap-2 rounded-md bg-scallion px-3 py-2 text-sm font-semibold text-ink-950 disabled:cursor-not-allowed disabled:opacity-45" disabled={generated.validationErrors.length > 0} onClick={copyYaml} type="button">
-                <Clipboard size={16} aria-hidden="true" />
-                {copied ? "已复制" : "复制 YAML"}
-              </button>
-              <button className="inline-flex items-center justify-center gap-2 rounded-md border border-white/10 px-3 py-2 text-sm font-semibold text-ink-100 hover:bg-white/[0.06] disabled:cursor-not-allowed disabled:opacity-45" disabled={generated.validationErrors.length > 0} onClick={copyIssueBody} type="button">
-                <Clipboard size={16} aria-hidden="true" />
-                {copiedIssue ? "已复制 Issue" : "复制 Issue 内容"}
-              </button>
-              <button className="inline-flex items-center justify-center gap-2 rounded-md border border-white/10 px-3 py-2 text-sm font-semibold text-ink-100 hover:bg-white/[0.06] disabled:cursor-not-allowed disabled:opacity-45" disabled={generated.validationErrors.length > 0} onClick={downloadYaml} type="button">
-                <Download size={16} aria-hidden="true" />
-                下载 YAML
-              </button>
-              {issueUrl ? (
-                <a className="inline-flex items-center justify-center gap-2 rounded-md border border-white/10 px-3 py-2 text-sm font-semibold text-ink-100 hover:bg-white/[0.06]" href={issueUrl} target="_blank" rel="noreferrer">
-                  <ExternalLink size={16} aria-hidden="true" />
-                  打开 Issue
-                </a>
-              ) : (
-                <span className="rounded-md border border-white/10 px-3 py-2 text-sm text-ink-500">部署到 GitHub Pages 后可生成 Issue 链接</span>
-              )}
-            </div>
+            {previewActions}
           </div>
           <p className="mt-3 rounded-md border border-white/10 bg-white/[0.035] px-3 py-2 text-xs text-ink-300">目标文件：{generated.targetPath}</p>
-          {generated.validationErrors.length > 0 ? (
-            <div className="mt-3 rounded-md border border-chili/25 bg-chili/[0.08] p-3 text-sm leading-6 text-ink-300">
-              {generated.validationErrors.map((error) => (
-                <p key={error}>{error}</p>
-              ))}
-            </div>
-          ) : null}
-          <pre className="mt-4 max-h-[44rem] overflow-auto rounded-md border border-white/10 bg-ink-950 p-4 text-xs leading-5 text-ink-300">
+          <button className="mt-3 w-full rounded-md border border-white/10 px-3 py-2 text-sm text-ink-300 xl:hidden" onClick={() => setPreviewOpen((value) => !value)} type="button">
+            {previewOpen ? "收起 YAML 预览" : "展开 YAML 预览"}
+          </button>
+          <pre className={(previewOpen ? "block" : "hidden") + " mt-4 max-h-[42rem] overflow-auto rounded-md border border-white/10 bg-ink-950 p-4 text-xs leading-5 text-ink-300 xl:block"}>
             <code>{generated.yaml}</code>
           </pre>
-        </section>
+        </aside>
       </div>
     </div>
   );

@@ -13,7 +13,7 @@ const navItems = [
   { href: "/ingredients/", label: "食材对照", icon: Wheat },
   { href: "/equipment/", label: "厨具", icon: Wrench },
   { href: "/guides/", label: "宝典", icon: ChefHat },
-  { href: "/about/", label: "贡献指南", icon: Github }
+  { href: "/about/", label: "关于/贡献", icon: Github }
 ];
 
 function isActive(pathname: string, href: string) {

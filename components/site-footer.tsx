@@ -6,7 +6,7 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-6xl gap-4 px-4 py-6 text-sm leading-6 text-ink-300 md:grid-cols-[minmax(0,1fr)_auto]">
         <div>
           <p className="font-medium text-ink-100">就地开饭 WokLocal</p>
-          <p className="mt-1">纯静态 GitHub Pages 站点。提交内容前请运行 `npm run validate:data` 和 `npm run build`。</p>
+          <p className="mt-1">给海外生活的新手厨房准备的开放资料站：菜谱、食材替代、厨具建议和采购清单都会持续补充。</p>
         </div>
         <div className="flex flex-wrap gap-3 md:justify-end">
           <Link className="text-scallion hover:text-scallion/80" href="/today/">
@@ -16,10 +16,10 @@ export function SiteFooter() {
             第一周清单
           </Link>
           <Link className="text-scallion hover:text-scallion/80" href="/contribute/">
-            可视化贡献
+            补充内容
           </Link>
           <Link className="text-scallion hover:text-scallion/80" href="/about/">
-            贡献指南
+            关于/贡献
           </Link>
           <Link className="text-scallion hover:text-scallion/80" href="/ingredients/">
             食材对照

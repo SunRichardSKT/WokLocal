@@ -13,10 +13,10 @@ export default function HomePage() {
     <div className="mx-auto max-w-6xl px-4 py-6 sm:py-10">
       <section className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-end">
         <div className="py-4">
-          <p className="text-sm font-medium text-scallion">给刚到海外的新手做饭者</p>
+          <p className="text-sm font-medium text-scallion">海外生活厨房指南</p>
           <h1 className="mt-3 max-w-3xl text-4xl font-semibold tracking-normal text-ink-100 sm:text-5xl">就地开饭 WokLocal</h1>
           <p className="mt-5 max-w-2xl text-base leading-7 text-ink-300">
-            每道菜保留标准做法，也标出在当地超市能买到的替代食材、购买位置和味道差异。先从英国示范数据跑通，再让社区慢慢补齐更多地区。
+            给留学生、交换生和刚搬到国外的人用。这里整理了快手菜谱、当地超市替代食材、基础厨具和第一周采购清单，帮你用买得到的东西先把饭做起来。
           </p>
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
             <Link className="inline-flex items-center justify-center gap-2 rounded-md bg-scallion px-4 py-3 text-sm font-semibold text-ink-950 transition hover:bg-scallion/90" href="/recipes/">
@@ -28,7 +28,7 @@ export default function HomePage() {
               <Sparkles size={16} aria-hidden="true" />
             </Link>
             <Link className="inline-flex items-center justify-center gap-2 rounded-md border border-white/10 bg-white/[0.04] px-4 py-3 text-sm font-semibold text-ink-100 transition hover:bg-white/[0.08]" href="/about/">
-              贡献指南
+              了解项目
             </Link>
           </div>
         </div>
@@ -45,7 +45,7 @@ export default function HomePage() {
         <Link href="/ingredients/" className="surface rounded-md p-4 transition hover:border-scallion/40">
           <Wheat className="text-scallion" size={20} aria-hidden="true" />
           <p className="mt-3 text-2xl font-semibold text-ink-100">食材对照</p>
-          <p className="mt-1 text-sm leading-6 text-ink-300">输入中文或英文名，查英国超市替代品。</p>
+          <p className="mt-1 text-sm leading-6 text-ink-300">输入中文、英文或拼音，查当地可以买到的替代品。</p>
         </Link>
         <Link href="/equipment/" className="surface rounded-md p-4 transition hover:border-scallion/40">
           <Wrench className="text-soy" size={20} aria-hidden="true" />
@@ -58,7 +58,7 @@ export default function HomePage() {
         <Link href="/guides/" className="surface rounded-md p-4 transition hover:border-scallion/40">
           <ShoppingBasket className="text-scallion" size={20} aria-hidden="true" />
           <p className="mt-3 text-2xl font-semibold text-ink-100">英国</p>
-          <p className="mt-1 text-sm leading-6 text-ink-300">首个完整示范地区，覆盖常见英超与亚超购买场景。</p>
+          <p className="mt-1 text-sm leading-6 text-ink-300">当前重点覆盖英国，包含常见英超与亚超购买场景。</p>
         </Link>
         <div className="surface rounded-md p-4">
           <Clock3 className="text-soy" size={20} aria-hidden="true" />
@@ -68,7 +68,7 @@ export default function HomePage() {
         <div className="surface rounded-md p-4">
           <Flame className="text-chili" size={20} aria-hidden="true" />
           <p className="mt-3 text-2xl font-semibold text-ink-100">{recipes.length}</p>
-          <p className="mt-1 text-sm leading-6 text-ink-300">道结构化示范菜，另有 {ingredients.length} 个食材和 {equipment.length} 个厨具条目。</p>
+          <p className="mt-1 text-sm leading-6 text-ink-300">道可直接照做的菜谱，另有 {ingredients.length} 个食材和 {equipment.length} 个厨具条目。</p>
         </div>
       </section>
 

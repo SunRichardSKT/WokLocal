@@ -1,0 +1,16 @@
+ingredient_id: suan
+name_zh: 蒜
+name_en: Garlic
+pinyin: suan
+category: 蔬菜
+aliases_zh: [大蒜, 蒜瓣, 蒜末]
+aliases_en: [Garlic bulb, Garlic cloves]
+aliases_pinyin: [dasuan, suanban, suanmo]
+search_keywords: [蒜, garlic, garlic cloves, 大蒜]
+common_uses: [炝锅, 凉拌, 蒜蓉, 腌肉]
+regions:
+  uk:
+    substitute: "Garlic bulb 或 garlic cloves"
+    where_to_buy: "Tesco、Sainsbury's、Lidl、Aldi 蔬菜区；也有罐装 garlic paste"
+    usage_note: "garlic paste 方便但香气更冲，炒菜时少放一点；新鲜蒜最稳定。"
+    similarity: 5

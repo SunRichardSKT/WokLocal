@@ -1,0 +1,46 @@
+id: heijiao-niurou-fan
+name:
+  zh: 黑椒牛肉饭
+  pinyin: Heijiao Niurou Fan
+  en: Black Pepper Beef Rice
+description: "用普通英国超市牛肉和甜椒做快手盖饭，适合想换口味时做。"
+difficulty: 3
+time_minutes: 25
+servings: 2
+cuisine: 留学生厨房菜
+recipe_type: local_adapted
+budget_level: medium
+scenarios: [pan_only, tesco_friendly, meal_prep]
+tags: [牛肉, 盖饭, 黑椒, 快手]
+equipment:
+  required_ids: [nonstick-pan, spatula, knife-board]
+  required: [不粘锅, 锅铲, 菜刀和砧板]
+  substitutes_if_missing: "没有牛肉片可用鸡腿肉替代。"
+base_ingredients:
+  - ingredient_id: niuroupian
+    amount: "250 克"
+  - ingredient_id: tiantangjiao
+    amount: "1 个"
+  - ingredient_id: yangcong
+    amount: "半个"
+  - ingredient_id: heihujiao
+    amount: "1 茶匙"
+  - ingredient_id: shengchou
+    amount: "1 汤匙"
+  - ingredient_id: dianfen
+    amount: "1 茶匙"
+  - ingredient_id: dami
+    amount: "2 碗熟米饭"
+steps:
+  - order: 1
+    instruction: "牛肉用生抽、淀粉和黑胡椒抓匀，腌 10 分钟。"
+  - order: 2
+    instruction: "洋葱和甜椒切丝。"
+  - order: 3
+    instruction: "热锅快炒牛肉到变色盛出。"
+  - order: 4
+    instruction: "炒软洋葱和甜椒，倒回牛肉，加黑胡椒和少量水翻匀。"
+video_links: []
+common_mistakes:
+  - "牛肉炒太久会硬。"
+  - "黑胡椒不要一次倒太多，容易辣和苦。"

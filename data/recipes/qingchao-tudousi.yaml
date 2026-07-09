@@ -1,0 +1,44 @@
+id: qingchao-tudousi
+name:
+  zh: 清炒土豆丝
+  pinyin: Qingchao Tudousi
+  en: Stir-fried Potato Shreds
+description: "用英国常见土豆练刀工和火候，低成本但很下饭。"
+difficulty: 2
+time_minutes: 20
+servings: 2
+cuisine: 家常菜
+recipe_type: chinese
+budget_level: low
+scenarios: [low_budget, pan_only, tesco_friendly]
+tags: [素食, 低预算, 下饭, 练习菜]
+equipment:
+  required_ids: [nonstick-pan, spatula, knife-board, peeler]
+  required: [不粘锅, 锅铲, 菜刀和砧板]
+  substitutes_if_missing: "没有削皮刀可以洗净不削皮；没有刀工可用擦丝器。"
+base_ingredients:
+  - ingredient_id: tudou
+    amount: "2 个"
+  - ingredient_id: suan
+    amount: "2 瓣"
+  - ingredient_id: chencu
+    amount: "1 茶匙"
+    optional: true
+  - ingredient_id: yan
+    amount: "适量"
+  - ingredient_id: shiyongyou
+    amount: "1 汤匙"
+steps:
+  - order: 1
+    instruction: "土豆切丝后用清水冲洗两遍，沥干。"
+    tip: "冲掉淀粉后更脆，也不容易粘锅。"
+  - order: 2
+    instruction: "锅热放油和蒜末，闻到香味后下土豆丝。"
+  - order: 3
+    instruction: "中高火翻炒 3-4 分钟，加盐和可选陈醋。"
+  - order: 4
+    instruction: "土豆丝变透明但仍有脆感时出锅。"
+video_links: []
+common_mistakes:
+  - "土豆丝没冲水会粘锅。"
+  - "炒太久会变成土豆泥口感。"

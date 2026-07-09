@@ -1,0 +1,16 @@
+ingredient_id: lengdongshucai
+name_zh: 冷冻混合蔬菜
+name_en: Frozen mixed vegetables
+pinyin: lengdong-hunhe-shucai
+category: 蔬菜
+aliases_zh: [冷冻青豆玉米胡萝卜, 速冻蔬菜]
+aliases_en: [Frozen mixed veg, Peas sweetcorn carrots]
+aliases_pinyin: [sudongshucai]
+search_keywords: [冷冻混合蔬菜, frozen mixed vegetables, frozen mixed veg, peas sweetcorn carrots]
+common_uses: [炒饭, 焖饭, 咖喱, 汤]
+regions:
+  uk:
+    substitute: "Frozen mixed vegetables"
+    where_to_buy: "所有英国超市冷冻区"
+    usage_note: "不用解冻，直接下锅；适合懒人补蔬菜。"
+    similarity: 5

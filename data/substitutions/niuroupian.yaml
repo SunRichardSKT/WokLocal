@@ -1,0 +1,16 @@
+ingredient_id: niuroupian
+name_zh: 牛肉片
+name_en: Sliced beef
+pinyin: niuroupian
+category: 蛋白质
+aliases_zh: [肥牛, 火锅牛肉片]
+aliases_en: [Beef slices, Hot pot beef]
+aliases_pinyin: [feiniu, huoguoniuroupian]
+search_keywords: [牛肉片, sliced beef, beef slices, hot pot beef, 肥牛]
+common_uses: [黑椒牛肉, 火锅, 炒饭盖饭]
+regions:
+  uk:
+    substitute: "Thin cut beef steak 自己切片；或亚超 frozen hot pot beef"
+    where_to_buy: "亚超冷冻区最稳定；普通超市可买 thin cut steak"
+    usage_note: "普通超市牛排要逆纹切薄，快炒不要久煮。"
+    similarity: 3

@@ -1,0 +1,13 @@
+equipment_id: measuring-spoons
+name_zh: 量勺
+name_en: Measuring spoons
+category: optional_upgrade
+budget_level: low
+is_essential: false
+use_cases: [控制盐量, 调酱汁, 烘焙, 复刻菜谱]
+substitutes_if_missing: [普通茶匙, 汤匙但误差更大]
+regions:
+  uk:
+    where_to_buy: "IKEA、Tesco、Sainsbury's、Amazon UK 烘焙区"
+    price_range: "£2-£7"
+    notes: "新手很容易把盐和酱油放多，量勺能明显降低翻车率。"

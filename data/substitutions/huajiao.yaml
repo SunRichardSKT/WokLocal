@@ -1,0 +1,16 @@
+ingredient_id: huajiao
+name_zh: 花椒
+name_en: Sichuan peppercorn
+pinyin: huajiao
+category: 香料
+aliases_zh: [麻椒, 四川花椒]
+aliases_en: [Sichuan pepper, Szechuan peppercorn]
+aliases_pinyin: [majiao, sichuanhuajiao]
+search_keywords: [sichuan peppercorn, 花椒, 麻, peppercorn]
+common_uses: [麻辣味, 炒香料, 花椒油, 川菜]
+regions:
+  uk:
+    substitute: "Sichuan peppercorn"
+    where_to_buy: "亚超、Whole Foods、部分 Waitrose 或线上香料店"
+    usage_note: "现成花椒粉香气散得快，整粒干锅小火焙一下再碾碎更接近。"
+    similarity: 4

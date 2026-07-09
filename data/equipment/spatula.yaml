@@ -1,0 +1,13 @@
+equipment_id: spatula
+name_zh: 硅胶锅铲
+name_en: Silicone spatula
+category: must_have
+budget_level: low
+is_essential: true
+use_cases: [翻炒, 防刮不粘锅, 盛饭]
+substitutes_if_missing: [木铲, 耐热勺]
+regions:
+  uk:
+    where_to_buy: "IKEA、Wilko 替代店、Tesco、Sainsbury's、Amazon UK"
+    price_range: "£2-£8"
+    notes: "不要用金属铲刮不粘锅，锅会很快报废。"

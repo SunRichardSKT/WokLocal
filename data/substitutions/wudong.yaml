@@ -1,0 +1,16 @@
+ingredient_id: wudong
+name_zh: 乌冬
+name_en: Udon noodles
+pinyin: wudong
+category: 主食
+aliases_zh: [乌冬面, 日式粗面]
+aliases_en: [Udon, Fresh udon]
+aliases_pinyin: [wudongmian]
+search_keywords: [乌冬, udon, udon noodles, fresh udon]
+common_uses: [汤面, 炒乌冬, 一锅煮]
+regions:
+  uk:
+    substitute: "Vacuum-packed udon"
+    where_to_buy: "亚超最稳定；大型 Tesco/Sainsbury's 世界食品区偶尔有"
+    usage_note: "袋装乌冬已熟，热水冲开或下锅 2 分钟即可，不要久煮。"
+    similarity: 5

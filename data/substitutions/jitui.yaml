@@ -1,0 +1,16 @@
+ingredient_id: jitui
+name_zh: 鸡腿肉
+name_en: Chicken thigh
+pinyin: jitui
+category: 蛋白质
+aliases_zh: [去骨鸡腿, 鸡腿排]
+aliases_en: [Chicken thigh fillets, Boneless chicken thigh]
+aliases_pinyin: [qugujitui, jituipai]
+search_keywords: [鸡腿肉, chicken thigh, boneless chicken thigh, thigh fillets]
+common_uses: [盖饭, 煎鸡排, 咖喱, 焖饭]
+regions:
+  uk:
+    substitute: "Chicken thigh fillets"
+    where_to_buy: "Tesco/Sainsbury's/Lidl/Aldi 肉类冷藏区"
+    usage_note: "比鸡胸更不容易柴，适合新手做盖饭和咖喱。"
+    similarity: 5

@@ -1,0 +1,44 @@
+id: gali-jirou-fan
+name:
+  zh: 咖喱鸡饭
+  pinyin: Gali Jirou Fan
+  en: Chicken Curry Rice
+description: "一锅出的大份量带饭菜，英国超市和亚超都能买齐主要材料。"
+difficulty: 2
+time_minutes: 35
+servings: 3
+cuisine: 留学生厨房菜
+recipe_type: local_adapted
+budget_level: medium
+scenarios: [tesco_friendly, meal_prep, low_smoke]
+tags: [咖喱, 带饭, 一锅出, 鸡肉]
+equipment:
+  required_ids: [saucepan, spatula, rice-cooker, knife-board]
+  required: [小奶锅或深锅, 米饭, 菜刀和砧板]
+  substitutes_if_missing: "没有咖喱块可用咖喱粉应急，但需要自己调浓度。"
+base_ingredients:
+  - ingredient_id: jitui
+    amount: "300 克"
+  - ingredient_id: tudou
+    amount: "1 个"
+  - ingredient_id: huluobo
+    amount: "1 根"
+  - ingredient_id: yangcong
+    amount: "半个"
+  - ingredient_id: galikuai
+    amount: "2 小块"
+  - ingredient_id: dami
+    amount: "3 碗熟米饭"
+steps:
+  - order: 1
+    instruction: "鸡肉、土豆、胡萝卜、洋葱切块。"
+  - order: 2
+    instruction: "锅里放油，先炒鸡肉到变色，再加洋葱。"
+  - order: 3
+    instruction: "加入土豆和胡萝卜，加水没过一半，煮 15 分钟。"
+  - order: 4
+    instruction: "关小火放咖喱块，搅到融化，再煮到浓稠。"
+video_links: []
+common_mistakes:
+  - "咖喱块大火下锅容易糊底。"
+  - "土豆切太大，鸡肉熟了土豆还硬。"

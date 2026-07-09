@@ -1,0 +1,16 @@
+ingredient_id: doubanjiang
+name_zh: 郫县豆瓣酱
+name_en: Pixian broad bean chili paste
+pinyin: pixian-doubanjiang
+category: 调料
+aliases_zh: [豆瓣酱, 郫县辣酱, 辣豆瓣]
+aliases_en: [Chili bean paste, Broad bean chili paste]
+aliases_pinyin: [doubanjiang, pixianlajiang, ladouban]
+search_keywords: [doubanjiang, chili bean sauce, 郫县豆瓣酱, 豆瓣酱, 川菜]
+common_uses: [川菜底味, 炒肉, 麻婆豆腐, 回锅肉]
+regions:
+  uk:
+    substitute: "Pixian Doubanjiang；没有时用 chili bean sauce"
+    where_to_buy: "亚超和线上中超最稳定；Lee Kum Kee chili bean sauce 在部分大超市更容易买到"
+    usage_note: "chili bean sauce 咸鲜够但发酵香弱，先小火炒香再下肉。"
+    similarity: 3

@@ -1,0 +1,16 @@
+ingredient_id: tusi
+name_zh: 吐司
+name_en: Sliced bread
+pinyin: tusi
+category: 主食
+aliases_zh: [面包片, 切片面包]
+aliases_en: [Toast bread, Sandwich bread]
+aliases_pinyin: [mianbaopian, qiepianmianbao]
+search_keywords: [吐司, sliced bread, toast bread, sandwich bread]
+common_uses: [三明治, 早餐, 融合餐]
+regions:
+  uk:
+    substitute: "Sliced white bread、wholemeal bread 或 seeded bread"
+    where_to_buy: "所有英国超市面包区"
+    usage_note: "英国吐司选择很多，做热三明治优先选 medium/thick sliced。"
+    similarity: 5

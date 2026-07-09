@@ -1,0 +1,45 @@
+id: teriyaki-jitui-fan
+name:
+  zh: 照烧鸡腿饭
+  pinyin: Teriyaki Jitui Fan
+  en: Teriyaki Chicken Rice Bowl
+description: "用生抽和糖做简化照烧汁，不需要专门买日式调料。"
+difficulty: 2
+time_minutes: 24
+servings: 2
+cuisine: 留学生厨房菜
+recipe_type: local_adapted
+budget_level: low
+scenarios: [low_budget, pan_only, tesco_friendly, meal_prep, low_smoke]
+tags: [盖饭, 鸡肉, 带饭, Tesco友好]
+equipment:
+  required_ids: [nonstick-pan, spatula, rice-cooker]
+  required: [不粘锅, 锅铲, 米饭]
+  substitutes_if_missing: "没有电饭煲可用微波米饭。"
+base_ingredients:
+  - ingredient_id: jitui
+    amount: "300 克"
+  - ingredient_id: dami
+    amount: "2 碗熟米饭"
+  - ingredient_id: shengchou
+    amount: "2 汤匙"
+  - ingredient_id: baitang
+    amount: "1 茶匙"
+  - ingredient_id: jiang
+    amount: "2 片"
+    optional: true
+  - ingredient_id: shiyongyou
+    amount: "1 汤匙"
+steps:
+  - order: 1
+    instruction: "鸡腿肉切大块，用少量生抽抓匀。"
+  - order: 2
+    instruction: "平底锅放油，中火把鸡肉两面煎金黄。"
+  - order: 3
+    instruction: "加入生抽、糖、少量水和姜片，盖盖焖 6 分钟。"
+  - order: 4
+    instruction: "开盖收汁，盖在米饭上。"
+video_links: []
+common_mistakes:
+  - "糖汁容易糊，收汁时火不要太大。"
+  - "鸡腿肉切太小会变干。"

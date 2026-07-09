@@ -1,0 +1,16 @@
+ingredient_id: dami
+name_zh: 大米
+name_en: Rice
+pinyin: dami
+category: 主食
+aliases_zh: [米, 白米, 香米]
+aliases_en: [Jasmine rice, Long grain rice, Sushi rice]
+aliases_pinyin: [mi, baimi, xiangmi]
+search_keywords: [大米, rice, jasmine rice, long grain rice, sushi rice]
+common_uses: [米饭, 粥, 炒饭, 盖饭]
+regions:
+  uk:
+    substitute: "Jasmine rice、Thai fragrant rice 或 sushi rice"
+    where_to_buy: "普通超市可买 long grain rice；亚超更适合买 jasmine rice 和东北米"
+    usage_note: "long grain rice 粒粒分明但不够软糯；想接近中式米饭优先买 jasmine rice。"
+    similarity: 4

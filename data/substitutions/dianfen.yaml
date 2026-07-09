@@ -1,0 +1,16 @@
+ingredient_id: dianfen
+name_zh: 淀粉
+name_en: Cornstarch
+pinyin: dianfen
+category: 调料
+aliases_zh: [玉米淀粉, 生粉, 勾芡粉]
+aliases_en: [Cornflour, Corn starch, Cornstarch]
+aliases_pinyin: [yumidianfen, shengfen, gouqianfen]
+search_keywords: [cornflour, cornstarch, 淀粉, 生粉, 勾芡]
+common_uses: [腌肉嫩化, 勾芡, 挂糊]
+regions:
+  uk:
+    substitute: "Cornflour"
+    where_to_buy: "Tesco、Sainsbury's、Lidl、Aldi 烘焙区常见"
+    usage_note: "英国包装常写 cornflour，就是中餐勾芡常用的玉米淀粉。"
+    similarity: 5

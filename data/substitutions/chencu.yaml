@@ -1,0 +1,16 @@
+ingredient_id: chencu
+name_zh: 陈醋
+name_en: Mature vinegar
+pinyin: chencu
+category: 调料
+aliases_zh: [香醋, 镇江香醋, 黑醋]
+aliases_en: [Black vinegar, Chinkiang vinegar]
+aliases_pinyin: [xiangcu, zhenjiangxiangcu, heicu]
+search_keywords: [black vinegar, chinkiang, 陈醋, 香醋, vinegar]
+common_uses: [凉拌, 酸甜汁, 宫保汁, 蘸料]
+regions:
+  uk:
+    substitute: "Chinkiang Vinegar；没有时用 rice vinegar 加少量 balsamic vinegar"
+    where_to_buy: "亚超常见镇江香醋；普通超市可买 rice vinegar 和 balsamic vinegar"
+    usage_note: "balsamic 更甜更浓，只加几滴找回颜色和厚度即可。"
+    similarity: 3

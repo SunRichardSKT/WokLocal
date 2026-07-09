@@ -1,0 +1,13 @@
+equipment_id: microwave-container
+name_zh: 微波炉饭盒
+name_en: Microwave-safe container
+category: dorm_friendly
+budget_level: low
+is_essential: false
+use_cases: [热饭, 带饭, 微波蒸蛋, 分装剩菜]
+substitutes_if_missing: [可微波瓷碗加盘子盖住]
+regions:
+  uk:
+    where_to_buy: "IKEA、Tesco、Sainsbury's、M&S、Amazon UK"
+    price_range: "£3-£12"
+    notes: "确认有 microwave-safe 标识，别把普通塑料盒放进微波炉。"

@@ -1,0 +1,16 @@
+ingredient_id: shengcai
+name_zh: 生菜
+name_en: Lettuce
+pinyin: shengcai
+category: 蔬菜
+aliases_zh: [罗马生菜, 沙拉菜]
+aliases_en: [Lettuce, Romaine lettuce, Salad leaves]
+aliases_pinyin: [luomashengcai, shalacai]
+search_keywords: [生菜, lettuce, romaine lettuce, salad leaves]
+common_uses: [三明治, 卷饼, 沙拉, 配菜]
+regions:
+  uk:
+    substitute: "Romaine lettuce、little gem 或 mixed salad leaves"
+    where_to_buy: "所有英国超市蔬菜冷藏区"
+    usage_note: "little gem 更脆，适合卷饼和三明治。"
+    similarity: 5

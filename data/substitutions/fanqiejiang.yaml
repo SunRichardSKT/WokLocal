@@ -1,0 +1,16 @@
+ingredient_id: fanqiejiang
+name_zh: 番茄酱
+name_en: Ketchup
+pinyin: fanqiejiang
+category: 调料
+aliases_zh: [茄汁, 番茄沙司]
+aliases_en: [Tomato ketchup, Tomato sauce]
+aliases_pinyin: [qiezhi, fanqieshasi]
+search_keywords: [番茄酱, ketchup, tomato ketchup, tomato sauce]
+common_uses: [酸甜汁, 三明治, 拌饭, 快手调味]
+regions:
+  uk:
+    substitute: "Tomato ketchup"
+    where_to_buy: "所有英国超市酱料区"
+    usage_note: "英国 tomato sauce 常指番茄酱，不是中式番茄炒蛋用的番茄原料。"
+    similarity: 5

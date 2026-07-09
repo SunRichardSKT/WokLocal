@@ -1,0 +1,13 @@
+equipment_id: nonstick-pan
+name_zh: 不粘平底锅
+name_en: Non-stick frying pan
+category: must_have
+budget_level: low
+is_essential: true
+use_cases: [炒鸡蛋, 炒饭, 煎鸡腿, 一锅盖饭]
+substitutes_if_missing: [深一点的炒锅, 铸铁锅但需要更多油]
+regions:
+  uk:
+    where_to_buy: "Argos、IKEA、Tesco Extra、Sainsbury's Home、Amazon UK"
+    price_range: "£10-£25 可买到入门款"
+    notes: "第一口锅建议 24-28cm，不要买太小；宿舍电炉优先选平底。"

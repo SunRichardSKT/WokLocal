@@ -1,0 +1,16 @@
+ingredient_id: jiang
+name_zh: 姜
+name_en: Ginger
+pinyin: jiang
+category: 蔬菜
+aliases_zh: [生姜, 姜片, 姜末]
+aliases_en: [Fresh ginger, Root ginger]
+aliases_pinyin: [shengjiang, jiangpian, jiangmo]
+search_keywords: [姜, ginger, fresh ginger, root ginger, 生姜]
+common_uses: [去腥, 炖煮, 腌肉, 炝锅]
+regions:
+  uk:
+    substitute: "Fresh ginger 或 root ginger"
+    where_to_buy: "各大超市蔬菜区；亚超通常更新鲜也更便宜"
+    usage_note: "没有新鲜姜时可用 ginger powder 少量应急，但去腥和香气差很多。"
+    similarity: 5

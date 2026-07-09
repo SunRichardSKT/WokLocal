@@ -1,0 +1,16 @@
+ingredient_id: liaojiu
+name_zh: 料酒
+name_en: Shaoxing rice wine
+pinyin: liaojiu
+category: 调料
+aliases_zh: [绍兴酒, 黄酒, 烹饪酒]
+aliases_en: [Shaoxing wine, Rice wine, Cooking wine]
+aliases_pinyin: [shaoxingjiu, huangjiu, pengrenjiu]
+search_keywords: [shaoxing, rice wine, cooking wine, 料酒, 去腥]
+common_uses: [腌肉去腥, 炒肉提香, 炖煮去腥]
+regions:
+  uk:
+    substitute: "Shaoxing Rice Wine；急用可用少量 dry sherry"
+    where_to_buy: "亚超最稳定；部分 Waitrose 或大型 Sainsbury's 可能有 cooking wine"
+    usage_note: "dry sherry 香气更甜，用量减半；完全没有时可用姜片和黑胡椒压腥。"
+    similarity: 3

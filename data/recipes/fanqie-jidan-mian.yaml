@@ -1,0 +1,46 @@
+id: fanqie-jidan-mian
+name:
+  zh: 番茄鸡蛋面
+  pinyin: Fanqie Jidan Mian
+  en: Tomato Egg Noodles
+description: "比炒菜更稳的入门热汤面，适合刚落地只有小奶锅的时候。"
+difficulty: 1
+time_minutes: 15
+servings: 1
+cuisine: 家常菜
+recipe_type: chinese
+budget_level: low
+scenarios: [quick_15, low_budget, tesco_friendly, low_smoke]
+tags: [汤面, 快手, 新手友好, 低油烟]
+equipment:
+  required_ids: [saucepan]
+  required: [小奶锅或深锅]
+  substitutes_if_missing: "没有奶锅可用深一点的平底锅煮。"
+base_ingredients:
+  - ingredient_id: miantiao
+    amount: "1 人份"
+  - ingredient_id: xihongshi
+    name_zh: 番茄
+    name_en: Tomato
+    amount: "1 个"
+  - ingredient_id: jidan
+    name_zh: 鸡蛋
+    name_en: Egg
+    amount: "1 个"
+  - ingredient_id: yan
+    amount: "适量"
+  - ingredient_id: shiyongyou
+    amount: "1 茶匙"
+steps:
+  - order: 1
+    instruction: "番茄切小块，鸡蛋打散。"
+  - order: 2
+    instruction: "锅里放一点油，把番茄炒软出汁。"
+  - order: 3
+    instruction: "加水煮开，下面条煮到合适口感。"
+  - order: 4
+    instruction: "淋入蛋液，等 20 秒再轻轻搅开，最后加盐。"
+video_links: []
+common_mistakes:
+  - "蛋液刚下锅就猛搅，会变成碎蛋花。"
+  - "面条煮太久会糊，按包装时间少煮半分钟更稳。"

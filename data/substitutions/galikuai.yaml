@@ -1,0 +1,16 @@
+ingredient_id: galikuai
+name_zh: 咖喱块
+name_en: Curry roux
+pinyin: galikuai
+category: 调料
+aliases_zh: [日式咖喱块, 咖喱砖]
+aliases_en: [Japanese curry roux, Curry blocks]
+aliases_pinyin: [rishigalikuai, galizhuan]
+search_keywords: [咖喱块, curry roux, japanese curry, curry blocks]
+common_uses: [咖喱鸡饭, 咖喱蔬菜, 一锅饭]
+regions:
+  uk:
+    substitute: "Japanese curry roux；没有时用 curry powder 加少量面粉和糖"
+    where_to_buy: "亚超最稳定；大型 Tesco/Sainsbury's 世界食品区偶尔有"
+    usage_note: "curry powder 不是咖喱块，味道更散，需要油炒香并自己调浓度。"
+    similarity: 4

@@ -1,0 +1,45 @@
+id: jinqiangyu-yumi-fan
+name:
+  zh: 金枪鱼玉米饭
+  pinyin: Jinqiangyu Yumi Fan
+  en: Tuna Sweetcorn Rice Bowl
+description: "几乎不用开火的应急饭，适合赶作业或刚搬家厨房不全时。"
+difficulty: 1
+time_minutes: 8
+servings: 1
+cuisine: 留学生厨房菜
+recipe_type: fusion
+budget_level: low
+scenarios: [quick_15, low_budget, tesco_friendly, low_smoke]
+tags: [罐头, 应急餐, 低油烟, 一人食]
+equipment:
+  required_ids: [microwave-container]
+  required: [微波炉饭盒或碗]
+  substitutes_if_missing: "没有微波炉时可用刚煮好的热米饭。"
+base_ingredients:
+  - ingredient_id: jinqiangyu
+    amount: "半罐到 1 罐"
+  - ingredient_id: microwave-rice
+    amount: "1 包"
+  - ingredient_id: lengdongshucai
+    amount: "半杯"
+    optional: true
+  - ingredient_id: shengchou
+    amount: "半茶匙"
+    optional: true
+  - ingredient_id: lajiang
+    amount: "适量"
+    optional: true
+steps:
+  - order: 1
+    instruction: "微波米饭按包装加热。"
+  - order: 2
+    instruction: "冷冻蔬菜微波 1-2 分钟到热透。"
+  - order: 3
+    instruction: "金枪鱼沥干，和米饭、蔬菜拌匀。"
+  - order: 4
+    instruction: "按口味加少量生抽或辣酱。"
+video_links: []
+common_mistakes:
+  - "金枪鱼罐头 brine 版本很咸，要先沥干。"
+  - "冷冻蔬菜要热透，不要直接冷拌。"

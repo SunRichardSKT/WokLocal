@@ -1,0 +1,58 @@
+id: xihongshi-chaodan
+name:
+  zh: 西红柿炒鸡蛋
+  pinyin: Xihongshi Chao Dan
+  en: Tomato and Egg Stir-fry
+description: "零基础也容易成功的家常快手菜，酸甜汤汁适合拌饭。"
+difficulty: 1
+time_minutes: 15
+servings: 2
+cuisine: 家常菜
+recipe_type: chinese
+budget_level: low
+scenarios: [quick_15, low_budget, pan_only, tesco_friendly, low_smoke]
+tags: [快手, 新手友好, 素食, 拌饭]
+equipment:
+  required_ids: [nonstick-pan, spatula]
+  required: [炒锅或深一点的平底锅, 碗, 锅铲]
+  substitutes_if_missing: "没有炒锅可以用不粘平底锅，火力调到中高火，少量多次翻动。"
+base_ingredients:
+  - ingredient_id: xihongshi
+    name_zh: 西红柿
+    name_en: Tomato
+    amount: "2 个"
+  - ingredient_id: jidan
+    name_zh: 鸡蛋
+    name_en: Egg
+    amount: "3 个"
+  - ingredient_id: shengchou
+    amount: "1 茶匙"
+    optional: true
+    note: "想要更鲜可加，不加也成立。"
+  - ingredient_id: baitang
+    name_zh: 白糖
+    name_en: Sugar
+    amount: "半茶匙"
+    optional: true
+  - ingredient_id: yan
+    name_zh: 盐
+    name_en: Salt
+    amount: "适量"
+steps:
+  - order: 1
+    instruction: "西红柿切块，鸡蛋打散，加一小撮盐。"
+    tip: "想要汤汁多，西红柿切小一点；不想吃皮，可以划十字用热水烫后剥皮。"
+  - order: 2
+    instruction: "锅里放油，中火倒入蛋液，刚凝固就盛出。"
+    tip: "鸡蛋后面还会回锅，第一次不要炒到完全干。"
+  - order: 3
+    instruction: "同一口锅放西红柿，撒少量盐，炒到出汁。"
+  - order: 4
+    instruction: "鸡蛋回锅，加入糖和可选生抽，翻匀 30 秒出锅。"
+video_links:
+  - platform: bilibili
+    title: "去 Bilibili 看西红柿炒鸡蛋基础做法"
+    url: "https://www.bilibili.com/"
+common_mistakes:
+  - "鸡蛋炒太久，口感会变硬。"
+  - "西红柿没有炒出汁就下鸡蛋，成菜会偏干。"

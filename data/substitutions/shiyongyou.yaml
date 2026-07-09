@@ -1,0 +1,16 @@
+ingredient_id: shiyongyou
+name_zh: 食用油
+name_en: Cooking oil
+pinyin: shiyongyou
+category: 调料
+aliases_zh: [炒菜油, 植物油]
+aliases_en: [Vegetable oil, Rapeseed oil, Sunflower oil]
+aliases_pinyin: [chaocaiyou, zhiwuyou]
+search_keywords: [食用油, cooking oil, vegetable oil, rapeseed oil, sunflower oil]
+common_uses: [炒菜, 煎蛋, 炒饭, 腌肉]
+regions:
+  uk:
+    substitute: "Vegetable oil、Rapeseed oil 或 Sunflower oil"
+    where_to_buy: "Tesco、Sainsbury's、Lidl、Aldi、M&S、Waitrose 食用油货架"
+    usage_note: "英国常见 rapeseed oil 烟点和味道都适合中式家常炒菜；olive oil 香味明显，不建议做所有中餐。"
+    similarity: 5

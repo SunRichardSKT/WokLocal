@@ -1,0 +1,13 @@
+equipment_id: knife-board
+name_zh: 菜刀和砧板
+name_en: Knife and chopping board
+category: must_have
+budget_level: low
+is_essential: true
+use_cases: [切菜, 切肉, 备菜, 分区处理生熟食]
+substitutes_if_missing: [厨房剪刀, 小水果刀应急]
+regions:
+  uk:
+    where_to_buy: "IKEA、Argos、Tesco、Sainsbury's、Amazon UK"
+    price_range: "£8-£25 可买入门套装"
+    notes: "建议至少买两块砧板或双面砧板，生肉和熟食分开。"

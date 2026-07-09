@@ -1,0 +1,13 @@
+equipment_id: lid
+name_zh: 锅盖
+name_en: Pan lid
+category: dorm_friendly
+budget_level: low
+is_essential: false
+use_cases: [焖鸡肉, 加速熟透, 防油溅]
+substitutes_if_missing: [锡纸临时盖住, 大号耐热盘]
+regions:
+  uk:
+    where_to_buy: "Amazon UK、IKEA、Argos"
+    price_range: "£5-£15"
+    notes: "可以买通用玻璃锅盖；如果只是临时焖菜，锡纸也能解决。"

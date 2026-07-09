@@ -1,0 +1,13 @@
+equipment_id: saucepan
+name_zh: 小奶锅
+name_en: Saucepan
+category: must_have
+budget_level: low
+is_essential: true
+use_cases: [煮面, 煮汤, 热牛奶, 小份炖煮]
+substitutes_if_missing: [深一点的平底锅, 电饭煲煮汤模式]
+regions:
+  uk:
+    where_to_buy: "IKEA、Argos、Tesco Extra、Sainsbury's Home、Amazon UK"
+    price_range: "£8-£20"
+    notes: "一人食买 16-18cm 足够，带盖更实用。"

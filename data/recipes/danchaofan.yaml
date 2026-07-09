@@ -1,0 +1,58 @@
+id: danchaofan
+name:
+  zh: 蛋炒饭
+  pinyin: Dan Chao Fan
+  en: Egg Fried Rice
+description: "处理剩饭最稳的一餐，一口锅完成，适合宿舍厨房。"
+difficulty: 2
+time_minutes: 12
+servings: 1
+cuisine: 家常菜
+recipe_type: chinese
+budget_level: low
+scenarios: [quick_15, low_budget, pan_only, meal_prep]
+tags: [快手, 一人食, 主食, 剩饭]
+equipment:
+  required_ids: [nonstick-pan, spatula]
+  required: [不粘锅或炒锅, 锅铲]
+  substitutes_if_missing: "没有炒锅就用不粘锅，米饭分散后再加蛋，避免粘成一团。"
+base_ingredients:
+  - ingredient_id: mifan
+    name_zh: 隔夜米饭
+    name_en: Cooked rice
+    amount: "1 大碗"
+  - ingredient_id: jidan
+    name_zh: 鸡蛋
+    name_en: Egg
+    amount: "2 个"
+  - ingredient_id: qingdou
+    name_zh: 冷冻青豆或玉米粒
+    name_en: Frozen peas or sweetcorn
+    amount: "半杯"
+    optional: true
+  - ingredient_id: shengchou
+    amount: "1 茶匙"
+  - ingredient_id: xiangyou
+    amount: "几滴"
+    optional: true
+  - ingredient_id: yan
+    name_zh: 盐
+    name_en: Salt
+    amount: "适量"
+steps:
+  - order: 1
+    instruction: "隔夜饭用勺子压散；鸡蛋打散。"
+    tip: "新煮的饭水汽重，摊开放凉 10 分钟会更好炒。"
+  - order: 2
+    instruction: "锅热后放油，倒入鸡蛋炒到半凝固。"
+  - order: 3
+    instruction: "加入米饭和青豆，中高火翻炒到米粒松散。"
+  - order: 4
+    instruction: "沿锅边淋生抽，补盐，关火后滴香油。"
+video_links:
+  - platform: bilibili
+    title: "去 Bilibili 看蛋炒饭基础手法"
+    url: "https://www.bilibili.com/"
+common_mistakes:
+  - "米饭没压散就下锅，会结块。"
+  - "生抽直接倒在饭堆中间，颜色和咸味会不均匀。"

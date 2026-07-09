@@ -1,0 +1,16 @@
+ingredient_id: cong
+name_zh: 葱
+name_en: Spring onion
+pinyin: cong
+category: 蔬菜
+aliases_zh: [小葱, 青葱, 葱花]
+aliases_en: [Spring onion, Scallion, Green onion]
+aliases_pinyin: [xiaocong, qingcong, conghua]
+search_keywords: [葱, spring onion, scallion, green onion, 小葱]
+common_uses: [炝锅, 葱花, 拌面, 汤面]
+regions:
+  uk:
+    substitute: "Spring onions"
+    where_to_buy: "Tesco、Sainsbury's、Lidl、Aldi 蔬菜区；亚超也常见"
+    usage_note: "英国 spring onions 比国内小葱更粗一些，葱白适合炝锅，葱绿适合最后撒。"
+    similarity: 5

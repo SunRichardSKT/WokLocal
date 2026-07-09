@@ -1,0 +1,16 @@
+ingredient_id: yangcong
+name_zh: 洋葱
+name_en: Onion
+pinyin: yangcong
+category: 蔬菜
+aliases_zh: [黄洋葱, 红洋葱]
+aliases_en: [Brown onion, Red onion]
+aliases_pinyin: [huangyangcong, hongyangcong]
+search_keywords: [洋葱, onion, brown onion, red onion]
+common_uses: [盖饭, 咖喱, 炒肉, 汤底]
+regions:
+  uk:
+    substitute: "Brown onions 或 red onions"
+    where_to_buy: "所有英国超市蔬菜区"
+    usage_note: "brown onion 最通用；red onion 生吃更甜，炒菜也可以用。"
+    similarity: 5

@@ -1,0 +1,16 @@
+ingredient_id: lajiang
+name_zh: 辣酱
+name_en: Hot sauce
+pinyin: lajiang
+category: 调料
+aliases_zh: [蒜蓉辣酱, 甜辣酱, 是拉差]
+aliases_en: [Sriracha, Chilli sauce, Sweet chilli sauce]
+aliases_pinyin: [suanronglajiang, tianlajiang, shilacha]
+search_keywords: [辣酱, hot sauce, sriracha, chilli sauce, sweet chilli sauce]
+common_uses: [拌饭, 蘸料, 三明治, 快手调味]
+regions:
+  uk:
+    substitute: "Sriracha、sweet chilli sauce 或 chilli sauce"
+    where_to_buy: "所有英国超市酱料区；亚超选择更多"
+    usage_note: "sweet chilli sauce 偏甜，Sriracha 蒜味重，做中餐不要完全等同豆瓣酱。"
+    similarity: 3

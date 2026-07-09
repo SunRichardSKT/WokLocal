@@ -1,0 +1,16 @@
+ingredient_id: haoyou
+name_zh: 蚝油
+name_en: Oyster sauce
+pinyin: haoyou
+category: 调料
+aliases_zh: [耗油, 蚝汁]
+aliases_en: [Oyster sauce, Vegetarian oyster sauce]
+aliases_pinyin: [haozhi]
+search_keywords: [蚝油, oyster sauce, vegetarian oyster sauce, lee kum kee]
+common_uses: [炒青菜, 腌肉, 拌面, 提鲜]
+regions:
+  uk:
+    substitute: "Oyster sauce；素食可用 mushroom vegetarian stir-fry sauce"
+    where_to_buy: "Tesco/Sainsbury's 世界食品区可能有李锦记；亚超选择更多"
+    usage_note: "蚝油偏甜咸，先少放；素蚝油鲜味不同但适合素菜。"
+    similarity: 4

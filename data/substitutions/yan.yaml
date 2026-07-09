@@ -1,0 +1,16 @@
+ingredient_id: yan
+name_zh: 盐
+name_en: Salt
+pinyin: yan
+category: 调料
+aliases_zh: [食盐]
+aliases_en: [Table salt, Sea salt]
+aliases_pinyin: [shiyan]
+search_keywords: [盐, salt, table salt, sea salt]
+common_uses: [基础调味, 腌肉, 煮面]
+regions:
+  uk:
+    substitute: "Table salt 或 sea salt"
+    where_to_buy: "所有英国超市调料区"
+    usage_note: "sea salt 颗粒更大，同体积会没那么咸；新手宁少勿多。"
+    similarity: 5

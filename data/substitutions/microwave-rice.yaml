@@ -1,0 +1,16 @@
+ingredient_id: microwave-rice
+name_zh: 微波米饭
+name_en: Microwave rice
+pinyin: weibomifan
+category: 主食
+aliases_zh: [即食米饭, 微波饭包]
+aliases_en: [Microwave pouch rice, Ready rice]
+aliases_pinyin: [jishimifan, weibofanbao]
+search_keywords: [微波米饭, microwave rice, pouch rice, ready rice]
+common_uses: [盖饭, 应急主食, 宿舍餐]
+regions:
+  uk:
+    substitute: "Microwave pouch rice"
+    where_to_buy: "Tesco/Sainsbury's/Lidl/Aldi 主食区"
+    usage_note: "适合刚落地没电饭煲时应急，长期吃成本比自己煮饭高。"
+    similarity: 4

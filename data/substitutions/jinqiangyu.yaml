@@ -1,0 +1,16 @@
+ingredient_id: jinqiangyu
+name_zh: 金枪鱼罐头
+name_en: Canned tuna
+pinyin: jinqiangyu
+category: 蛋白质
+aliases_zh: [吞拿鱼罐头, 罐头金枪鱼]
+aliases_en: [Tinned tuna, Tuna chunks]
+aliases_pinyin: [tunnayu, guantoujinqiangyu]
+search_keywords: [金枪鱼罐头, canned tuna, tinned tuna, tuna chunks]
+common_uses: [拌饭, 三明治, 沙拉, 应急蛋白]
+regions:
+  uk:
+    substitute: "Tinned tuna in spring water 或 brine"
+    where_to_buy: "所有英国超市罐头区"
+    usage_note: "in brine 更咸，拌饭前沥干；in oil 更香但油脂更高。"
+    similarity: 5

@@ -1,0 +1,45 @@
+id: congyou-ban-mian
+name:
+  zh: 葱油拌面
+  pinyin: Congyou Ban Mian
+  en: Scallion Oil Noodles
+description: "食材极少的低预算拌面，适合不想出门买很多菜的时候。"
+difficulty: 2
+time_minutes: 18
+servings: 1
+cuisine: 家常菜
+recipe_type: chinese
+budget_level: low
+scenarios: [low_budget, pan_only, low_smoke]
+tags: [拌面, 低预算, 素食, 基础调料]
+equipment:
+  required_ids: [saucepan, nonstick-pan, colander]
+  required: [煮面锅, 平底锅, 滤网]
+  substitutes_if_missing: "没有滤网可以用锅盖留缝倒水。"
+base_ingredients:
+  - ingredient_id: miantiao
+    amount: "1 人份"
+  - ingredient_id: cong
+    amount: "2-3 根"
+  - ingredient_id: shengchou
+    amount: "1 汤匙"
+  - ingredient_id: laochou
+    amount: "半茶匙"
+    optional: true
+  - ingredient_id: baitang
+    amount: "半茶匙"
+  - ingredient_id: shiyongyou
+    amount: "2 汤匙"
+steps:
+  - order: 1
+    instruction: "葱白和葱绿切段，面条煮熟后沥干。"
+  - order: 2
+    instruction: "小火用油煎葱段，煎到葱变深但不焦。"
+  - order: 3
+    instruction: "关火后加入生抽、老抽和糖，拌匀成葱油汁。"
+  - order: 4
+    instruction: "把面条倒入锅里拌匀。"
+video_links: []
+common_mistakes:
+  - "葱油火太大会发苦。"
+  - "酱油下锅前不关火，容易飞溅和糊底。"

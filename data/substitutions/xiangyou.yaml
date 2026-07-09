@@ -1,0 +1,16 @@
+ingredient_id: xiangyou
+name_zh: 香油
+name_en: Toasted sesame oil
+pinyin: xiangyou
+category: 调料
+aliases_zh: [芝麻油, 麻油]
+aliases_en: [Sesame oil, Toasted sesame oil]
+aliases_pinyin: [zhimayou, mayou]
+search_keywords: [sesame oil, toasted sesame oil, 香油, 芝麻油]
+common_uses: [出锅增香, 凉拌, 汤面点香]
+regions:
+  uk:
+    substitute: "Toasted Sesame Oil"
+    where_to_buy: "大型超市世界食品区、M&S、Waitrose、亚超"
+    usage_note: "香油只适合最后点几滴，不适合大火炒。"
+    similarity: 5

@@ -1,0 +1,16 @@
+ingredient_id: xiaren
+name_zh: 虾仁
+name_en: Prawns
+pinyin: xiaren
+category: 蛋白质
+aliases_zh: [冷冻虾仁, 去壳虾]
+aliases_en: [King prawns, Cooked prawns, Raw prawns]
+aliases_pinyin: [lengdongxiaren, qukexia]
+search_keywords: [虾仁, prawns, king prawns, cooked prawns, raw prawns]
+common_uses: [炒饭, 汤面, 沙拉, 快手蛋白]
+regions:
+  uk:
+    substitute: "Frozen king prawns 或 cooked prawns"
+    where_to_buy: "所有英国超市冷冻区或冷藏海鲜区"
+    usage_note: "熟虾只需最后加热，生虾要炒到完全变粉白。"
+    similarity: 5

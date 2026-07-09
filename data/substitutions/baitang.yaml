@@ -1,0 +1,16 @@
+ingredient_id: baitang
+name_zh: 白糖
+name_en: Sugar
+pinyin: baitang
+category: 调料
+aliases_zh: [砂糖, 细砂糖]
+aliases_en: [Granulated sugar, Caster sugar]
+aliases_pinyin: [shatang, xishatang]
+search_keywords: [白糖, sugar, granulated sugar, caster sugar]
+common_uses: [提鲜, 酸甜汁, 调味]
+regions:
+  uk:
+    substitute: "Granulated sugar"
+    where_to_buy: "所有英国超市烘焙区"
+    usage_note: "caster sugar 更细但更贵，普通炒菜用 granulated sugar 就够。"
+    similarity: 5

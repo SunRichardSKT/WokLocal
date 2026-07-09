@@ -1,0 +1,16 @@
+ingredient_id: weizeng
+name_zh: 味噌
+name_en: Miso paste
+pinyin: weizeng
+category: 调料
+aliases_zh: [味增, 日式豆酱]
+aliases_en: [Miso, White miso, Red miso]
+aliases_pinyin: [weizeng, rishidoujiang]
+search_keywords: [味噌, miso paste, miso, white miso]
+common_uses: [汤, 腌肉, 融合调味]
+regions:
+  uk:
+    substitute: "Miso paste"
+    where_to_buy: "Waitrose、Whole Foods、亚超；大型 Tesco/Sainsbury's 偶尔有"
+    usage_note: "味噌有咸味，适合做汤和腌鸡肉；不要大火久煮。"
+    similarity: 5

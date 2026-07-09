@@ -1,0 +1,16 @@
+ingredient_id: bocai
+name_zh: 菠菜
+name_en: Spinach
+pinyin: bocai
+category: 蔬菜
+aliases_zh: [嫩菠菜, 菠菜叶]
+aliases_en: [Baby spinach, Spinach leaves]
+aliases_pinyin: [nenbocai, bocaiye]
+search_keywords: [菠菜, spinach, baby spinach, spinach leaves]
+common_uses: [汤面, 炒蛋, 咖喱, 沙拉]
+regions:
+  uk:
+    substitute: "Baby spinach 或 spinach leaves"
+    where_to_buy: "所有英国超市蔬菜冷藏区"
+    usage_note: "袋装菠菜很快缩水，炒菜要多放一点；也适合最后丢进汤面。"
+    similarity: 5

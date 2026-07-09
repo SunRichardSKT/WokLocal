@@ -1,0 +1,16 @@
+ingredient_id: tudou
+name_zh: 土豆
+name_en: Potato
+pinyin: tudou
+category: 蔬菜
+aliases_zh: [马铃薯, 洋芋]
+aliases_en: [Potato, Baking potato, Baby potato]
+aliases_pinyin: [malingshu, yangyu]
+search_keywords: [土豆, potato, baking potato, baby potato]
+common_uses: [土豆丝, 炖菜, 烤土豆, 盖饭配菜]
+regions:
+  uk:
+    substitute: "Maris Piper、King Edward 或 baking potatoes"
+    where_to_buy: "所有英国超市蔬菜区"
+    usage_note: "baking potato 更粉，适合烤和炖；炒土豆丝优先选 waxy 或 baby potato。"
+    similarity: 4

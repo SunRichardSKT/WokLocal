@@ -1,0 +1,50 @@
+name: 补充地区替代信息
+description: 为某个地区补充食材或调料替代方案
+title: "地区替代："
+labels: ["substitution", "region"]
+body:
+  - type: input
+    id: ingredient
+    attributes:
+      label: 食材或调料
+      placeholder: 生抽
+    validations:
+      required: true
+  - type: dropdown
+    id: region
+    attributes:
+      label: 地区
+      options:
+        - uk
+        - north_america
+        - europe
+        - australia
+        - japan_korea
+    validations:
+      required: true
+  - type: textarea
+    id: substitute
+    attributes:
+      label: 替代方案
+      placeholder: 写出英文货架名、品牌或可替代商品
+    validations:
+      required: true
+  - type: textarea
+    id: where
+    attributes:
+      label: 哪里能买到
+      placeholder: Tesco、Sainsbury's、亚超、线上中超等
+    validations:
+      required: true
+  - type: textarea
+    id: note
+    attributes:
+      label: 使用差异
+      placeholder: 咸度、香气、颜色、用量或烹饪差异
+  - type: input
+    id: similarity
+    attributes:
+      label: 相似度 1-5
+      placeholder: "4"
+    validations:
+      required: true

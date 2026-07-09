@@ -1,0 +1,16 @@
+ingredient_id: heihujiao
+name_zh: 黑胡椒
+name_en: Black pepper
+pinyin: heihujiao
+category: 调料
+aliases_zh: [黑椒, 胡椒粉]
+aliases_en: [Ground black pepper, Black peppercorns]
+aliases_pinyin: [heijiao, hujiaofen]
+search_keywords: [黑胡椒, black pepper, ground black pepper, peppercorns]
+common_uses: [黑椒汁, 腌肉, 煎蛋, 炒饭]
+regions:
+  uk:
+    substitute: "Ground black pepper 或 black peppercorns"
+    where_to_buy: "所有英国超市香料区"
+    usage_note: "现磨黑胡椒香气更好；粉状更方便。"
+    similarity: 5

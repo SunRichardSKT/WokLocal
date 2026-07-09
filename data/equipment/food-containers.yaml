@@ -1,0 +1,13 @@
+equipment_id: food-containers
+name_zh: 保鲜盒
+name_en: Food containers
+category: dorm_friendly
+budget_level: low
+is_essential: false
+use_cases: [带饭, 分装剩菜, 腌肉, 备菜]
+substitutes_if_missing: [带盖碗, 密封袋]
+regions:
+  uk:
+    where_to_buy: "IKEA、Tesco、Sainsbury's、M&S、Amazon UK"
+    price_range: "£3-£12"
+    notes: "优先买可微波、可冷冻的款式；合租冰箱空间有限，方形更省地方。"

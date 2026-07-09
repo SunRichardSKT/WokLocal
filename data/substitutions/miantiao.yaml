@@ -1,0 +1,16 @@
+ingredient_id: miantiao
+name_zh: 面条
+name_en: Noodles
+pinyin: miantiao
+category: 主食
+aliases_zh: [挂面, 碱水面, 拉面]
+aliases_en: [Wheat noodles, Egg noodles, Medium noodles]
+aliases_pinyin: [guamian, jianshuimian, lamian]
+search_keywords: [面条, noodles, wheat noodles, egg noodles, medium noodles]
+common_uses: [汤面, 拌面, 炒面]
+regions:
+  uk:
+    substitute: "Egg noodles、medium noodles 或亚超挂面"
+    where_to_buy: "Tesco/Sainsbury's 世界食品区有 egg noodles；亚超可买挂面和鲜面"
+    usage_note: "英超 egg noodles 偏有嚼劲，适合炒面和拌面；汤面想清爽可买亚超挂面。"
+    similarity: 4

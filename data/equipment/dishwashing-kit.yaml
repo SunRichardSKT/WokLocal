@@ -1,0 +1,13 @@
+equipment_id: dishwashing-kit
+name_zh: 洗碗套装
+name_en: Dishwashing kit
+category: must_have
+budget_level: low
+is_essential: true
+use_cases: [洗锅, 洗碗, 保持共用厨房卫生]
+substitutes_if_missing: [无]
+regions:
+  uk:
+    where_to_buy: "所有英国超市清洁用品区"
+    price_range: "£2-£8"
+    notes: "至少买 washing up liquid、sponge、kitchen roll；合租厨房别等别人提供。"

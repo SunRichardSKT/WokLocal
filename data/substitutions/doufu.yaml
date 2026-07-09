@@ -1,0 +1,16 @@
+ingredient_id: doufu
+name_zh: 豆腐
+name_en: Tofu
+pinyin: doufu
+category: 蛋白质
+aliases_zh: [老豆腐, 嫩豆腐, 北豆腐]
+aliases_en: [Firm tofu, Silken tofu, Extra firm tofu]
+aliases_pinyin: [laodoufu, nendoufu, beidoufu]
+search_keywords: [豆腐, tofu, firm tofu, silken tofu]
+common_uses: [麻婆豆腐, 煎豆腐, 汤, 素食蛋白]
+regions:
+  uk:
+    substitute: "Firm tofu 或 silken tofu"
+    where_to_buy: "大型超市素食冷藏区、亚超、Whole Foods；Tofoo 品牌常见"
+    usage_note: "firm tofu 适合煎炒，silken tofu 适合汤和嫩口菜；不要混用。"
+    similarity: 4

@@ -1,0 +1,16 @@
+ingredient_id: jixiong
+name_zh: 鸡胸肉
+name_en: Chicken breast
+pinyin: jixiong
+category: 蛋白质
+aliases_zh: [鸡胸, 去皮鸡胸]
+aliases_en: [Chicken breast fillets]
+aliases_pinyin: [jixiong, qupijixiong]
+search_keywords: [鸡胸肉, chicken breast, chicken breast fillets]
+common_uses: [健身餐, 炒鸡丁, 三明治]
+regions:
+  uk:
+    substitute: "Chicken breast fillets"
+    where_to_buy: "所有英国超市肉类冷藏区"
+    usage_note: "容易柴，切片后用淀粉和少量油腌 10 分钟会嫩很多。"
+    similarity: 5

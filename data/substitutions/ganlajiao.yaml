@@ -1,0 +1,16 @@
+ingredient_id: ganlajiao
+name_zh: 干辣椒
+name_en: Dried chili
+pinyin: ganlajiao
+category: 香料
+aliases_zh: [辣椒干, 干红辣椒]
+aliases_en: [Dried chilli, Chili flakes, Dried red chili]
+aliases_pinyin: [lajiaogan, ganhonglajiao]
+search_keywords: [dried chilli, chilli flakes, 干辣椒, 辣椒]
+common_uses: [炝锅, 辣味, 宫保鸡丁, 油泼]
+regions:
+  uk:
+    substitute: "Dried chilli flakes 或 whole dried chillies"
+    where_to_buy: "Tesco、Sainsbury's、Lidl、Aldi 香料区均常见；亚超选择更多"
+    usage_note: "chilli flakes 辣味释放快，少放一些，避免糊锅。"
+    similarity: 4

@@ -1,0 +1,16 @@
+ingredient_id: mogu
+name_zh: 蘑菇
+name_en: Mushrooms
+pinyin: mogu
+category: 蔬菜
+aliases_zh: [口蘑, 白蘑菇, 棕蘑菇]
+aliases_en: [Closed cup mushrooms, Chestnut mushrooms]
+aliases_pinyin: [koumo, baimogu, zongmogu]
+search_keywords: [蘑菇, mushrooms, chestnut mushrooms, closed cup mushrooms]
+common_uses: [盖饭, 炒蛋, 意面, 汤]
+regions:
+  uk:
+    substitute: "Closed cup mushrooms 或 chestnut mushrooms"
+    where_to_buy: "所有英国超市蔬菜区"
+    usage_note: "chestnut mushrooms 香味更浓；蘑菇会出水，炒菜先中火炒软。"
+    similarity: 5

@@ -1,0 +1,42 @@
+id: sandwich-ronghe
+name:
+  zh: 鸡蛋金枪鱼三明治
+  pinyin: Jidan Jinqiangyu Sanmingzhi
+  en: Egg Tuna Sandwich
+description: "英国超市食材就能完成的冷餐，适合带去图书馆或课间吃。"
+difficulty: 1
+time_minutes: 12
+servings: 1
+cuisine: 留学生厨房菜
+recipe_type: fusion
+budget_level: low
+scenarios: [quick_15, low_budget, tesco_friendly, low_smoke]
+tags: [三明治, 带饭, 冷餐, 低油烟]
+equipment:
+  required_ids: [saucepan, knife-board]
+  required: [小奶锅, 菜刀和砧板]
+  substitutes_if_missing: "可以买 ready boiled eggs 省掉煮蛋。"
+base_ingredients:
+  - ingredient_id: tusi
+    amount: "2 片"
+  - ingredient_id: jidan
+    name_zh: 鸡蛋
+    name_en: Egg
+    amount: "1 个"
+  - ingredient_id: jinqiangyu
+    amount: "半罐"
+  - ingredient_id: shengcai
+    amount: "几片"
+  - ingredient_id: heihujiao
+    amount: "少量"
+steps:
+  - order: 1
+    instruction: "鸡蛋煮 8-10 分钟，剥壳压碎。"
+  - order: 2
+    instruction: "金枪鱼沥干，和鸡蛋、黑胡椒拌匀。"
+  - order: 3
+    instruction: "吐司夹生菜和馅料，压紧后切开。"
+video_links: []
+common_mistakes:
+  - "馅料水分太多会让吐司变湿。"
+  - "带饭时生菜擦干再夹，口感更好。"

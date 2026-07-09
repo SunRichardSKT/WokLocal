@@ -1,0 +1,16 @@
+ingredient_id: layou
+name_zh: 辣椒油
+name_en: Chili oil
+pinyin: layou
+category: 调料
+aliases_zh: [红油, 油泼辣子, 辣油]
+aliases_en: [Chilli oil, Crispy chilli oil, Lao Gan Ma]
+aliases_pinyin: [hongyou, youpolazi, layou]
+search_keywords: [辣椒油, chili oil, chilli oil, crispy chilli oil, lao gan ma, 老干妈]
+common_uses: [拌面, 蘸料, 凉拌, 提辣]
+regions:
+  uk:
+    substitute: "Crispy chilli oil、Lao Gan Ma 或普通 chilli oil"
+    where_to_buy: "亚超最稳定；大型 Tesco/Sainsbury's 世界食品区可能有 Lao Gan Ma"
+    usage_note: "crispy chilli oil 通常更咸更香，做蘸料很好；炒菜时注意别糊。"
+    similarity: 4

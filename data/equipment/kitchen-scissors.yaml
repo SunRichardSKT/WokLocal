@@ -1,0 +1,13 @@
+equipment_id: kitchen-scissors
+name_zh: 厨房剪刀
+name_en: Kitchen scissors
+category: dorm_friendly
+budget_level: low
+is_essential: false
+use_cases: [剪鸡肉, 剪葱, 开包装, 处理三明治材料]
+substitutes_if_missing: [菜刀和砧板]
+regions:
+  uk:
+    where_to_buy: "IKEA、Argos、Amazon UK、大型超市厨具区"
+    price_range: "£3-£10"
+    notes: "不想处理菜刀的新手可以先用厨房剪刀处理鸡腿肉。"

@@ -1,0 +1,16 @@
+ingredient_id: shengchou
+name_zh: 生抽
+name_en: Light soy sauce
+pinyin: shengchou
+category: 调料
+aliases_zh: [酱油, 淡酱油, 鲜味酱油]
+aliases_en: [Soy sauce, Light soy, Reduced salt soy sauce]
+aliases_pinyin: [jiangyou, danjiangyou]
+search_keywords: [soy sauce, light soy sauce, 生抽, 酱油, kikkoman]
+common_uses: [炒菜调味, 腌肉, 蘸料, 炒饭]
+regions:
+  uk:
+    substitute: "Light soy sauce 或 Reduced Salt Soy Sauce"
+    where_to_buy: "Tesco、Sainsbury's、Waitrose 调料区常见；亚超可买李锦记、海天、珠江桥牌"
+    usage_note: "英超常见酱油有些偏咸，第一次可少放三分之一，出锅前再补味。"
+    similarity: 4

@@ -1,0 +1,45 @@
+id: dianfanbao-menfan
+name:
+  zh: 电饭煲鸡肉焖饭
+  pinyin: Dianfanbao Jirou Menfan
+  en: Rice Cooker Chicken Rice
+description: "一键完成的低油烟主食，适合没心情炒菜但想吃热饭的时候。"
+difficulty: 2
+time_minutes: 35
+servings: 2
+cuisine: 留学生厨房菜
+recipe_type: local_adapted
+budget_level: low
+scenarios: [low_budget, tesco_friendly, meal_prep, low_smoke]
+tags: [电饭煲, 焖饭, 低油烟, 带饭]
+equipment:
+  required_ids: [rice-cooker, knife-board]
+  required: [电饭煲, 菜刀和砧板]
+  substitutes_if_missing: "没有电饭煲不建议做这道，可改做酱油鸡肉饭。"
+base_ingredients:
+  - ingredient_id: dami
+    amount: "1 杯"
+  - ingredient_id: jitui
+    amount: "200 克"
+  - ingredient_id: huluobo
+    amount: "半根"
+  - ingredient_id: lengdongshucai
+    amount: "半杯"
+  - ingredient_id: shengchou
+    amount: "1 汤匙"
+  - ingredient_id: gaotangkuai
+    amount: "半块"
+    optional: true
+steps:
+  - order: 1
+    instruction: "米洗好，水量比平时少一点点。"
+  - order: 2
+    instruction: "鸡肉切小块，用生抽抓匀；胡萝卜切丁。"
+  - order: 3
+    instruction: "把鸡肉、胡萝卜、冷冻蔬菜铺在米上，不要搅。"
+  - order: 4
+    instruction: "按煮饭键，跳保温后焖 10 分钟再拌开。"
+video_links: []
+common_mistakes:
+  - "水太多会变粥，蔬菜也会出水。"
+  - "生鸡肉块不要切太大，避免不熟。"

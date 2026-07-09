@@ -1,0 +1,54 @@
+id: haoyou-mogu-jirou-yiwu
+name:
+  zh: 蚝油蘑菇鸡肉一锅饭
+  pinyin: Haoyou Mogu Jirou Yiwu
+  en: Oyster Mushroom Chicken Rice Bowl
+description: "用英国超市蘑菇和鸡腿肉做中式盖饭，食材好买，适合一次做两餐。"
+difficulty: 2
+time_minutes: 26
+servings: 2
+cuisine: 留学生厨房菜
+recipe_type: local_adapted
+budget_level: medium
+scenarios: [tesco_friendly, meal_prep, low_smoke]
+tags: [盖饭, 本地食材, 鸡肉, 餐备]
+equipment:
+  required_ids: [nonstick-pan, spatula, rice-cooker, knife-board]
+  required: [不粘锅, 锅铲, 电饭煲或熟米饭]
+  substitutes_if_missing: "没有电饭煲可买微波米饭包，先把菜炒好后直接盖上去。"
+base_ingredients:
+  - ingredient_id: jitui
+    name_zh: 去骨鸡腿肉
+    name_en: Boneless chicken thigh
+    amount: "300 克"
+  - ingredient_id: mogu
+    name_zh: 蘑菇
+    name_en: Mushrooms
+    amount: "一盒"
+  - ingredient_id: dami
+    amount: "2 碗熟米饭"
+  - ingredient_id: haoyou
+    amount: "1 汤匙"
+  - ingredient_id: shengchou
+    amount: "1 汤匙"
+  - ingredient_id: dianfen
+    amount: "1 茶匙"
+    optional: true
+  - ingredient_id: shiyongyou
+    amount: "1 汤匙"
+steps:
+  - order: 1
+    instruction: "鸡腿肉切块，用生抽、淀粉和一点油抓匀。蘑菇切片。"
+  - order: 2
+    instruction: "平底锅放油，中火把鸡肉煎到表面变色。"
+  - order: 3
+    instruction: "加入蘑菇炒软，放蚝油和少量水，盖盖焖 5 分钟。"
+  - order: 4
+    instruction: "开盖收汁，盖在米饭上。"
+video_links:
+  - platform: bilibili
+    title: "去 Bilibili 看蚝油鸡肉盖饭思路"
+    url: "https://www.bilibili.com/"
+common_mistakes:
+  - "蘑菇会出水，不要一开始就加太多水。"
+  - "蚝油和生抽都咸，收汁后再决定要不要补盐。"

@@ -1,0 +1,38 @@
+name: 提交新菜谱
+description: 建议新增一道适合留学生的中餐菜谱
+title: "新菜谱："
+labels: ["recipe"]
+body:
+  - type: input
+    id: recipe-name
+    attributes:
+      label: 菜名
+      placeholder: 西红柿炒鸡蛋
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: 为什么适合留学生
+      placeholder: 说明耗时、预算、厨具、食材获取难度
+    validations:
+      required: true
+  - type: textarea
+    id: ingredients
+    attributes:
+      label: 食材清单
+      placeholder: 写出标准食材和可选食材
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: 做法步骤
+      placeholder: 尽量用新手能看懂的语言
+    validations:
+      required: true
+  - type: textarea
+    id: mistakes
+    attributes:
+      label: 新手容易失败的点
+      placeholder: 火候、顺序、用量、替代后的差异等

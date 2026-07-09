@@ -1,0 +1,45 @@
+id: doufu-mogu-gaifan
+name:
+  zh: 豆腐蘑菇盖饭
+  pinyin: Doufu Mogu Gaifan
+  en: Tofu Mushroom Rice Bowl
+description: "素食友好的低油烟盖饭，豆腐和蘑菇在英国超市都相对好买。"
+difficulty: 2
+time_minutes: 22
+servings: 2
+cuisine: 留学生厨房菜
+recipe_type: local_adapted
+budget_level: low
+scenarios: [low_budget, tesco_friendly, meal_prep, low_smoke]
+tags: [素食, 盖饭, 豆腐, 低油烟]
+equipment:
+  required_ids: [nonstick-pan, spatula, rice-cooker]
+  required: [不粘锅, 锅铲, 米饭]
+  substitutes_if_missing: "没有米饭可用微波米饭。"
+base_ingredients:
+  - ingredient_id: doufu
+    amount: "1 盒"
+  - ingredient_id: mogu
+    amount: "半盒"
+  - ingredient_id: shengchou
+    amount: "1 汤匙"
+  - ingredient_id: haoyou
+    amount: "1 茶匙"
+    optional: true
+  - ingredient_id: dianfen
+    amount: "1 茶匙"
+  - ingredient_id: dami
+    amount: "2 碗熟米饭"
+steps:
+  - order: 1
+    instruction: "豆腐切块，蘑菇切片。"
+  - order: 2
+    instruction: "锅里少油，先把蘑菇炒软出香味。"
+  - order: 3
+    instruction: "加入豆腐、生抽、蚝油和少量水，轻轻推匀。"
+  - order: 4
+    instruction: "淀粉加水调开，倒入锅里勾薄芡，盖在米饭上。"
+video_links: []
+common_mistakes:
+  - "豆腐下锅后不要大力翻，会碎。"
+  - "淀粉水直接倒粉会结块，先用冷水调开。"

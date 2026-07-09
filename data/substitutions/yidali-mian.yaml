@@ -1,0 +1,16 @@
+ingredient_id: yidali-mian
+name_zh: 意面
+name_en: Pasta
+pinyin: yidali-mian
+category: 主食
+aliases_zh: [意大利面, 通心粉, 螺旋面]
+aliases_en: [Spaghetti, Penne, Fusilli]
+aliases_pinyin: [yidalimian, tongxinfen, luoxuanmian]
+search_keywords: [意面, pasta, spaghetti, penne, fusilli]
+common_uses: [拌面替代, 炒面替代, 快手主食]
+regions:
+  uk:
+    substitute: "Spaghetti 或 penne"
+    where_to_buy: "所有英国超市主食区，Lidl/Aldi 通常最便宜"
+    usage_note: "意面耐煮且便宜，可替代拌面主食；中式炒面口感会更弹。"
+    similarity: 3

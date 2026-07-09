@@ -1,0 +1,56 @@
+id: jiangyou-jirou-fan
+name:
+  zh: 酱油鸡肉饭
+  pinyin: Jiangyou Jirou Fan
+  en: Soy Sauce Chicken Rice Bowl
+description: "把英国超市鸡腿肉变成稳定盖饭，适合没有中式厨具的新手。"
+difficulty: 2
+time_minutes: 22
+servings: 2
+cuisine: 留学生快手菜
+recipe_type: local_adapted
+budget_level: low
+scenarios: [low_budget, pan_only, tesco_friendly, meal_prep, low_smoke]
+tags: [盖饭, 鸡肉, 一锅出, 低预算]
+equipment:
+  required_ids: [nonstick-pan, lid, rice-cooker]
+  required: [平底锅, 锅盖或锡纸]
+  substitutes_if_missing: "没有锅盖可以用锡纸临时盖住，让鸡肉更容易熟透。"
+base_ingredients:
+  - ingredient_id: jitui
+    name_zh: 去骨鸡腿肉
+    name_en: Boneless chicken thigh
+    amount: "300 克"
+  - ingredient_id: yangcong
+    name_zh: 洋葱
+    name_en: Onion
+    amount: "半个"
+  - ingredient_id: shengchou
+    amount: "1.5 汤匙"
+  - ingredient_id: laochou
+    amount: "半茶匙"
+    optional: true
+  - ingredient_id: baitang
+    name_zh: 白糖
+    name_en: Sugar
+    amount: "半茶匙"
+  - ingredient_id: mifan
+    name_zh: 米饭
+    name_en: Cooked rice
+    amount: "2 碗"
+steps:
+  - order: 1
+    instruction: "鸡腿肉切大块，洋葱切丝。"
+  - order: 2
+    instruction: "平底锅放油，中火把鸡肉两面煎到金黄。"
+  - order: 3
+    instruction: "加入洋葱炒软，倒入生抽、老抽、糖和少量水。"
+  - order: 4
+    instruction: "盖上锅盖焖 6-8 分钟，汤汁变浓后盖在米饭上。"
+video_links:
+  - platform: youtube
+    title: "去 YouTube 看鸡肉盖饭类似做法"
+    url: "https://www.youtube.com/"
+common_mistakes:
+  - "鸡肉切太小会容易变干。"
+  - "收汁时火太大，酱油容易糊底。"

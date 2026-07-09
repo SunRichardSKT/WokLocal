@@ -1,0 +1,41 @@
+name: 补充厨具建议
+description: 为某个地区补充厨具购买建议或宿舍替代方案
+title: "厨具建议："
+labels: ["equipment"]
+body:
+  - type: input
+    id: equipment
+    attributes:
+      label: 厨具名称
+      placeholder: 小电饭煲
+    validations:
+      required: true
+  - type: dropdown
+    id: region
+    attributes:
+      label: 地区
+      options:
+        - uk
+        - north_america
+        - europe
+        - australia
+        - japan_korea
+    validations:
+      required: true
+  - type: textarea
+    id: where
+    attributes:
+      label: 哪里能买到
+      placeholder: Argos、IKEA、Amazon UK、亚超等
+    validations:
+      required: true
+  - type: input
+    id: price
+    attributes:
+      label: 价格区间
+      placeholder: "£20-£45"
+  - type: textarea
+    id: notes
+    attributes:
+      label: 购买建议或替代方案
+      placeholder: 宿舍限制、尺寸、电压、替代厨具等

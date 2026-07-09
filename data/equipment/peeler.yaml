@@ -1,0 +1,13 @@
+equipment_id: peeler
+name_zh: 削皮刀
+name_en: Peeler
+category: optional_upgrade
+budget_level: low
+is_essential: false
+use_cases: [削土豆, 削胡萝卜, 做土豆丝应急]
+substitutes_if_missing: [小刀, 洗净不削皮]
+regions:
+  uk:
+    where_to_buy: "IKEA、Tesco、Sainsbury's、Amazon UK"
+    price_range: "£1-£6"
+    notes: "做土豆和胡萝卜多的话很省时间。"

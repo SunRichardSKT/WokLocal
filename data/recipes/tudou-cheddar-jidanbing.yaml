@@ -1,0 +1,52 @@
+id: tudou-cheddar-jidanbing
+name:
+  zh: 土豆切达鸡蛋饼
+  pinyin: Tudou Cheddar Jidan Bing
+  en: Potato Cheddar Egg Pancake
+description: "用英国超市最常见的土豆、鸡蛋和切达奶酪做一顿便宜顶饱的融合早午餐。"
+difficulty: 2
+time_minutes: 22
+servings: 1
+cuisine: 留学生厨房菜
+recipe_type: fusion
+budget_level: low
+scenarios: [low_budget, pan_only, tesco_friendly, low_smoke]
+tags: [融合菜, 低预算, 早午餐, 一锅出]
+equipment:
+  required_ids: [nonstick-pan, spatula, knife-board]
+  required: [不粘平底锅, 锅铲, 菜刀和砧板]
+  substitutes_if_missing: "没有菜刀时可用擦丝器处理土豆；没有切达可用任意 grated cheese。"
+base_ingredients:
+  - ingredient_id: tudou
+    amount: "1 个中等大小"
+  - ingredient_id: jidan
+    name_zh: 鸡蛋
+    name_en: Egg
+    amount: "2 个"
+  - ingredient_id: cheddar
+    name_zh: 切达奶酪
+    name_en: Cheddar cheese
+    amount: "一小把"
+  - ingredient_id: shiyongyou
+    amount: "1 汤匙"
+  - ingredient_id: yan
+    name_zh: 盐
+    name_en: Salt
+    amount: "少量"
+steps:
+  - order: 1
+    instruction: "土豆切细丝或擦丝，鸡蛋打散，加少量盐。"
+    tip: "土豆丝越细越容易熟，适合宿舍小火力。"
+  - order: 2
+    instruction: "平底锅放油，中火把土豆丝铺平，煎到边缘变软。"
+  - order: 3
+    instruction: "倒入蛋液，撒切达奶酪，盖上锅盖或锡纸焖到蛋液凝固。"
+  - order: 4
+    instruction: "翻面再煎 1 分钟，切块吃。"
+video_links:
+  - platform: youtube
+    title: "去 YouTube 看土豆鸡蛋饼类似做法"
+    url: "https://www.youtube.com/"
+common_mistakes:
+  - "土豆切太粗，外面焦了里面还没熟。"
+  - "奶酪本身有咸味，盐不要一次放多。"

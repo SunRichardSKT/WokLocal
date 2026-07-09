@@ -1,0 +1,13 @@
+equipment_id: rice-cooker
+name_zh: 小电饭煲
+name_en: Mini rice cooker
+category: must_have
+budget_level: medium
+is_essential: true
+use_cases: [煮米饭, 煮粥, 简单焖饭, 保温]
+substitutes_if_missing: [带盖小奶锅, 微波炉米饭盒]
+regions:
+  uk:
+    where_to_buy: "Argos、Amazon UK、当地亚超、部分大型 Tesco"
+    price_range: "£20-£45 入门够用"
+    notes: "一人食 0.6L-1L 足够；合租可买 1.5L。"

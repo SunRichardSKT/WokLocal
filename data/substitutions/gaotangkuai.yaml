@@ -1,0 +1,16 @@
+ingredient_id: gaotangkuai
+name_zh: 高汤块
+name_en: Stock cube
+pinyin: gaotangkuai
+category: 调料
+aliases_zh: [鸡汤块, 浓汤宝, 蔬菜高汤块]
+aliases_en: [Chicken stock cube, Vegetable stock cube]
+aliases_pinyin: [jitangkuai, nongtangbao, shucaigaotangkuai]
+search_keywords: [高汤块, stock cube, chicken stock cube, vegetable stock cube]
+common_uses: [汤面, 焖饭, 咖喱, 炖菜]
+regions:
+  uk:
+    substitute: "Chicken stock cube 或 vegetable stock cube"
+    where_to_buy: "所有英国超市调料区"
+    usage_note: "stock cube 很咸，先用半块；汤面和焖饭很方便。"
+    similarity: 4

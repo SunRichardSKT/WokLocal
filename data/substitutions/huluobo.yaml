@@ -1,0 +1,16 @@
+ingredient_id: huluobo
+name_zh: 胡萝卜
+name_en: Carrot
+pinyin: huluobo
+category: 蔬菜
+aliases_zh: [红萝卜, 萝卜仔]
+aliases_en: [Carrots]
+aliases_pinyin: [hongluobo]
+search_keywords: [胡萝卜, carrot, carrots]
+common_uses: [咖喱, 炒饭, 焖饭, 沙拉]
+regions:
+  uk:
+    substitute: "Carrots"
+    where_to_buy: "所有英国超市蔬菜区，Lidl/Aldi 常有大袋低价"
+    usage_note: "切小丁更容易熟，适合焖饭和咖喱。"
+    similarity: 5

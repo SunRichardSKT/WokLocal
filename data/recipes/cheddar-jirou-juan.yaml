@@ -1,0 +1,49 @@
+id: cheddar-jirou-juan
+name:
+  zh: 切达鸡肉卷
+  pinyin: Cheddar Jirou Juan
+  en: Cheddar Chicken Wrap
+description: "用英国超市 tortilla、鸡肉和切达做热卷饼，适合带饭和快速晚餐。"
+difficulty: 2
+time_minutes: 20
+servings: 2
+cuisine: 留学生厨房菜
+recipe_type: fusion
+budget_level: medium
+scenarios: [pan_only, tesco_friendly, meal_prep, low_smoke]
+tags: [卷饼, 鸡肉, 融合菜, 带饭]
+equipment:
+  required_ids: [nonstick-pan, spatula, knife-board]
+  required: [不粘锅, 锅铲, 菜刀和砧板]
+  substitutes_if_missing: "没有 tortilla 可用吐司夹馅做热三明治。"
+base_ingredients:
+  - ingredient_id: jixiong
+    amount: "250 克"
+  - ingredient_id: tortilla
+    name_zh: 卷饼皮
+    name_en: Tortilla wraps
+    amount: "2 张"
+  - ingredient_id: cheddar
+    name_zh: 切达奶酪
+    name_en: Cheddar cheese
+    amount: "一小把"
+  - ingredient_id: shengcai
+    amount: "几片"
+  - ingredient_id: fanqiejiang
+    amount: "适量"
+    optional: true
+  - ingredient_id: heihujiao
+    amount: "少量"
+steps:
+  - order: 1
+    instruction: "鸡胸切片，用盐和黑胡椒腌 5 分钟。"
+  - order: 2
+    instruction: "平底锅把鸡肉煎熟，切成条。"
+  - order: 3
+    instruction: "卷饼皮上放鸡肉、生菜、切达和少量番茄酱。"
+  - order: 4
+    instruction: "卷紧后放锅里小火两面各热 1 分钟。"
+video_links: []
+common_mistakes:
+  - "鸡胸太厚会外熟内生，切薄更稳。"
+  - "生菜太湿会让卷饼皮变软破掉。"

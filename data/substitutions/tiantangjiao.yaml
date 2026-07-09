@@ -1,0 +1,16 @@
+ingredient_id: tiantangjiao
+name_zh: 甜椒
+name_en: Bell pepper
+pinyin: tiantangjiao
+category: 蔬菜
+aliases_zh: [彩椒, 灯笼椒]
+aliases_en: [Pepper, Sweet pepper, Bell pepper]
+aliases_pinyin: [caijiao, denglongjiao]
+search_keywords: [甜椒, bell pepper, sweet pepper, pepper, 彩椒]
+common_uses: [炒肉, 盖饭, 三明治, 烤菜]
+regions:
+  uk:
+    substitute: "Mixed peppers 或 bell peppers"
+    where_to_buy: "所有英国超市蔬菜区"
+    usage_note: "英国 pepper 通常指甜椒，不是黑胡椒；颜色不同味道差别不大。"
+    similarity: 5

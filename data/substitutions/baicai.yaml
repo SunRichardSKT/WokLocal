@@ -1,0 +1,16 @@
+ingredient_id: baicai
+name_zh: 白菜
+name_en: Chinese leaf
+pinyin: baicai
+category: 蔬菜
+aliases_zh: [大白菜, 娃娃菜]
+aliases_en: [Chinese cabbage, Napa cabbage]
+aliases_pinyin: [dabaicai, wawacai]
+search_keywords: [白菜, chinese leaf, chinese cabbage, napa cabbage]
+common_uses: [汤面, 炖菜, 炒菜]
+regions:
+  uk:
+    substitute: "Chinese leaf 或 sweetheart cabbage"
+    where_to_buy: "大型超市蔬菜区常见 Chinese leaf；亚超更稳定"
+    usage_note: "sweetheart cabbage 更硬更甜，炒菜可以，做汤口感不同。"
+    similarity: 4

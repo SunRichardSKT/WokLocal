@@ -1,0 +1,13 @@
+equipment_id: colander
+name_zh: 滤网/漏勺
+name_en: Colander or sieve
+category: optional_upgrade
+budget_level: low
+is_essential: false
+use_cases: [沥面, 洗菜, 沥罐头, 解冻虾仁]
+substitutes_if_missing: [锅盖留缝倒水, 大勺捞出]
+regions:
+  uk:
+    where_to_buy: "IKEA、Tesco、Sainsbury's、Amazon UK"
+    price_range: "£2-£8"
+    notes: "经常煮面的话很值得买；小厨房可买折叠款。"

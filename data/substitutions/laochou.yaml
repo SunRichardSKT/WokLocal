@@ -1,0 +1,16 @@
+ingredient_id: laochou
+name_zh: 老抽
+name_en: Dark soy sauce
+pinyin: laochou
+category: 调料
+aliases_zh: [深色酱油, 上色酱油]
+aliases_en: [Dark soy, Dark soy sauce]
+aliases_pinyin: [shensejiangyou, shangsejiangyou]
+search_keywords: [dark soy sauce, 老抽, 红烧, 上色]
+common_uses: [红烧上色, 卤味上色, 酱油鸡上色]
+regions:
+  uk:
+    substitute: "Dark Soy Sauce"
+    where_to_buy: "大型 Tesco/Sainsbury's 的世界食品区可能有；更稳定的是当地亚超或线上中超"
+    usage_note: "主要负责上色，不要用生抽等量替代；没有老抽时可省略，味道影响小但颜色会浅。"
+    similarity: 4

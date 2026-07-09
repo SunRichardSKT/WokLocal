@@ -1,0 +1,16 @@
+ingredient_id: zhuroumo
+name_zh: 猪肉末
+name_en: Pork mince
+pinyin: zhuroumo
+category: 蛋白质
+aliases_zh: [肉末, 猪绞肉]
+aliases_en: [Minced pork, Pork mince]
+aliases_pinyin: [roumo, zhujiaorou]
+search_keywords: [猪肉末, pork mince, minced pork, 肉末]
+common_uses: [肉末拌面, 麻婆豆腐, 炒饭]
+regions:
+  uk:
+    substitute: "Pork mince"
+    where_to_buy: "Tesco/Sainsbury's/Lidl/Aldi 肉类冷藏区"
+    usage_note: "英国肉末常有不同 fat percentage，炒菜选 5%-12% 比较稳。"
+    similarity: 5

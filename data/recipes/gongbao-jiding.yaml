@@ -1,0 +1,68 @@
+id: gongbao-jiding
+name:
+  zh: 宫保鸡丁
+  pinyin: Gongbao Jiding
+  en: Kung Pao Chicken
+description: "酸甜咸辣平衡的下饭菜，示范腌肉、调汁和替代调料。"
+difficulty: 3
+time_minutes: 28
+servings: 2
+cuisine: 川菜
+recipe_type: chinese
+budget_level: medium
+scenarios: [pan_only, meal_prep]
+tags: [下饭, 鸡肉, 微辣, 进阶]
+equipment:
+  required_ids: [nonstick-pan, spatula, prep-bowl]
+  required: [炒锅或不粘锅, 小碗, 锅铲]
+  substitutes_if_missing: "没有炒锅可以用大号不粘锅，鸡肉先煎熟盛出，再炒调料。"
+base_ingredients:
+  - ingredient_id: jitui
+    name_zh: 去骨鸡腿肉
+    name_en: Boneless chicken thigh
+    amount: "250 克"
+  - ingredient_id: huasheng
+    name_zh: 熟花生
+    name_en: Roasted peanuts
+    amount: "一小把"
+  - ingredient_id: huanggua
+    name_zh: 黄瓜或甜椒
+    name_en: Cucumber or bell pepper
+    amount: "半根或半个"
+    optional: true
+  - ingredient_id: shengchou
+    amount: "1 汤匙"
+  - ingredient_id: laochou
+    amount: "半茶匙"
+    optional: true
+  - ingredient_id: liaojiu
+    amount: "1 茶匙"
+  - ingredient_id: chencu
+    amount: "1 汤匙"
+  - ingredient_id: dianfen
+    amount: "1 茶匙"
+  - ingredient_id: ganlajiao
+    amount: "2-4 段"
+    optional: true
+  - ingredient_id: huajiao
+    amount: "十几粒"
+    optional: true
+steps:
+  - order: 1
+    instruction: "鸡腿肉切丁，用生抽、料酒、淀粉和一点油抓匀，腌 10 分钟。"
+    tip: "鸡胸也能做，但更容易柴；鸡腿肉对新手更友好。"
+  - order: 2
+    instruction: "小碗里混合生抽、醋、糖、少量水和淀粉，做成碗汁。"
+  - order: 3
+    instruction: "热锅放油，鸡丁炒到变色后盛出。"
+  - order: 4
+    instruction: "小火炒香干辣椒和花椒，倒回鸡丁和配菜。"
+  - order: 5
+    instruction: "倒入碗汁快速翻匀，最后加花生出锅。"
+video_links:
+  - platform: bilibili
+    title: "去 Bilibili 看宫保鸡丁调汁思路"
+    url: "https://www.bilibili.com/"
+common_mistakes:
+  - "辣椒和花椒火太大容易糊，糊了会发苦。"
+  - "碗汁没有提前调好，手忙脚乱时鸡肉容易炒老。"

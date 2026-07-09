@@ -1,0 +1,13 @@
+equipment_id: prep-bowl
+name_zh: 小碗/备菜碗
+name_en: Prep bowl
+category: optional_upgrade
+budget_level: low
+is_essential: false
+use_cases: [打蛋, 调碗汁, 腌肉, 分装配料]
+substitutes_if_missing: [马克杯, 饭碗, 保鲜盒]
+regions:
+  uk:
+    where_to_buy: "IKEA、Tesco、Sainsbury's、亚超"
+    price_range: "£1-£6"
+    notes: "宫保鸡丁这类菜提前调碗汁，会显著降低翻车率。"

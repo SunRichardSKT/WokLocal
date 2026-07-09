@@ -1,0 +1,44 @@
+id: microwave-zhengdan
+name:
+  zh: 微波炉蒸蛋
+  pinyin: Weibolu Zheng Dan
+  en: Microwave Steamed Egg
+description: "没有蒸锅也能做的低油烟蛋羹，适合宿舍厨房和早餐。"
+difficulty: 1
+time_minutes: 10
+servings: 1
+cuisine: 家常菜
+recipe_type: local_adapted
+budget_level: low
+scenarios: [quick_15, low_budget, tesco_friendly, low_smoke]
+tags: [微波炉, 低油烟, 鸡蛋, 早餐]
+equipment:
+  required_ids: [microwave-container]
+  required: [可微波碗或饭盒]
+  substitutes_if_missing: "可用瓷碗加盘子盖住，但要确认能进微波炉。"
+base_ingredients:
+  - ingredient_id: jidan
+    name_zh: 鸡蛋
+    name_en: Egg
+    amount: "2 个"
+  - ingredient_id: yan
+    amount: "一小撮"
+  - ingredient_id: xiangyou
+    amount: "几滴"
+    optional: true
+  - ingredient_id: shengchou
+    amount: "半茶匙"
+    optional: true
+steps:
+  - order: 1
+    instruction: "鸡蛋打散，加入约 1.5 倍温水和一小撮盐。"
+  - order: 2
+    instruction: "过筛可选，盖上盖子或盘子。"
+  - order: 3
+    instruction: "中火微波 2 分钟，停 30 秒，再微波 1-2 分钟到凝固。"
+  - order: 4
+    instruction: "出炉后淋少量生抽和香油。"
+video_links: []
+common_mistakes:
+  - "一次高火太久会变蜂窝。"
+  - "水太少会硬，水太多会不凝固。"

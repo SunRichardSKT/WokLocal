@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { AlertTriangle, CheckCircle2, Clock3, ExternalLink, MapPin, ShoppingBasket, Star, Utensils, Video } from "lucide-react";
 import { RecipeCover } from "@/components/recipe-cover";
 import { RegionSelector, getStoredRegion, subscribeToRegionChange } from "@/components/region-selector";
+import { assetPath } from "@/lib/assets";
 import { scenarioLabelMap } from "@/lib/recommendations";
 import { regions, type RegionKey } from "@/lib/regions";
 import type { Equipment, Recipe, RecipeStep, Substitution } from "@/lib/schemas";
@@ -381,7 +382,7 @@ export function RecipeDetail({ recipe, substitutions, equipment }: RecipeDetailP
                     <p className="leading-7 text-ink-100">{renderHighlightedInstruction(step.instruction, getStepHighlights(step))}</p>
                     {step.image ? (
                       <figure className="mt-3 overflow-hidden rounded-md border border-white/10 bg-white/[0.035]">
-                        <img className="h-auto w-full object-cover" src={step.image.src} alt={step.image.alt} loading="lazy" />
+                        <img className="h-auto w-full object-cover" src={assetPath(step.image.src)} alt={step.image.alt} loading="lazy" />
                         <figcaption className="flex flex-col gap-1 px-3 py-2 text-xs text-ink-500 sm:flex-row sm:items-center sm:justify-between">
                           <span>{step.image.caption ?? step.image.alt}</span>
                           <span>{step.image.credit ?? imageSrcLabel(step.image.src)}</span>

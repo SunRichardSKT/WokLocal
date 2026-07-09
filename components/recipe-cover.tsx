@@ -1,3 +1,4 @@
+import { assetPath } from "@/lib/assets";
 import type { Recipe } from "@/lib/schemas";
 
 type RecipeCoverProps = {
@@ -16,7 +17,7 @@ export function RecipeCover({ recipe, className = "", compact = false }: RecipeC
   if (recipe.cover_image) {
     return (
       <figure className={`relative overflow-hidden rounded-md border border-white/10 bg-ink-900 ${className}`}>
-        <img className="h-full w-full object-cover" src={recipe.cover_image.src} alt={recipe.cover_image.alt} loading={compact ? "lazy" : "eager"} />
+        <img className="h-full w-full object-cover" src={assetPath(recipe.cover_image.src)} alt={recipe.cover_image.alt} loading={compact ? "lazy" : "eager"} />
         <figcaption className="absolute bottom-0 left-0 right-0 bg-ink-950/70 px-3 py-2 text-xs text-ink-300 backdrop-blur">
           {recipe.cover_image.caption ?? recipe.name.zh}
         </figcaption>

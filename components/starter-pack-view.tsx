@@ -5,10 +5,11 @@ import { useEffect, useMemo, useState } from "react";
 import { CheckCircle2, MapPin, UploadCloud, WalletCards } from "lucide-react";
 import { getStoredRegion, setStoredRegion, subscribeToRegionChange } from "@/components/region-selector";
 import { regions, supportedRegionKeys, type RegionKey } from "@/lib/regions";
-import type { StarterPack } from "@/lib/schemas";
+import type { Guide, StarterPack } from "@/lib/schemas";
 
 type StarterPackViewProps = {
   packs: StarterPack[];
+  guides: Guide[];
 };
 
 const priorityLabels: Record<StarterPack["sections"][number]["priority"], string> = {
@@ -17,9 +18,10 @@ const priorityLabels: Record<StarterPack["sections"][number]["priority"], string
   optional: "有预算再买"
 };
 
-export function StarterPackView({ packs }: StarterPackViewProps) {
+export function StarterPackView({ packs, guides }: StarterPackViewProps) {
   const [selectedRegion, setSelectedRegion] = useState<RegionKey>((packs[0]?.region as RegionKey | undefined) ?? "uk");
   const visiblePacks = useMemo(() => packs.filter((pack) => pack.region === selectedRegion), [packs, selectedRegion]);
+  const visibleGuides = useMemo(() => guides.filter((guide) => guide.region === selectedRegion), [guides, selectedRegion]);
 
   useEffect(() => {
     const storedRegion = getStoredRegion();
@@ -51,8 +53,8 @@ export function StarterPackView({ packs }: StarterPackViewProps) {
               <button
                 className={
                   selectedRegion === regionKey
-                    ? "rounded-md bg-scallion px-3 py-2 text-sm font-semibold text-ink-950"
-                    : "rounded-md border border-white/10 bg-white/[0.035] px-3 py-2 text-sm text-ink-300 hover:border-scallion/40"
+                    ? "min-h-11 rounded-md bg-scallion px-3 py-2 text-sm font-semibold text-ink-950"
+                    : "min-h-11 rounded-md border border-white/10 bg-white/[0.035] px-3 py-2 text-sm text-ink-300 hover:border-scallion/40"
                 }
                 key={regionKey}
                 onClick={() => {
@@ -119,6 +121,37 @@ export function StarterPackView({ packs }: StarterPackViewProps) {
           </p>
         </section>
       )}
+
+      <section className="surface rounded-md p-4 sm:p-5">
+        <p className="text-sm font-medium text-scallion">快速入门宝典</p>
+        <h2 className="mt-2 text-xl font-semibold text-ink-100">{regions[selectedRegion]} 的厨房搭建建议</h2>
+        {visibleGuides.length > 0 ? (
+          <div className="mt-4 space-y-5">
+            {visibleGuides.map((guide) => (
+              <article key={guide.guide_id}>
+                <p className="max-w-3xl text-sm leading-6 text-ink-300">{guide.summary}</p>
+                <div className="mt-4 grid gap-3 md:grid-cols-2">
+                  {guide.sections.map((section) => (
+                    <section className="rounded-md border border-white/10 bg-white/[0.035] p-4" key={section.title}>
+                      <h3 className="font-semibold text-ink-100">{section.title}</h3>
+                      <ul className="mt-3 space-y-2 text-sm leading-6 text-ink-300">
+                        {section.items.map((item) => (
+                          <li className="flex gap-2" key={item}>
+                            <CheckCircle2 className="mt-1 shrink-0 text-scallion" size={15} aria-hidden="true" />
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </section>
+                  ))}
+                </div>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <p className="mt-3 text-sm leading-6 text-ink-300">这个地区还没有完整的快速入门建议。你可以先补充附近超市、宿舍电器限制或第一周厨房搭建经验。</p>
+        )}
+      </section>
 
       <section className="surface rounded-md p-4">
         <h2 className="flex items-center gap-2 text-lg font-semibold text-ink-100">

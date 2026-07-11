@@ -6,14 +6,23 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-6xl gap-4 px-4 py-6 text-sm leading-6 text-ink-300 md:grid-cols-[minmax(0,1fr)_auto]">
         <div>
           <p className="font-medium text-ink-100">就地开饭 WokLocal</p>
-          <p className="mt-1">给海外生活的新手厨房准备的开放资料站：菜谱、食材替代、厨具建议和采购清单都会持续补充。</p>
+          <p className="mt-1">给海外生活的新手厨房准备的开放资料站：菜谱、食材替代、厨具建议和落地清单都会持续补充。</p>
         </div>
         <div className="flex flex-wrap gap-3 md:justify-end">
           <Link className="text-scallion hover:text-scallion/80" href="/today/">
             今天吃什么
           </Link>
+          <Link className="text-scallion hover:text-scallion/80" href="/pantry/">
+            我有什么食材
+          </Link>
+          <Link className="text-scallion hover:text-scallion/80" href="/saved/">
+            我的菜谱
+          </Link>
+          <Link className="text-scallion hover:text-scallion/80" href="/shopping-list/">
+            购物清单
+          </Link>
           <Link className="text-scallion hover:text-scallion/80" href="/starter/">
-            落地清单
+            落地清单与宝典
           </Link>
           <Link className="text-scallion hover:text-scallion/80" href="/contribute/">
             补充内容

@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { AlertTriangle, CheckCircle2, Clock3, ExternalLink, MapPin, ShoppingBasket, Star, Utensils, Video } from "lucide-react";
 import { RecipeCover } from "@/components/recipe-cover";
+import { RecipeSaveButton, RecipeShoppingButton, RecipeViewTracker } from "@/components/recipe-memory-actions";
 import { RegionSelector, getStoredRegion, subscribeToRegionChange } from "@/components/region-selector";
 import { assetPath } from "@/lib/assets";
 import { scenarioLabelMap } from "@/lib/recommendations";
@@ -115,17 +116,33 @@ function renderHighlightedInstruction(instruction: string, highlights: Highlight
 }
 
 function StepHighlight({ highlight }: { highlight: HighlightInfo }) {
+  const [open, setOpen] = useState(false);
+
   return (
-    <span className="group relative inline-flex">
-      <span className="cursor-help rounded bg-scallion/[0.16] px-1 py-0.5 text-scallion underline decoration-scallion/50 decoration-dotted underline-offset-4">
+    <span className="group relative">
+      <button
+        aria-label={`${highlight.label} 的本地替代信息`}
+        aria-expanded={open}
+        className="cursor-pointer rounded bg-scallion/[0.16] px-1 py-0.5 text-left text-scallion underline decoration-scallion/50 decoration-dotted underline-offset-4 outline-none transition focus-visible:ring-2 focus-visible:ring-scallion/60"
+        onClick={() => setOpen((value) => !value)}
+        type="button"
+      >
         {highlight.label}
-      </span>
-      <span className="pointer-events-none absolute left-0 top-full z-20 mt-2 hidden w-72 rounded-md border border-white/10 bg-ink-950 p-3 text-left text-sm leading-6 text-ink-300 shadow-soft group-hover:block group-focus-within:block">
+      </button>
+      <span className="pointer-events-none absolute left-1/2 top-full z-20 mt-2 hidden w-72 max-w-[calc(100vw-2rem)] -translate-x-1/2 rounded-md border border-white/10 bg-ink-950 p-3 text-left text-sm leading-6 text-ink-300 shadow-soft group-hover:block group-focus-within:block">
         <span className="block font-semibold text-ink-100">{highlight.title}</span>
         {highlight.subtitle ? <span className="mt-1 block text-xs text-ink-500">{highlight.subtitle}</span> : null}
         <span className="mt-2 block">{highlight.body}</span>
         {highlight.meta ? <span className="mt-2 block text-xs text-ink-500">{highlight.meta}</span> : null}
       </span>
+      {open ? (
+        <span className="mt-2 block w-full rounded-md border border-scallion/25 bg-ink-950 p-3 text-left text-sm leading-6 text-ink-300 md:hidden">
+          <span className="block font-semibold text-ink-100">{highlight.title}</span>
+          {highlight.subtitle ? <span className="mt-1 block text-xs text-ink-500">{highlight.subtitle}</span> : null}
+          <span className="mt-2 block">{highlight.body}</span>
+          {highlight.meta ? <span className="mt-2 block text-xs text-ink-500">{highlight.meta}</span> : null}
+        </span>
+      ) : null}
     </span>
   );
 }
@@ -266,10 +283,11 @@ export function RecipeDetail({ recipe, substitutions, equipment }: RecipeDetailP
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
+      <RecipeViewTracker recipeId={recipe.id} />
       <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_22rem]">
         <article className="space-y-5">
           <section className="py-3">
-            <RecipeCover recipe={recipe} className="mb-5 aspect-[16/9] min-h-64" />
+            <RecipeCover recipe={recipe} className="mb-5 aspect-[16/9] min-h-52 sm:min-h-64" />
             <div className="flex flex-wrap gap-2 text-sm text-ink-300">
               <span className="pill">{recipe.cuisine}</span>
               <span className="pill">预算 {recipe.budget_level === "low" ? "低" : recipe.budget_level === "medium" ? "中" : "高"}</span>
@@ -287,20 +305,24 @@ export function RecipeDetail({ recipe, substitutions, equipment }: RecipeDetailP
             <h1 className="mt-4 text-3xl font-semibold tracking-normal text-ink-100 sm:text-4xl">{recipe.name.zh}</h1>
             <p className="mt-2 text-base text-ink-300">{recipe.name.en}</p>
             <p className="mt-4 max-w-3xl text-base leading-7 text-ink-300">{recipe.description}</p>
+            <div className="mt-5 flex flex-col gap-2 sm:flex-row">
+              <RecipeSaveButton recipeId={recipe.id} />
+              <RecipeShoppingButton recipeId={recipe.id} />
+            </div>
             <div className="mt-5 grid grid-cols-3 gap-2 text-sm">
-              <div className="surface rounded-md p-3">
+              <div className="surface rounded-md p-2.5 sm:p-3">
                 <Clock3 className="mb-2 text-scallion" size={18} aria-hidden="true" />
-                <p className="text-ink-300">耗时</p>
+                <p className="text-xs text-ink-300 sm:text-sm">耗时</p>
                 <p className="mt-1 font-semibold text-ink-100">{recipe.time_minutes} 分钟</p>
               </div>
-              <div className="surface rounded-md p-3">
+              <div className="surface rounded-md p-2.5 sm:p-3">
                 <Star className="mb-2 text-soy" size={18} aria-hidden="true" />
-                <p className="text-ink-300">难度</p>
+                <p className="text-xs text-ink-300 sm:text-sm">难度</p>
                 <p className="mt-1 font-semibold text-ink-100">{recipe.difficulty}/5</p>
               </div>
-              <div className="surface rounded-md p-3">
+              <div className="surface rounded-md p-2.5 sm:p-3">
                 <Utensils className="mb-2 text-chili" size={18} aria-hidden="true" />
-                <p className="text-ink-300">份量</p>
+                <p className="text-xs text-ink-300 sm:text-sm">份量</p>
                 <p className="mt-1 font-semibold text-ink-100">{recipe.servings} 人份</p>
               </div>
             </div>
@@ -376,7 +398,7 @@ export function RecipeDetail({ recipe, substitutions, equipment }: RecipeDetailP
             ) : null}
             <ol className="mt-4 space-y-4">
               {recipe.steps.map((step) => (
-                <li className="grid gap-3 sm:grid-cols-[2.5rem_minmax(0,1fr)]" key={step.order}>
+                <li className="grid grid-cols-[2.25rem_minmax(0,1fr)] gap-3" key={step.order}>
                   <span className="flex size-9 items-center justify-center rounded-md bg-scallion text-sm font-bold text-ink-950">{step.order}</span>
                   <div>
                     <p className="leading-7 text-ink-100">{renderHighlightedInstruction(step.instruction, getStepHighlights(step))}</p>

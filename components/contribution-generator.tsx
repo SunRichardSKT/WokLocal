@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Clipboard, Download, ExternalLink, Plus, RotateCcw, Search, Trash2 } from "lucide-react";
+import { Clipboard, Download, ExternalLink, ImagePlus, Plus, RotateCcw, Search, Trash2 } from "lucide-react";
 import { scenarioDefinitions } from "@/lib/recommendations";
 import type { Equipment, RecommendationScenario, Substitution } from "@/lib/schemas";
 
@@ -9,8 +9,26 @@ type ContributionKind = "recipe" | "substitution" | "equipment" | "starter";
 type RecipeType = "chinese" | "fusion" | "local_adapted";
 type BudgetLevel = "low" | "medium" | "high";
 type IngredientSource = "library" | "custom";
-type SectionKey = "basic" | "scenarios" | "equipment" | "ingredients" | "steps" | "mistakes" | "region";
+type SectionKey = "basic" | "scenarios" | "equipment" | "ingredients" | "steps" | "mistakes" | "media" | "region";
 type StarterPriority = "today" | "three_days" | "optional";
+type ImageMode = "none" | "upload" | "url";
+
+type PreparedImage = {
+  blob: Blob;
+  previewUrl: string;
+  sourceName: string;
+  width: number;
+  height: number;
+};
+
+type ImageDraft = {
+  mode: ImageMode;
+  url: string;
+  alt: string;
+  caption: string;
+  credit: string;
+  file?: PreparedImage;
+};
 
 type RecipeIngredientDraft = {
   source: IngredientSource;
@@ -25,6 +43,7 @@ type RecipeIngredientDraft = {
 type RecipeStepDraft = {
   instruction: string;
   tip: string;
+  image: ImageDraft;
 };
 
 type GeneratedContribution = {
@@ -76,9 +95,11 @@ const defaultIngredients: RecipeIngredientDraft[] = [
   { source: "custom", ingredientId: "cheddar", nameZh: "切达奶酪", nameEn: "Cheddar cheese", amount: "一小把", optional: false, note: "" }
 ];
 
+const emptyImageDraft = (): ImageDraft => ({ mode: "none", url: "", alt: "", caption: "", credit: "" });
+
 const defaultSteps: RecipeStepDraft[] = [
-  { instruction: "把主要食材切好。", tip: "新手先把所有食材放在手边。" },
-  { instruction: "按顺序下锅，调味后出锅。", tip: "" }
+  { instruction: "把主要食材切好。", tip: "新手先把所有食材放在手边。", image: emptyImageDraft() },
+  { instruction: "按顺序下锅，调味后出锅。", tip: "", image: emptyImageDraft() }
 ];
 
 const defaultSubstitution = {
@@ -146,12 +167,88 @@ function yamlList(values: string[]) {
   return `[${values.map(quote).join(", ")}]`;
 }
 
+function yamlBlockScalar(value: string, indent: number) {
+  const padding = " ".repeat(indent);
+  return value
+    .replace(/\r\n/g, "\n")
+    .split("\n")
+    .map((line) => `${padding}${line}`)
+    .join("\n");
+}
+
 function isValidId(value: string) {
   return /^[a-z0-9-]+$/.test(value.trim());
 }
 
 function validateUrl(value: string) {
   return !value.trim() || /^https?:\/\/\S+$/i.test(value.trim());
+}
+
+function hasImage(image: ImageDraft) {
+  return image.mode === "upload" ? Boolean(image.file) : image.mode === "url" && Boolean(image.url.trim());
+}
+
+function suggestedImageName(recipeId: string, slot: "cover" | number) {
+  return `${recipeId}-${slot === "cover" ? "cover" : `step-${slot}`}.webp`;
+}
+
+function imageSource(image: ImageDraft, localPath: string) {
+  return image.mode === "url" ? image.url.trim() : localPath;
+}
+
+function imageYaml(image: ImageDraft, key: "cover_image" | "image", indent: number, localPath: string) {
+  if (!hasImage(image)) return "";
+
+  const padding = " ".repeat(indent);
+  const childPadding = " ".repeat(indent + 2);
+  const lines = [`${padding}${key}:`, `${childPadding}src: ${quote(imageSource(image, localPath))}`, `${childPadding}alt: ${quote(image.alt.trim())}`];
+  if (image.caption.trim()) lines.push(`${childPadding}caption: ${quote(image.caption.trim())}`);
+  if (image.credit.trim()) lines.push(`${childPadding}credit: ${quote(image.credit.trim())}`);
+  return lines.join("\n");
+}
+
+async function optimizeImage(file: File): Promise<PreparedImage> {
+  if (!/image\/(jpeg|png|webp)/.test(file.type)) {
+    throw new Error("请上传 JPG、PNG 或 WebP 图片。");
+  }
+  if (file.size > 12 * 1024 * 1024) {
+    throw new Error("图片请控制在 12MB 以内。");
+  }
+
+  const sourceUrl = URL.createObjectURL(file);
+  try {
+    const image = await new Promise<HTMLImageElement>((resolve, reject) => {
+      const element = new Image();
+      element.onload = () => resolve(element);
+      element.onerror = () => reject(new Error("这张图片无法读取。"));
+      element.src = sourceUrl;
+    });
+    const longestEdge = 1600;
+    const scale = Math.min(1, longestEdge / Math.max(image.naturalWidth, image.naturalHeight));
+    const width = Math.max(1, Math.round(image.naturalWidth * scale));
+    const height = Math.max(1, Math.round(image.naturalHeight * scale));
+    const canvas = document.createElement("canvas");
+    canvas.width = width;
+    canvas.height = height;
+    const context = canvas.getContext("2d");
+    if (!context) throw new Error("浏览器无法处理这张图片。");
+    context.drawImage(image, 0, 0, width, height);
+    const blob = await new Promise<Blob>((resolve, reject) => {
+      canvas.toBlob((result) => (result ? resolve(result) : reject(new Error("图片压缩失败。"))), "image/webp", 0.82);
+    });
+    return { blob, previewUrl: URL.createObjectURL(blob), sourceName: file.name, width, height };
+  } finally {
+    URL.revokeObjectURL(sourceUrl);
+  }
+}
+
+function downloadPreparedImage(image: PreparedImage, fileName: string) {
+  const anchor = document.createElement("a");
+  anchor.href = image.previewUrl;
+  anchor.download = fileName;
+  document.body.appendChild(anchor);
+  anchor.click();
+  anchor.remove();
 }
 
 function firstNonEmpty(...values: string[]) {
@@ -251,6 +348,102 @@ function TextArea({
   );
 }
 
+function ImageEditor({
+  image,
+  onChange,
+  suggestedName,
+  title
+}: {
+  image: ImageDraft;
+  onChange: (image: ImageDraft) => void;
+  suggestedName: string;
+  title: string;
+}) {
+  const [error, setError] = useState("");
+  const active = hasImage(image);
+
+  async function handleFile(file?: File) {
+    if (!file) return;
+    try {
+      setError("");
+      const prepared = await optimizeImage(file);
+      if (image.file?.previewUrl) URL.revokeObjectURL(image.file.previewUrl);
+      onChange({ ...image, mode: "upload", url: "", file: prepared });
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : "图片处理失败。" );
+    }
+  }
+
+  function chooseMode(mode: ImageMode) {
+    if (image.file?.previewUrl && mode !== "upload") URL.revokeObjectURL(image.file.previewUrl);
+    onChange({ ...image, mode, url: mode === "url" ? image.url : "", file: mode === "upload" ? image.file : undefined });
+    setError("");
+  }
+
+  return (
+    <div className="rounded-md border border-white/10 bg-white/[0.02] p-3">
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p className="text-sm font-medium text-ink-100">{title}</p>
+          <p className="mt-1 text-xs leading-5 text-ink-500">推荐上传到本地后压缩为 WebP；页面不会直接上传文件，生成投稿后请把下载的图片附到 Issue 或邮件。</p>
+        </div>
+        <div className="flex flex-wrap gap-1">
+          {([
+            ["none", "不添加"],
+            ["upload", "本地图片"],
+            ["url", "外部链接"]
+          ] as Array<[ImageMode, string]>).map(([mode, label]) => (
+            <button className={image.mode === mode ? "rounded-md bg-scallion px-2 py-1 text-xs font-semibold text-ink-950" : "rounded-md border border-white/10 px-2 py-1 text-xs text-ink-300 hover:bg-white/[0.06]"} key={mode} onClick={() => chooseMode(mode)} type="button">
+              {label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {image.mode === "upload" ? (
+        <div className="mt-3 grid gap-3">
+          <label className="flex cursor-pointer items-center justify-center gap-2 rounded-md border border-dashed border-white/20 px-3 py-4 text-sm text-ink-300 transition hover:border-scallion/50 hover:bg-scallion/[0.05]">
+            <ImagePlus size={17} className="text-scallion" aria-hidden="true" />
+            选择 JPG、PNG 或 WebP 图片（最大 12MB）
+            <input className="sr-only" accept="image/jpeg,image/png,image/webp" onChange={(event) => handleFile(event.target.files?.[0])} type="file" />
+          </label>
+          {image.file ? (
+            <div className="grid gap-3 sm:grid-cols-[8rem_minmax(0,1fr)]">
+              <img className="aspect-[4/3] w-full rounded-md border border-white/10 object-cover" src={image.file.previewUrl} alt="投稿图片预览" />
+              <div className="min-w-0 text-sm leading-6 text-ink-300">
+                <p className="truncate text-ink-100">{image.file.sourceName}</p>
+                <p className="text-ink-500">已压缩为 {image.file.width} x {image.file.height} WebP</p>
+                <p className="mt-2 break-all text-ink-300">建议路径：<code className="text-scallion">/recipe-media/{suggestedName}</code></p>
+                <button className="mt-2 inline-flex items-center gap-1 rounded-md border border-white/10 px-2 py-1 text-xs text-ink-300 hover:bg-white/[0.06]" onClick={() => downloadPreparedImage(image.file!, suggestedName)} type="button">
+                  <Download size={14} aria-hidden="true" />
+                  下载压缩图
+                </button>
+              </div>
+            </div>
+          ) : null}
+        </div>
+      ) : null}
+
+      {image.mode === "url" ? (
+        <div className="mt-3">
+          <TextInput label="图片链接" value={image.url} onChange={(url) => onChange({ ...image, url })} placeholder="https://..." hint="仅使用你有权使用、且长期稳定的图片链接；站内本地图片更可靠。" />
+        </div>
+      ) : null}
+
+      {active ? (
+        <div className="mt-3 grid gap-3 sm:grid-cols-2">
+          <TextInput label="图片说明" value={image.alt} onChange={(alt) => onChange({ ...image, alt })} hint="必填，用一句话说明画面内容。" />
+          <TextInput label="图片来源 / 作者" required={false} value={image.credit} onChange={(credit) => onChange({ ...image, credit })} hint="选填，建议写明本人拍摄、授权来源或作者。" />
+          <div className="sm:col-span-2">
+            <TextInput label="图片图注" required={false} value={image.caption} onChange={(caption) => onChange({ ...image, caption })} hint="选填，会显示在图片下方。" />
+          </div>
+        </div>
+      ) : null}
+      {error ? <p className="mt-3 text-sm text-chili">{error}</p> : null}
+    </div>
+  );
+}
+
 function SectionPanel({
   title,
   children,
@@ -297,6 +490,68 @@ function CompletionSummary({ generated }: { generated: GeneratedContribution }) 
         {complete ? "格式看起来可以提交。复制 YAML 或 Issue 内容后发给维护者即可。" : `还有 ${generated.validationErrors.length} 个问题需要修正。`}
       </p>
     </section>
+  );
+}
+
+function MarkdownPreview({ value }: { value: string }) {
+  const lines = value.trim() ? value.replace(/\r\n/g, "\n").split("\n") : ["还没有填写主要内容。"];
+
+  return (
+    <div className="mt-3 max-h-72 overflow-auto rounded-md border border-white/10 bg-ink-950 p-3 text-sm leading-6 text-ink-300">
+      {lines.map((line, index) => {
+        const trimmed = line.trim();
+
+        if (!trimmed) {
+          return <div className="h-2" key={`blank-${index}`} />;
+        }
+
+        if (trimmed.startsWith("### ")) {
+          return (
+            <h4 className="mt-3 font-semibold text-ink-100 first:mt-0" key={`h3-${index}`}>
+              {trimmed.slice(4)}
+            </h4>
+          );
+        }
+
+        if (trimmed.startsWith("## ")) {
+          return (
+            <h3 className="mt-4 text-base font-semibold text-ink-100 first:mt-0" key={`h2-${index}`}>
+              {trimmed.slice(3)}
+            </h3>
+          );
+        }
+
+        if (trimmed.startsWith("# ")) {
+          return (
+            <h2 className="mt-4 text-lg font-semibold text-ink-100 first:mt-0" key={`h1-${index}`}>
+              {trimmed.slice(2)}
+            </h2>
+          );
+        }
+
+        const bullet = trimmed.match(/^[-*]\s+(.+)$/);
+        if (bullet) {
+          return (
+            <p className="flex gap-2" key={`bullet-${index}`}>
+              <span className="text-scallion">•</span>
+              <span>{bullet[1]}</span>
+            </p>
+          );
+        }
+
+        const numbered = trimmed.match(/^(\d+)\.\s+(.+)$/);
+        if (numbered) {
+          return (
+            <p className="flex gap-2" key={`numbered-${index}`}>
+              <span className="text-scallion">{numbered[1]}.</span>
+              <span>{numbered[2]}</span>
+            </p>
+          );
+        }
+
+        return <p key={`paragraph-${index}`}>{trimmed}</p>;
+      })}
+    </div>
   );
 }
 
@@ -381,6 +636,7 @@ export function ContributionGenerator({ ingredients: ingredientLibrary, equipmen
   const [selectedEquipmentIds, setSelectedEquipmentIds] = useState<string[]>(["nonstick-pan", "spatula"]);
   const [ingredients, setIngredients] = useState<RecipeIngredientDraft[]>(defaultIngredients);
   const [steps, setSteps] = useState<RecipeStepDraft[]>(defaultSteps);
+  const [coverImage, setCoverImage] = useState<ImageDraft>(emptyImageDraft);
   const [substitution, setSubstitution] = useState(defaultSubstitution);
   const [equipment, setEquipment] = useState(defaultEquipment);
   const [starterPack, setStarterPack] = useState(defaultStarterPack);
@@ -400,6 +656,7 @@ export function ContributionGenerator({ ingredients: ingredientLibrary, equipmen
     setSelectedEquipmentIds(["nonstick-pan", "spatula"]);
     setIngredients(defaultIngredients);
     setSteps(defaultSteps);
+    setCoverImage(emptyImageDraft());
     setSubstitution(defaultSubstitution);
     setEquipment(defaultEquipment);
     setStarterPack(defaultStarterPack);
@@ -410,6 +667,7 @@ export function ContributionGenerator({ ingredients: ingredientLibrary, equipmen
     let yaml = "";
     let targetPath = "";
     let issueTitle = "";
+    let mediaSubmission = "";
     let completedRequired = 0;
     let totalRequired = 0;
 
@@ -431,6 +689,10 @@ export function ContributionGenerator({ ingredients: ingredientLibrary, equipmen
       const numericServings = Number(recipe.servings);
       const usableIngredients = ingredients.filter((item) => item.amount.trim() && (item.source === "library" ? item.ingredientId.trim() : item.nameZh.trim() || item.nameEn.trim()));
       const usableSteps = steps.filter((item) => item.instruction.trim());
+      const imageEntries = [
+        { image: coverImage, name: suggestedImageName(id, "cover"), label: "菜谱封面" },
+        ...usableSteps.map((step, index) => ({ image: step.image, name: suggestedImageName(id, index + 1), label: `步骤 ${index + 1}` }))
+      ].filter((entry) => hasImage(entry.image));
 
       const requiredChecks = [
         recipe.nameZh.trim() || recipe.nameEn.trim(),
@@ -465,6 +727,10 @@ export function ContributionGenerator({ ingredients: ingredientLibrary, equipmen
       });
       if (usableSteps.length === 0) addError(sectionErrors, "steps", "至少填写一个步骤。");
       if (!validateUrl(recipe.videoUrl)) addError(sectionErrors, "basic", "视频链接必须是 http 或 https URL。");
+      imageEntries.forEach((entry) => {
+        if (!entry.image.alt.trim()) addError(sectionErrors, "media", `${entry.label}需要填写图片说明。`);
+        if (entry.image.mode === "url" && !validateUrl(entry.image.url)) addError(sectionErrors, "media", `${entry.label}的外部图片链接无效。`);
+      });
 
       targetPath = `data/recipes/${id}.yaml`;
       issueTitle = `新菜谱：${displayName}`;
@@ -488,13 +754,22 @@ export function ContributionGenerator({ ingredients: ingredientLibrary, equipmen
           return lines.join("\n");
         })
         .join("\n");
+      const coverBlock = imageYaml(coverImage, "cover_image", 0, `/recipe-media/${suggestedImageName(id, "cover")}`);
       const stepBlock = usableSteps
         .map((step, index) => {
           const lines = [`  - order: ${index + 1}`, `    instruction: ${quote(step.instruction)}`];
           if (step.tip.trim()) lines.push(`    tip: ${quote(step.tip)}`);
+          const stepImageBlock = imageYaml(step.image, "image", 4, `/recipe-media/${suggestedImageName(id, index + 1)}`);
+          if (stepImageBlock) lines.push(stepImageBlock);
           return lines.join("\n");
         })
         .join("\n");
+      const uploadedImages = imageEntries.filter((entry) => entry.image.mode === "upload");
+      if (uploadedImages.length > 0) {
+        mediaSubmission = `\n\n图片附件（请把下列下载的压缩图拖入这个 Issue；邮件投稿则作为附件发送）：\n${uploadedImages
+          .map((entry) => `- ${entry.name}（${entry.label}，发布路径：\`/public/recipe-media/${entry.name}\`）`)
+          .join("\n")}\n\n维护说明：图片放入 \`public/recipe-media/\` 后，下面 YAML 的站内路径即可直接生效。`;
+      }
 
       yaml = `id: ${id}
 name:
@@ -502,6 +777,7 @@ name:
   pinyin: ${quote(recipePinyin)}
   en: ${quote(recipeNameEn)}
 description: ${quote(recipe.description)}
+${coverBlock ? `${coverBlock}\n` : ""}difficulty: ${numericDifficulty || 2}
 difficulty: ${numericDifficulty || 2}
 time_minutes: ${numericTime || 20}
 servings: ${numericServings || 1}
@@ -621,14 +897,15 @@ sections:
         category: "落地清单"
         where_to_buy: ["见备注"]
         estimated_budget: "见备注"
-        note: ${quote(content || "请补充主要内容。")}
+        note: |
+${yamlBlockScalar(content || "请补充主要内容。", 10)}
 `;
     }
 
     const validationErrors = Object.values(sectionErrors).flat();
-    const issueBody = `目标文件：\`${targetPath}\`\n\n请审阅下面的 YAML：\n\n\`\`\`yaml\n${yaml}\`\`\``;
+    const issueBody = `目标文件：\`${targetPath}\`\n\n请审阅下面的 YAML：\n\n\`\`\`yaml\n${yaml}\`\`\`${mediaSubmission}`;
     return { targetPath, fileName: targetPath.split("/").pop() ?? "contribution.yaml", yaml, issueTitle, issueBody, validationErrors, sectionErrors, completedRequired, totalRequired };
-  }, [equipment, equipmentItems, ingredients, kind, recipe, recipeScenarios, selectedEquipmentIds, starterPack, steps, substitution]);
+  }, [coverImage, equipment, equipmentItems, ingredients, kind, recipe, recipeScenarios, selectedEquipmentIds, starterPack, steps, substitution]);
 
   const issueUrl =
     generated.validationErrors.length === 0
@@ -697,7 +974,7 @@ sections:
   return (
     <div className="space-y-5">
       <div className="surface rounded-md p-2">
-        <div className="grid gap-2 sm:grid-cols-4">
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
           {tabs.map((tab) => (
             <button
               className={tab.id === kind ? "rounded-md bg-scallion px-3 py-2 text-sm font-semibold text-ink-950" : "rounded-md px-3 py-2 text-sm text-ink-300 hover:bg-white/[0.06]"}
@@ -718,7 +995,7 @@ sections:
           <div className="flex flex-col gap-3 rounded-md border border-white/10 bg-white/[0.035] p-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <h2 className="text-lg font-semibold text-ink-100">可视化编辑</h2>
-              <p className="mt-1 text-sm leading-6 text-ink-300">不会直接上传，只生成可复制内容和 Issue 链接。</p>
+              <p className="mt-1 text-sm leading-6 text-ink-300">不会直接写入仓库；菜谱图片会在本地压缩，供你下载后附到 Issue 或邮件。</p>
             </div>
             <button className="inline-flex items-center justify-center gap-2 rounded-md border border-white/10 px-3 py-2 text-sm font-semibold text-ink-100 hover:bg-white/[0.06]" onClick={resetExample} type="button">
               <RotateCcw size={16} aria-hidden="true" />
@@ -762,6 +1039,11 @@ sections:
                   <TextInput label="标签，逗号分隔" value={recipe.tags} onChange={(value) => setRecipe({ ...recipe, tags: value })} />
                 </div>
                 <TextInput label="视频链接" required={false} value={recipe.videoUrl} onChange={(value) => setRecipe({ ...recipe, videoUrl: value })} placeholder="https://..." />
+              </SectionPanel>
+
+              <SectionPanel title="图片" errors={generated.sectionErrors.media} optional>
+                <ImageEditor image={coverImage} onChange={setCoverImage} suggestedName={suggestedImageName(generated.fileName.replace(/\.yaml$/, "") || "new-recipe", "cover")} title="菜谱封面" />
+                <p className="text-sm leading-6 text-ink-300">封面图推荐拍成横图，步骤图推荐只放关键动作。选择本地图片后，请下载压缩图；提交 Issue 时把图片拖入正文，邮件投稿则直接添加附件。</p>
               </SectionPanel>
 
               <SectionPanel title="推荐场景" errors={generated.sectionErrors.scenarios}>
@@ -874,7 +1156,7 @@ sections:
 
               <SectionPanel title="步骤" errors={generated.sectionErrors.steps}>
                 <div className="flex justify-end">
-                  <button className="inline-flex items-center gap-1 rounded-md border border-white/10 px-2 py-1 text-xs text-ink-300 hover:bg-white/[0.06]" onClick={() => setSteps([...steps, { instruction: "", tip: "" }])} type="button">
+                  <button className="inline-flex items-center gap-1 rounded-md border border-white/10 px-2 py-1 text-xs text-ink-300 hover:bg-white/[0.06]" onClick={() => setSteps([...steps, { instruction: "", tip: "", image: emptyImageDraft() }])} type="button">
                     <Plus size={14} aria-hidden="true" />
                     添加步骤
                   </button>
@@ -890,6 +1172,12 @@ sections:
                       </div>
                       <TextArea label="步骤说明" value={step.instruction} onChange={(value) => setSteps(steps.map((item, i) => (i === index ? { ...item, instruction: value } : item)))} />
                       <TextInput label="新手提示" required={false} value={step.tip} onChange={(value) => setSteps(steps.map((item, i) => (i === index ? { ...item, tip: value } : item)))} />
+                      <ImageEditor
+                        image={step.image}
+                        onChange={(image) => setSteps(steps.map((item, i) => (i === index ? { ...item, image } : item)))}
+                        suggestedName={suggestedImageName(generated.fileName.replace(/\.yaml$/, "") || "new-recipe", index + 1)}
+                        title={`步骤 ${index + 1} 配图`}
+                      />
                     </div>
                   ))}
                 </div>
@@ -1020,7 +1308,7 @@ sections:
                 />
                 <div className="rounded-md border border-white/10 bg-ink-950 p-3">
                   <p className="text-sm font-semibold text-ink-100">Markdown 预览</p>
-                  <pre className="mt-3 max-h-72 overflow-auto whitespace-pre-wrap text-sm leading-6 text-ink-300">{starterPack.content || "还没有填写主要内容。"}</pre>
+                  <MarkdownPreview value={starterPack.content} />
                 </div>
               </SectionPanel>
             </>

@@ -60,7 +60,7 @@ type RegionSelectorProps = {
 
 export function RegionSelector({ value, onChange, compact = false }: RegionSelectorProps) {
   return (
-    <label className="flex w-full items-center gap-2 rounded-md border border-white/10 bg-ink-850 px-3 py-2 sm:w-auto">
+    <label className="flex min-h-11 w-full items-center gap-2 rounded-md border border-white/10 bg-ink-850 px-3 py-2 sm:w-auto">
       <Globe2 className="shrink-0 text-scallion" size={18} aria-hidden="true" />
       <span className={compact ? "sr-only" : "shrink-0 text-sm text-ink-300"}>地区</span>
       <select

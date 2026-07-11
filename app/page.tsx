@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, ClipboardList, Clock3, Flame, ShoppingBasket, Sparkles, Wrench, Wheat } from "lucide-react";
+import { ArrowRight, ClipboardList, Clock3, Flame, Heart, SearchCheck, ShoppingBasket, Sparkles, Wrench, Wheat } from "lucide-react";
 import { RegionAwarePanel } from "@/components/region-aware-panel";
 import { RecipeCover } from "@/components/recipe-cover";
 import { getEquipment, getIngredients, getRecipes } from "@/lib/data";
@@ -19,17 +19,29 @@ export default function HomePage() {
           <p className="mt-5 max-w-2xl text-base leading-7 text-ink-300">
             每道菜保留标准做法，并给出当地超市能买到的替代食材、购买位置和味道差异。欢迎世界各地留子慢慢补齐更多信息。
           </p>
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-            <Link className="inline-flex items-center justify-center gap-2 rounded-md bg-scallion px-4 py-3 text-sm font-semibold text-ink-950 transition hover:bg-scallion/90" href="/recipes/">
+          <div className="mt-6 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:gap-3">
+            <Link className="col-span-2 inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-scallion px-4 py-3 text-sm font-semibold text-ink-950 transition hover:bg-scallion/90" href="/recipes/">
               看菜谱
               <ArrowRight size={16} aria-hidden="true" />
             </Link>
-            <Link className="inline-flex items-center justify-center gap-2 rounded-md border border-scallion/40 bg-scallion/[0.12] px-4 py-3 text-sm font-semibold text-scallion transition hover:bg-scallion/[0.18]" href="/today/">
+            <Link className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-scallion/40 bg-scallion/[0.12] px-3 py-3 text-sm font-semibold text-scallion transition hover:bg-scallion/[0.18] sm:px-4" href="/today/">
               今天吃什么
               <Sparkles size={16} aria-hidden="true" />
             </Link>
-            <Link className="inline-flex items-center justify-center gap-2 rounded-md border border-white/10 bg-white/[0.04] px-4 py-3 text-sm font-semibold text-ink-100 transition hover:bg-white/[0.08]" href="/about/">
-              了解项目
+            <Link className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-white/10 bg-white/[0.04] px-3 py-3 text-sm font-semibold text-ink-100 transition hover:bg-white/[0.08] sm:px-4" href="/about/">
+              上传指南
+            </Link>
+            <Link className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-white/10 bg-white/[0.04] px-3 py-3 text-sm font-semibold text-ink-100 transition hover:bg-white/[0.08] sm:px-4" href="/saved/">
+              我的菜谱
+              <Heart size={16} aria-hidden="true" />
+            </Link>
+            <Link className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-white/10 bg-white/[0.04] px-3 py-3 text-sm font-semibold text-ink-100 transition hover:bg-white/[0.08] sm:px-4" href="/shopping-list/">
+              购物清单
+              <ShoppingBasket size={16} aria-hidden="true" />
+            </Link>
+            <Link className="col-span-2 inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-white/10 bg-white/[0.04] px-4 py-3 text-sm font-semibold text-ink-100 transition hover:bg-white/[0.08]" href="/pantry/">
+              我有什么食材
+              <SearchCheck size={16} aria-hidden="true" />
             </Link>
           </div>
         </div>
@@ -40,8 +52,8 @@ export default function HomePage() {
       <section className="mt-8 grid gap-3 sm:grid-cols-3">
         <Link href="/starter/" className="surface rounded-md p-4 transition hover:border-scallion/40">
           <ClipboardList className="text-scallion" size={20} aria-hidden="true" />
-          <p className="mt-3 text-2xl font-semibold text-ink-100">落地清单与注意事项</p>
-          <p className="mt-1 text-sm leading-6 text-ink-300">按地区整理刚落地要买什么、去哪买、哪些先别急。</p>
+          <p className="mt-3 text-2xl font-semibold text-ink-100">落地清单与宝典</p>
+          <p className="mt-1 text-sm leading-6 text-ink-300">按地区整理刚落地要买什么、去哪买，以及如何把厨房快速搭起来。</p>
         </Link>
         <Link href="/ingredients/" className="surface rounded-md p-4 transition hover:border-scallion/40">
           <Wheat className="text-scallion" size={20} aria-hidden="true" />
@@ -56,11 +68,11 @@ export default function HomePage() {
       </section>
 
       <section className="mt-3 grid gap-3 sm:grid-cols-3">
-        <Link href="/guides/" className="surface rounded-md p-4 transition hover:border-scallion/40">
+        <div className="surface rounded-md p-4">
           <ShoppingBasket className="text-scallion" size={20} aria-hidden="true" />
-          <p className="mt-3 text-2xl font-semibold text-ink-100">英国</p>
-          <p className="mt-1 text-sm leading-6 text-ink-300">当前重点覆盖英国，包含常见英超与亚超购买场景。</p>
-        </Link>
+          <p className="mt-3 text-2xl font-semibold text-ink-100">英国样板</p>
+          <p className="mt-1 text-sm leading-6 text-ink-300">当前重点覆盖英国，包含常见英超、亚超与厨房搭建场景。</p>
+        </div>
         <div className="surface rounded-md p-4">
           <Clock3 className="text-soy" size={20} aria-hidden="true" />
           <p className="mt-3 text-2xl font-semibold text-ink-100">12-28</p>

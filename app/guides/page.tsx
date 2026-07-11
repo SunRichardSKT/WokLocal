@@ -1,22 +1,21 @@
-import { GuidesView } from "@/components/guides-view";
-import { getGuides } from "@/lib/data";
+import Link from "next/link";
 
 export const metadata = {
-  title: "落地快速入门宝典 | 就地开饭",
-  description: "按地区整理留学生落地后搭建厨房、购买厨具和食材的快速入门清单。"
+  title: "已合并：落地清单与新手宝典 | 就地开饭",
+  description: "落地快速入门建议已合并至落地清单与新手宝典。"
 };
 
 export default function GuidesPage() {
-  const guides = getGuides();
-
   return (
-    <div className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
-      <section className="mb-6">
-        <p className="text-sm font-medium text-scallion">Starter Guide</p>
-        <h1 className="mt-2 text-3xl font-semibold tracking-normal text-ink-100 sm:text-4xl">落地快速入门宝典</h1>
-        <p className="mt-3 max-w-2xl text-sm leading-6 text-ink-300">到达后的前 48 小时，先把做饭环境搭起来：买什么、去哪买、哪些先不用急。</p>
+    <div className="mx-auto max-w-3xl px-4 py-12 sm:py-16">
+      <section className="surface rounded-md p-5 sm:p-6">
+        <p className="text-sm font-medium text-scallion">Page Moved</p>
+        <h1 className="mt-2 text-2xl font-semibold text-ink-100">落地宝典已合并</h1>
+        <p className="mt-3 text-sm leading-6 text-ink-300">采购清单、厨房搭建建议和地区注意事项现在都在同一个页面，方便按地区一次看完。</p>
+        <Link className="mt-5 inline-flex min-h-11 items-center justify-center rounded-md bg-scallion px-4 py-3 text-sm font-semibold text-ink-950" href="/starter/">
+          前往落地清单与宝典
+        </Link>
       </section>
-      <GuidesView guides={guides} />
     </div>
   );
 }

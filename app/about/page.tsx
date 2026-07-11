@@ -16,7 +16,7 @@ export default function AboutPage() {
         <p className="text-sm font-medium text-scallion">Upload Guide</p>
         <h1 className="mt-2 text-3xl font-semibold tracking-normal text-ink-100 sm:text-4xl">上传指南</h1>
         <p className="mt-4 max-w-3xl text-base leading-7 text-ink-300">
-          就地开饭欢迎世界各地留子补充真实经验：一道做成功过的菜、一个当地超市能买到的替代食材、一件值得买或不值得买的厨具，或者一份刚落地时的采购清单。
+          就地开饭欢迎世界各地留子补充真实经验：一道做成功过的菜、一个当地超市能买到的替代食材、一件值得买或不值得买的厨具，或者一份刚落地时的落地清单与注意事项。
         </p>
         <div className="mt-6 flex flex-col gap-3 sm:flex-row">
           <Link className="inline-flex items-center justify-center rounded-md bg-scallion px-4 py-3 text-sm font-semibold text-ink-950 hover:bg-scallion/90" href="/contribute/">
@@ -155,11 +155,22 @@ export default function AboutPage() {
       <section className="surface mt-6 rounded-md p-5">
         <h2 className="flex items-center gap-2 text-xl font-semibold text-ink-100">
           <PenLine size={19} aria-hidden="true" />
-          小提示
+          图片怎么投稿
         </h2>
         <p className="mt-3 text-sm leading-6 text-ink-300">
-          图片投稿暂不支持站内上传。你可以在邮件里附图，或在 Issue / 邮件正文里说明图片来源和是否允许本站使用。
+          图片不会直接上传到站点。为了让 GitHub Pages 上的封面和步骤图稳定显示，请在可视化贡献页选择本地图片：页面会在你的浏览器里压缩成 WebP，并给出统一文件名和发布路径。压缩过程不会把图片发到第三方服务。
         </p>
+        <div className="mt-4 grid gap-3 text-sm leading-6 text-ink-300 md:grid-cols-2">
+          <div className="rounded-md border border-white/10 bg-white/[0.035] p-4">
+            <h3 className="font-medium text-ink-100">通过 GitHub Issue</h3>
+            <p className="mt-2">1. 在菜谱的“图片”区选择封面或步骤图，填写图片说明。2. 下载压缩图并复制 Issue 内容。3. 打开 Issue 后，把下载的图片直接拖进正文，再提交。维护者会把图片放进 <code className="text-scallion">public/recipe-media/</code> 并合并对应 YAML。</p>
+          </div>
+          <div className="rounded-md border border-white/10 bg-white/[0.035] p-4">
+            <h3 className="font-medium text-ink-100">通过邮件投稿</h3>
+            <p className="mt-2">把可视化贡献页生成的内容粘进邮件正文，并把下载后的 WebP 图片作为附件发到 guyanrichard@qq.com。邮件标题可写“就地开饭投稿 - 菜谱 - 地区 - 菜名”。</p>
+          </div>
+        </div>
+        <p className="mt-4 text-sm leading-6 text-ink-300">优先使用本人拍摄或已获得明确授权的图片；请写明来源。外部图片链接可以作为临时参考，但可能失效，站内本地图片会更可靠。</p>
       </section>
     </div>
   );

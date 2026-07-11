@@ -42,7 +42,7 @@ npm run build
 - `data/substitutions/*.yaml`：共享食材替代库。
 - `data/equipment/*.yaml`：厨具库。
 - `data/guides/*.yaml`：地区落地快速入门宝典。
-- `data/starter-packs/*.yaml`：第一周采购清单。
+- `data/starter-packs/*.yaml`：落地清单与注意事项。
 
 菜谱通过 `ingredient_id` 引用替代库，通过 `equipment.required_ids` 引用厨具库。普通本地食材可以直接在菜谱里写 `name_zh` 和 `name_en`；调料、香料或海外难找的食材应优先进入共享替代库。
 
@@ -50,13 +50,13 @@ npm run build
 
 - `/recipes`：菜谱列表和类型筛选。
 - `/today`：按时间、预算、厨具和购物场景推荐今天做什么。
-- `/starter`：英国新生第一周采购清单。
+- `/starter`：落地清单与注意事项。
 - `/ingredients`：食材对照表，支持中文、英文和别名搜索。
 - `/equipment`：厨具购买建议。
 - `/guides`：地区落地快速入门宝典。
 - `/contribute`：可视化生成 YAML 和 GitHub Issue 内容。
 
-当前英国样板数据包含食材替代、厨具建议、落地宝典，以及中餐和本地食材改造菜。
+当前英国样板数据包含食材替代、厨具建议、落地宝典，以及中餐、融合菜和本地食材改造菜。
 
 ## GitHub Pages 部署
 

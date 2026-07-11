@@ -55,8 +55,8 @@ export function RecipesExplorer({ recipes, cuisines, tags, recipeTypes }: Recipe
   return (
     <div className="space-y-5">
       <section className="surface rounded-md p-4">
-        <div className="grid gap-3 md:grid-cols-[minmax(0,1.4fr)_repeat(5,minmax(0,1fr))]">
-          <label className="relative block">
+        <div className="grid grid-cols-2 gap-3 md:grid-cols-[minmax(0,1.4fr)_repeat(5,minmax(0,1fr))]">
+          <label className="relative col-span-2 block md:col-span-1">
             <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-ink-500" size={18} aria-hidden="true" />
             <input
               className="control w-full pl-10"
@@ -119,7 +119,7 @@ export function RecipesExplorer({ recipes, cuisines, tags, recipeTypes }: Recipe
                 <h2 className="truncate text-lg font-semibold text-ink-100">{recipe.name.zh}</h2>
                 <p className="mt-1 truncate text-sm text-ink-300">{recipe.name.en}</p>
               </div>
-              <span className="rounded-md bg-scallion/[0.15] px-2 py-1 text-xs font-medium text-scallion">{recipe.cuisine}</span>
+              <span className="max-w-28 shrink-0 truncate rounded-md bg-scallion/[0.15] px-2 py-1 text-xs font-medium text-scallion">{recipe.cuisine}</span>
             </div>
             <p className="mt-3 line-clamp-2 min-h-12 text-sm leading-6 text-ink-300">{recipe.description}</p>
             <div className="mt-4 flex flex-wrap gap-2">

@@ -1,5 +1,5 @@
 name: 提交新菜谱
-description: 建议新增一道适合留学生的中餐菜谱
+description: 建议新增一道适合留学生的厨房菜谱
 title: "新菜谱："
 labels: ["recipe"]
 body:
@@ -36,3 +36,9 @@ body:
     attributes:
       label: 新手容易失败的点
       placeholder: 火候、顺序、用量、替代后的差异等
+  - type: textarea
+    id: images
+    attributes:
+      label: 图片（可选）
+      description: 请优先使用可视化贡献页压缩后的 WebP 图片，并直接拖入本 Issue。请说明图片来源和是否允许本站使用。
+      placeholder: 封面图 / 步骤图拖到这里；本人拍摄、授权来源或作者说明写在下方。

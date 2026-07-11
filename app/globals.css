@@ -26,6 +26,17 @@ body {
     "PingFang SC", "Microsoft YaHei", sans-serif;
 }
 
+body::before {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  content: "";
+  background-image: linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.012) 1px, transparent 1px);
+  background-size: 36px 36px;
+  mask-image: linear-gradient(to bottom, black, transparent 72%);
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -38,17 +49,27 @@ input {
   touch-action: manipulation;
 }
 
+button:focus-visible,
+a:focus-visible,
+select:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+summary:focus-visible {
+  outline: 2px solid rgba(142, 207, 158, 0.9);
+  outline-offset: 3px;
+}
+
 ::selection {
   background: rgba(142, 207, 158, 0.32);
 }
 
 @layer components {
   .surface {
-    @apply border border-white/10 bg-ink-900/[0.82] shadow-soft backdrop-blur;
+    @apply border border-white/10 bg-ink-900/[0.88] shadow-soft backdrop-blur;
   }
 
   .control {
-    @apply rounded-md border border-white/10 bg-ink-850 px-3 py-2 text-sm text-ink-100 outline-none transition focus:border-scallion/70 focus:ring-2 focus:ring-scallion/20;
+    @apply min-w-0 rounded-md border border-white/10 bg-ink-850 px-3 py-2 text-sm text-ink-100 outline-none transition placeholder:text-ink-500 focus:border-scallion/70 focus:ring-2 focus:ring-scallion/20;
   }
 
   .pill {
@@ -61,6 +82,10 @@ input {
 
   .scrollbar-none::-webkit-scrollbar {
     display: none;
+  }
+
+  .section-summary {
+    @apply rounded-sm transition hover:text-scallion;
   }
 }
 

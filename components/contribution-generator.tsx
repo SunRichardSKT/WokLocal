@@ -293,8 +293,8 @@ function buildIssueUrl(title: string, body: string, labels: string[]) {
 
 function RequiredLabel({ label, required = true }: { label: string; required?: boolean }) {
   return (
-    <span className="flex items-center gap-2">
-      <span>{label}</span>
+    <span className="flex min-w-0 flex-wrap items-center gap-1.5">
+      <span className="min-w-0 break-words">{label}</span>
       <span className={required ? "rounded-full bg-chili/[0.14] px-2 py-0.5 text-[11px] text-chili" : "rounded-full bg-white/[0.06] px-2 py-0.5 text-[11px] text-ink-500"}>
         {required ? "必填" : "选填"}
       </span>
@@ -318,10 +318,10 @@ function TextInput({
   placeholder?: string;
 }) {
   return (
-    <label className="grid gap-1 text-sm text-ink-300">
+    <label className="grid min-w-0 gap-1 text-sm text-ink-300">
       <RequiredLabel label={label} required={required} />
       <input className="control" value={value} onChange={(event) => onChange(event.target.value)} placeholder={placeholder} />
-      {hint ? <span className="text-xs text-ink-500">{hint}</span> : null}
+      {hint ? <span className="break-words text-xs text-ink-500">{hint}</span> : null}
     </label>
   );
 }
@@ -340,10 +340,10 @@ function TextArea({
   hint?: string;
 }) {
   return (
-    <label className="grid gap-1 text-sm text-ink-300">
+    <label className="grid min-w-0 gap-1 text-sm text-ink-300">
       <RequiredLabel label={label} required={required} />
       <textarea className="control min-h-24" value={value} onChange={(event) => onChange(event.target.value)} />
-      {hint ? <span className="text-xs text-ink-500">{hint}</span> : null}
+      {hint ? <span className="break-words text-xs text-ink-500">{hint}</span> : null}
     </label>
   );
 }
@@ -457,7 +457,7 @@ function SectionPanel({
 }) {
   return (
     <details className="rounded-md border border-white/10 bg-white/[0.035] p-3" open>
-      <summary className="cursor-pointer select-none text-sm font-semibold text-ink-100">
+      <summary className="section-summary cursor-pointer select-none text-sm font-semibold text-ink-100">
         <span className="inline-flex items-center gap-2">
           {title}
           <span className={optional ? "rounded-full bg-white/[0.06] px-2 py-0.5 text-[11px] text-ink-500" : "rounded-full bg-chili/[0.14] px-2 py-0.5 text-[11px] text-chili"}>
@@ -990,7 +990,7 @@ ${yamlBlockScalar(content || "请补充主要内容。", 10)}
 
       <CompletionSummary generated={generated} />
 
-      <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(28rem,0.9fr)]">
+      <div className="grid gap-5 2xl:grid-cols-[minmax(0,1fr)_minmax(26rem,0.78fr)]">
         <section className="space-y-4">
           <div className="flex flex-col gap-3 rounded-md border border-white/10 bg-white/[0.035] p-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
@@ -1006,20 +1006,20 @@ ${yamlBlockScalar(content || "请补充主要内容。", 10)}
           {kind === "recipe" ? (
             <>
               <SectionPanel title="基础信息" errors={generated.sectionErrors.basic}>
-                <div className="grid gap-3 md:grid-cols-3">
+                <div className="grid gap-3 sm:grid-cols-2">
                   <TextInput label="中文名" required={false} value={recipe.nameZh} onChange={(value) => setRecipe({ ...recipe, nameZh: value })} hint="中文名和英文名至少填一个。" />
                   <TextInput label="拼音" required={false} value={recipe.pinyin} onChange={(value) => setRecipe({ ...recipe, pinyin: value })} hint="选填；填写后会优先用于自动生成菜谱 ID。" />
                   <TextInput label="英文名" required={false} value={recipe.nameEn} onChange={(value) => setRecipe({ ...recipe, nameEn: value })} hint="选填；没有英文名时会用中文名兜底。" />
                 </div>
                 <TextInput label="自定义菜谱 ID" required={false} value={recipe.id} onChange={(value) => setRecipe({ ...recipe, id: value })} hint="选填；留空时优先用拼音自动生成文件名和 URL。" />
                 <TextArea label="简介" value={recipe.description} onChange={(value) => setRecipe({ ...recipe, description: value })} />
-                <div className="grid gap-3 md:grid-cols-4">
+                <div className="grid gap-3 sm:grid-cols-2">
                   <TextInput label="难度 1-5" value={recipe.difficulty} onChange={(value) => setRecipe({ ...recipe, difficulty: value })} />
                   <TextInput label="耗时/分钟" value={recipe.timeMinutes} onChange={(value) => setRecipe({ ...recipe, timeMinutes: value })} />
                   <TextInput label="份量" value={recipe.servings} onChange={(value) => setRecipe({ ...recipe, servings: value })} />
                   <TextInput label="菜系" required={false} value={recipe.cuisine} onChange={(value) => setRecipe({ ...recipe, cuisine: value })} hint="选填；留空默认留学生厨房菜。" />
                 </div>
-                <div className="grid gap-3 md:grid-cols-3">
+                <div className="grid gap-3 sm:grid-cols-2">
                   <label className="grid gap-1 text-sm text-ink-300">
                     <RequiredLabel label="类型" />
                     <select className="control" value={recipe.recipeType} onChange={(event) => setRecipe({ ...recipe, recipeType: event.target.value as RecipeType })}>
@@ -1134,16 +1134,16 @@ ${yamlBlockScalar(content || "请补充主要内容。", 10)}
                             onSelect={(next) => setIngredients(ingredients.map((item, i) => (i === index ? next : item)))}
                           />
                         ) : (
-                          <div className="grid gap-3 md:grid-cols-3">
+                          <div className="grid gap-3 sm:grid-cols-2">
                             <TextInput label="食材 ID" required={false} value={ingredient.ingredientId} onChange={(value) => setIngredients(ingredients.map((item, i) => (i === index ? { ...item, ingredientId: value } : item)))} hint="选填；留空会自动生成。" />
                             <TextInput label="中文名" required={false} value={ingredient.nameZh} onChange={(value) => setIngredients(ingredients.map((item, i) => (i === index ? { ...item, nameZh: value } : item)))} hint="中文名和英文名至少填一个。" />
                             <TextInput label="英文名" required={false} value={ingredient.nameEn} onChange={(value) => setIngredients(ingredients.map((item, i) => (i === index ? { ...item, nameEn: value } : item)))} hint="选填；没有英文名时会用中文名兜底。" />
                           </div>
                         )}
-                        <div className="grid gap-3 md:grid-cols-[1fr_1fr_auto]">
+                        <div className="grid gap-3 sm:grid-cols-2">
                           <TextInput label="用量" value={ingredient.amount} onChange={(value) => setIngredients(ingredients.map((item, i) => (i === index ? { ...item, amount: value } : item)))} />
                           <TextInput label="备注" required={false} value={ingredient.note} onChange={(value) => setIngredients(ingredients.map((item, i) => (i === index ? { ...item, note: value } : item)))} />
-                          <label className="mt-6 flex items-center gap-2 text-sm text-ink-300">
+                          <label className="flex min-h-11 items-center gap-2 text-sm text-ink-300 sm:self-end">
                             <input className="size-4 accent-scallion" checked={ingredient.optional} onChange={(event) => setIngredients(ingredients.map((item, i) => (i === index ? { ...item, optional: event.target.checked } : item)))} type="checkbox" />
                             可选
                           </label>
@@ -1190,12 +1190,12 @@ ${yamlBlockScalar(content || "请补充主要内容。", 10)}
           ) : kind === "substitution" ? (
             <>
               <SectionPanel title="食材基础信息" errors={generated.sectionErrors.basic}>
-                <div className="grid gap-3 md:grid-cols-3">
+                <div className="grid gap-3 sm:grid-cols-2">
                   <TextInput label="中文名" required={false} value={substitution.nameZh} onChange={(value) => setSubstitution({ ...substitution, nameZh: value })} hint="中文名和英文名至少填一个。" />
                   <TextInput label="英文名" required={false} value={substitution.nameEn} onChange={(value) => setSubstitution({ ...substitution, nameEn: value })} hint="选填；没有英文名时会用中文名兜底。" />
                   <TextInput label="拼音" required={false} value={substitution.pinyin} onChange={(value) => setSubstitution({ ...substitution, pinyin: value })} hint="选填；填写后会优先用于自动生成食材 ID。" />
                 </div>
-                <div className="grid gap-3 md:grid-cols-2">
+                <div className="grid gap-3 sm:grid-cols-2">
                   <TextInput label="自定义食材 ID" required={false} value={substitution.id} onChange={(value) => setSubstitution({ ...substitution, id: value })} hint="选填；留空自动生成。" />
                   <TextInput label="分类" required={false} value={substitution.category} onChange={(value) => setSubstitution({ ...substitution, category: value })} hint="选填；留空为未分类。" />
                 </div>
@@ -1206,7 +1206,7 @@ ${yamlBlockScalar(content || "请补充主要内容。", 10)}
                 <TextInput label="常见用途，逗号分隔" required={false} value={substitution.uses} onChange={(value) => setSubstitution({ ...substitution, uses: value })} />
               </SectionPanel>
               <SectionPanel title="地区替代信息" errors={generated.sectionErrors.region} optional>
-                <div className="grid gap-3 md:grid-cols-[10rem_1fr]">
+                <div className="grid gap-3 sm:grid-cols-2">
                   <label className="grid gap-1 text-sm text-ink-300">
                     <RequiredLabel label="地区" required={false} />
                     <select className="control" value={substitution.region} onChange={(event) => setSubstitution({ ...substitution, region: event.target.value })}>
@@ -1227,12 +1227,12 @@ ${yamlBlockScalar(content || "请补充主要内容。", 10)}
           ) : kind === "equipment" ? (
             <>
               <SectionPanel title="厨具基础信息" errors={generated.sectionErrors.basic}>
-                <div className="grid gap-3 md:grid-cols-3">
+                <div className="grid gap-3 sm:grid-cols-2">
                   <TextInput label="自定义厨具 ID" required={false} value={equipment.id} onChange={(value) => setEquipment({ ...equipment, id: value })} hint="选填；留空自动生成。" />
                   <TextInput label="中文名" required={false} value={equipment.nameZh} onChange={(value) => setEquipment({ ...equipment, nameZh: value })} hint="中文名和英文名至少填一个。" />
                   <TextInput label="英文名" required={false} value={equipment.nameEn} onChange={(value) => setEquipment({ ...equipment, nameEn: value })} hint="选填；没有英文名时会用中文名兜底。" />
                 </div>
-                <div className="grid gap-3 md:grid-cols-3">
+                <div className="grid gap-3 sm:grid-cols-2">
                   <label className="grid gap-1 text-sm text-ink-300">
                     <RequiredLabel label="分类" required={false} />
                     <select className="control" value={equipment.category} onChange={(event) => setEquipment({ ...equipment, category: event.target.value })}>
@@ -1250,7 +1250,7 @@ ${yamlBlockScalar(content || "请补充主要内容。", 10)}
                       <option value="high">高</option>
                     </select>
                   </label>
-                  <label className="mt-6 flex items-center gap-2 text-sm text-ink-300">
+                  <label className="flex min-h-11 items-center gap-2 text-sm text-ink-300 sm:self-end">
                     <input className="size-4 accent-scallion" checked={equipment.essential} onChange={(event) => setEquipment({ ...equipment, essential: event.target.checked })} type="checkbox" />
                     是否必买（选填）
                   </label>
@@ -1259,7 +1259,7 @@ ${yamlBlockScalar(content || "请补充主要内容。", 10)}
                 <TextInput label="没有时可替代，逗号分隔" required={false} value={equipment.substitutes} onChange={(value) => setEquipment({ ...equipment, substitutes: value })} />
               </SectionPanel>
               <SectionPanel title="地区购买信息" errors={generated.sectionErrors.region} optional>
-                <div className="grid gap-3 md:grid-cols-[10rem_1fr_12rem]">
+                <div className="grid gap-3 sm:grid-cols-2">
                   <label className="grid gap-1 text-sm text-ink-300">
                     <RequiredLabel label="地区" required={false} />
                     <select className="control" value={equipment.region} onChange={(event) => setEquipment({ ...equipment, region: event.target.value })}>
@@ -1279,7 +1279,7 @@ ${yamlBlockScalar(content || "请补充主要内容。", 10)}
           ) : (
             <>
               <SectionPanel title="清单基础信息" errors={generated.sectionErrors.basic}>
-                <div className="grid gap-3 md:grid-cols-[1fr_10rem]">
+                <div className="grid gap-3 sm:grid-cols-2">
                   <TextInput label="清单标题" value={starterPack.title} onChange={(value) => setStarterPack({ ...starterPack, title: value })} placeholder="英国落地清单与注意事项" />
                   <label className="grid gap-1 text-sm text-ink-300">
                     <RequiredLabel label="地区" />

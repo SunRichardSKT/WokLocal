@@ -4,6 +4,14 @@ name:
   pinyin: Kongqizhaguo Kao Shutiao
   en: Air Fryer Chips
 description: 英国薯条太贵？自己切土豆放空气炸锅，便宜又好吃。可以搭配空气炸锅烤鸡翅，一餐荤素都有了。
+cover_image:
+  src: /recipe-media/kongqizhaguo-kao-shutiao-cover.jpg
+  alt: 空气炸锅烤薯条真实成品图
+  caption: 空气炸锅烤薯条
+  credit: Sri2161k · Wikimedia Commons · CC BY-SA 4.0
+  credit_url: https://commons.wikimedia.org/wiki/File%3AFrench_fries_3.jpg
+  license: CC BY-SA 4.0
+  license_url: https://creativecommons.org/licenses/by-sa/4.0
 difficulty: 1
 time_minutes: 25
 servings: 1

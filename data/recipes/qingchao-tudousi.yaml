@@ -4,6 +4,14 @@ name:
   pinyin: Qingchao Tudousi
   en: Stir-fried Potato Shreds
 description: "用英国常见土豆练刀工和火候，低成本但很下饭。"
+cover_image:
+  src: /recipe-media/qingchao-tudousi-cover.jpg
+  alt: 清炒土豆丝真实成品图
+  caption: 清炒土豆丝
+  credit: Ewan Munro from London, UK · Wikimedia Commons · CC BY-SA 2.0
+  credit_url: https://commons.wikimedia.org/wiki/File%3ATaste_of_Beijing%2C_Soho%2C_London_(4363975792).jpg
+  license: CC BY-SA 2.0
+  license_url: https://creativecommons.org/licenses/by-sa/2.0
 difficulty: 2
 time_minutes: 20
 servings: 2

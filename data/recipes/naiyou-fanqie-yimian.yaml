@@ -4,6 +4,14 @@ name:
   pinyin: Naiyou Fanqie Yimian
   en: Creamy Tomato Pasta
 description: 英国留学生性价比最高的意面之一，只需罐装番茄、double cream 和意面。酸甜浓郁，15分钟搞定。
+cover_image:
+  src: /recipe-media/naiyou-fanqie-yimian-cover.jpg
+  alt: 奶油番茄意面真实成品图
+  caption: 奶油番茄意面
+  credit: Ginny from USA · Wikimedia Commons · CC BY-SA 2.0
+  credit_url: https://commons.wikimedia.org/wiki/File%3ATomato_cream_sauce_on_pasta_and_chicken.jpg
+  license: CC BY-SA 2.0
+  license_url: https://creativecommons.org/licenses/by-sa/2.0
 difficulty: 1
 time_minutes: 20
 servings: 1

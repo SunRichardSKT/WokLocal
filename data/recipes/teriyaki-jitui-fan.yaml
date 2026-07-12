@@ -4,6 +4,14 @@ name:
   pinyin: Teriyaki Jitui Fan
   en: Teriyaki Chicken Rice Bowl
 description: "用生抽和糖做简化照烧汁，不需要专门买日式调料。"
+cover_image:
+  src: /recipe-media/teriyaki-jitui-fan-cover.jpg
+  alt: 照烧鸡腿饭真实成品图
+  caption: 照烧鸡腿饭
+  credit: Wide Awake! · Wikimedia Commons · CC BY 4.0
+  credit_url: https://commons.wikimedia.org/wiki/File%3ATeriyaki_Chicken_Rice_Bowl_from_Botejyu_(2024-12-21).jpg
+  license: CC BY 4.0
+  license_url: https://creativecommons.org/licenses/by/4.0
 difficulty: 2
 time_minutes: 24
 servings: 2

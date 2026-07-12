@@ -4,6 +4,14 @@ name:
   pinyin: Xihongshi Chao Dan
   en: Tomato and Egg Stir-fry
 description: "零基础也容易成功的家常快手菜，酸甜汤汁适合拌饭。"
+cover_image:
+  src: /recipe-media/xihongshi-chaodan-cover.jpg
+  alt: 西红柿炒鸡蛋真实成品图
+  caption: 西红柿炒鸡蛋
+  credit: Huangdan2060 · Wikimedia Commons · CC BY 3.0
+  credit_url: https://commons.wikimedia.org/wiki/File%3AHunan_cuisine%2C_stir-fried_tomato_with_eggs.jpg
+  license: CC BY 3.0
+  license_url: https://creativecommons.org/licenses/by/3.0
 difficulty: 1
 time_minutes: 15
 servings: 2

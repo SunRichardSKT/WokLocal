@@ -4,6 +4,14 @@ name:
   pinyin: Hongshao Rou Menfan
   en: Braised Pork Belly Rice
 description: 电饭煲懒人版红烧肉，肥瘦相间的五花肉配土豆，一锅出连汤带饭。在英国超市买 pork belly 即可。
+cover_image:
+  src: /recipe-media/hongshao-rou-menfan-cover.jpg
+  alt: 红烧肉焖饭真实成品图
+  caption: 红烧肉焖饭
+  credit: avlxyz · Wikimedia Commons · CC BY-SA 2.0
+  credit_url: https://commons.wikimedia.org/wiki/File%3A%E7%BA%A2%E7%83%A7%E8%82%89_Grandma's_Pork_with_rice_-_The_Bund_AUD9.jpg
+  license: CC BY-SA 2.0
+  license_url: https://creativecommons.org/licenses/by-sa/2.0
 difficulty: 2
 time_minutes: 45
 servings: 2

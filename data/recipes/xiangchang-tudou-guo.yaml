@@ -4,6 +4,14 @@ name:
   pinyin: Xiangchang Tudou Guo
   en: Sausage Potato Pan
 description: "用英国香肠和土豆做一锅热菜，偏融合但很适合冷天。"
+cover_image:
+  src: /recipe-media/xiangchang-tudou-guo-cover.jpg
+  alt: 香肠土豆锅真实成品图
+  caption: 香肠土豆锅
+  credit: Daderot · Wikimedia Commons · CC0
+  credit_url: https://commons.wikimedia.org/wiki/File%3AChicken_sausage%2C_sauerkraut%2C_and_fried_potatoes_-_Massachusetts.jpg
+  license: CC0
+  license_url: http://creativecommons.org/publicdomain/zero/1.0/deed.en
 difficulty: 2
 time_minutes: 28
 servings: 2

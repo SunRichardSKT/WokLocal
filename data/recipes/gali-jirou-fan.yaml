@@ -4,6 +4,14 @@ name:
   pinyin: Gali Jirou Fan
   en: Chicken Curry Rice
 description: "一锅出的大份量带饭菜，英国超市和亚超都能买齐主要材料。"
+cover_image:
+  src: /recipe-media/gali-jirou-fan-cover.jpg
+  alt: 咖喱鸡饭真实成品图
+  caption: 咖喱鸡饭
+  credit: Gaurav Dhwaj Khadka · Wikimedia Commons · CC BY-SA 4.0
+  credit_url: https://commons.wikimedia.org/wiki/File%3AChicken_Curry_with_Rice.jpg
+  license: CC BY-SA 4.0
+  license_url: https://creativecommons.org/licenses/by-sa/4.0
 difficulty: 2
 time_minutes: 35
 servings: 3

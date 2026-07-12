@@ -4,6 +4,14 @@ name:
   pinyin: Kongqizhaguo Kao Jichi
   en: Air Fryer Chicken Wings
 description: 宿舍空气炸锅的神级用法。只用生抽、蚝油和黑胡椒三样调料，就能做出外焦里嫩的烤鸡翅。
+cover_image:
+  src: /recipe-media/kongqizhaguo-kao-jichi-cover.jpg
+  alt: 空气炸锅烤鸡翅真实成品图
+  caption: 空气炸锅烤鸡翅
+  credit: Emilian Robert Vicol from Com. Balanesti, Romania · Wikimedia Commons · CC BY 2.0
+  credit_url: https://commons.wikimedia.org/wiki/File%3AGrill_Wings_tip_(4791277361).jpg
+  license: CC BY 2.0
+  license_url: https://creativecommons.org/licenses/by/2.0
 difficulty: 1
 time_minutes: 30
 servings: 1

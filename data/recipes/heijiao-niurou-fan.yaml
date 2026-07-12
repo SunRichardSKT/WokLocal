@@ -4,6 +4,14 @@ name:
   pinyin: Heijiao Niurou Fan
   en: Black Pepper Beef Rice
 description: "用普通英国超市牛肉和甜椒做快手盖饭，适合想换口味时做。"
+cover_image:
+  src: /recipe-media/heijiao-niurou-fan-cover.jpg
+  alt: 黑椒牛肉饭真实成品图
+  caption: 黑椒牛肉饭
+  credit: Crisco 1492 · Wikimedia Commons · CC BY-SA 3.0
+  credit_url: https://commons.wikimedia.org/wiki/File%3ABlack-Pepper_Beef_(Sapi_Lada_Hitam)%2C_One_Two_Restaurant%2C_Yogyakarta.jpg
+  license: CC BY-SA 3.0
+  license_url: https://creativecommons.org/licenses/by-sa/3.0
 difficulty: 3
 time_minutes: 25
 servings: 2

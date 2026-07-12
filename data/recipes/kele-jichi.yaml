@@ -4,6 +4,14 @@ name:
   pinyin: Kele Jichi
   en: Cola Chicken Wings
 description: 零失败留子招牌菜，甜咸微焦，电饭煲一锅搞定。可乐在英国任何超市都能买到。
+cover_image:
+  src: /recipe-media/kele-jichi-cover.jpg
+  alt: 可乐鸡翅真实成品图
+  caption: 可乐鸡翅
+  credit: Alpha from Melbourne, Australia · Wikimedia Commons · CC BY-SA 2.0
+  credit_url: https://commons.wikimedia.org/wiki/File%3AChicken_Wings_in_Coca_Cola_Sauce.jpg
+  license: CC BY-SA 2.0
+  license_url: https://creativecommons.org/licenses/by-sa/2.0
 difficulty: 2
 time_minutes: 35
 servings: 2

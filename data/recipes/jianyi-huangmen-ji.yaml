@@ -4,6 +4,14 @@ name:
   pinyin: Jianyi Huangmenji
   en: Simplified Braised Chicken Thighs
 description: 黄焖鸡米饭的宿舍平替版，用鸡大腿肉加土豆和黄焖酱料，在电饭煲中焖出一锅咸香浓郁的盖浇饭。
+cover_image:
+  src: /recipe-media/jianyi-huangmen-ji-cover.jpg
+  alt: 简易黄焖鸡真实成品图
+  caption: 简易黄焖鸡
+  credit: Fumikas Sagisavas · Wikimedia Commons · CC0
+  credit_url: https://commons.wikimedia.org/wiki/File%3AYellow_braised_chicken.jpg
+  license: CC0
+  license_url: http://creativecommons.org/publicdomain/zero/1.0/deed.en
 difficulty: 2
 time_minutes: 30
 servings: 1

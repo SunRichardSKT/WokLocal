@@ -4,6 +4,14 @@ name:
   pinyin: Yingshi Kao Tudou
   en: Baked Potato
 description: 英国经典学生餐，一个土豆搞定一顿。英国超市的 baking potato 品种好，微波炉10分钟或烤箱40分钟即可。
+cover_image:
+  src: /recipe-media/yingshi-kao-tudou-cover.jpg
+  alt: 微波炉/烤箱土豆真实成品图
+  caption: 微波炉/烤箱土豆
+  credit: me (w:User:pfctdayelise) · Wikimedia Commons · CC BY-SA 2.5
+  credit_url: https://commons.wikimedia.org/wiki/File%3AMicrowaved_potatoes.JPG
+  license: CC BY-SA 2.5
+  license_url: https://creativecommons.org/licenses/by-sa/2.5
 difficulty: 1
 time_minutes: 15
 servings: 1

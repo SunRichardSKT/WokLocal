@@ -4,6 +4,14 @@ name:
   pinyin: Jiangyou Jirou Fan
   en: Soy Sauce Chicken Rice Bowl
 description: "把英国超市鸡腿肉变成稳定盖饭，适合没有中式厨具的新手。"
+cover_image:
+  src: /recipe-media/jiangyou-jirou-fan-cover.jpg
+  alt: 酱油鸡肉饭真实成品图
+  caption: 酱油鸡肉饭
+  credit: Dennis Wong from Hong Kong, Hong Kong · Wikimedia Commons · CC BY 2.0
+  credit_url: https://commons.wikimedia.org/wiki/File%3ASoy_Sauce_Chicken.jpg
+  license: CC BY 2.0
+  license_url: https://creativecommons.org/licenses/by/2.0
 difficulty: 2
 time_minutes: 22
 servings: 2

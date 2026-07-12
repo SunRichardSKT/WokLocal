@@ -4,6 +4,14 @@ name:
   pinyin: Congyou Ban Mian
   en: Scallion Oil Noodles
 description: "食材极少的低预算拌面，适合不想出门买很多菜的时候。"
+cover_image:
+  src: /recipe-media/congyou-ban-mian-cover.jpg
+  alt: 葱油拌面真实成品图
+  caption: 葱油拌面
+  credit: HanWei's EXP from (optional) · Wikimedia Commons · CC BY-SA 2.0
+  credit_url: https://commons.wikimedia.org/wiki/File%3AShanghai_oil_noodle.jpg
+  license: CC BY-SA 2.0
+  license_url: https://creativecommons.org/licenses/by-sa/2.0
 difficulty: 2
 time_minutes: 18
 servings: 1

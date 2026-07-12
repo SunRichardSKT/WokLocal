@@ -4,6 +4,14 @@ name:
   pinyin: Qingzheng Luyu / Qingzheng Sanwenyu
   en: Steamed Sea Bass / Steamed Salmon
 description: 英国超市鱼类品质高且价格合理。利用宿舍烤箱或微波炉简单蒸制，中式调味保留鲜味，是一道健康又体面的主菜。
+cover_image:
+  src: /recipe-media/qingzheng-yu-cover.jpg
+  alt: 清蒸鲈鱼 / 清蒸三文鱼真实成品图
+  caption: 清蒸鲈鱼 / 清蒸三文鱼
+  credit: T.Tseng · Wikimedia Commons · CC BY 2.0
+  credit_url: https://commons.wikimedia.org/wiki/File%3ACHILEAN_SEA_BASS_with_SUKI_SAUCE_(Spicy)_Steamed_sea_bass_topped_with_our_special_spicy_chili_sauce._Served_on_top_of_steamed_vegetables.jpg
+  license: CC BY 2.0
+  license_url: https://creativecommons.org/licenses/by/2.0
 difficulty: 2
 time_minutes: 20
 servings: 1

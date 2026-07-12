@@ -4,6 +4,14 @@ name:
   pinyin: Naiyou Mogu Jirou Yimian
   en: Creamy Mushroom Chicken Pasta
 description: 英式经典留子款，用英国超市随处可见的 double cream 做浓酱，搭配蘑菇和鸡肉，口口满足。
+cover_image:
+  src: /recipe-media/naiyou-mogu-jirou-yimian-cover.jpg
+  alt: 奶油蘑菇鸡肉意面真实成品图
+  caption: 奶油蘑菇鸡肉意面
+  credit: Samizambak · Wikimedia Commons · CC BY-SA 4.0
+  credit_url: https://commons.wikimedia.org/wiki/File%3AKremal%C4%B1_Mantarl%C4%B1_Tavuklu_Makarna.jpg
+  license: CC BY-SA 4.0
+  license_url: https://creativecommons.org/licenses/by-sa/4.0
 difficulty: 2
 time_minutes: 25
 servings: 1

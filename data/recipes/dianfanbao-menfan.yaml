@@ -4,6 +4,14 @@ name:
   pinyin: Dianfanbao Jirou Menfan
   en: Rice Cooker Chicken Rice
 description: "一键完成的低油烟主食，适合没心情炒菜但想吃热饭的时候。"
+cover_image:
+  src: /recipe-media/dianfanbao-menfan-cover.jpg
+  alt: 电饭煲鸡肉焖饭真实成品图
+  caption: 电饭煲鸡肉焖饭
+  credit: Bawani Sri Jayaveeran · Wikimedia Commons · CC BY-SA 4.0
+  credit_url: https://commons.wikimedia.org/wiki/File%3AMalaysian_Claypot_Chicken_Rice_via_Rice_Cooker.jpg
+  license: CC BY-SA 4.0
+  license_url: https://creativecommons.org/licenses/by-sa/4.0
 difficulty: 2
 time_minutes: 35
 servings: 2

@@ -4,6 +4,14 @@ name:
   pinyin: Jidan Jinqiangyu Sanmingzhi
   en: Egg Tuna Sandwich
 description: "英国超市食材就能完成的冷餐，适合带去图书馆或课间吃。"
+cover_image:
+  src: /recipe-media/sandwich-ronghe-cover.jpg
+  alt: 鸡蛋金枪鱼三明治真实成品图
+  caption: 鸡蛋金枪鱼三明治
+  credit: Kham Tran - www.khamtran.com · Wikimedia Commons · CC BY-SA 3.0
+  credit_url: https://commons.wikimedia.org/wiki/File%3AScrambled-Eggs-And-Tuna-On-Toast-2007.jpg
+  license: CC BY-SA 3.0
+  license_url: https://creativecommons.org/licenses/by-sa/3.0
 difficulty: 1
 time_minutes: 12
 servings: 1

@@ -4,6 +4,14 @@ name:
   pinyin: Haoyou Mogu Jirou Yiwu
   en: Oyster Mushroom Chicken Rice Bowl
 description: "用英国超市蘑菇和鸡腿肉做中式盖饭，食材好买，适合一次做两餐。"
+cover_image:
+  src: /recipe-media/haoyou-mogu-jirou-yiwu-cover.jpg
+  alt: 蚝油蘑菇鸡肉一锅饭真实成品图
+  caption: 蚝油蘑菇鸡肉一锅饭
+  credit: Manfilliomia · Wikimedia Commons · CC BY-SA 4.0
+  credit_url: https://commons.wikimedia.org/wiki/File%3AHK_Kwun_Tong_Lunch_Box_dim_sum_mushroom_chicken_rice_Nov_2018_01.jpg
+  license: CC BY-SA 4.0
+  license_url: https://creativecommons.org/licenses/by-sa/4.0
 difficulty: 2
 time_minutes: 26
 servings: 2

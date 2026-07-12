@@ -4,6 +4,14 @@ name:
   pinyin: Fanqie Zhishi Menfan
   en: Tomato Cheese Rice
 description: 用普通英国超市食材做一顿低门槛热饭，番茄汁渗入米饭，配上融化的切达芝士，咸香满足。
+cover_image:
+  src: /recipe-media/fanqie-zhishi-menfan-cover.jpg
+  alt: 番茄芝士焖饭真实成品图
+  caption: 番茄芝士焖饭
+  credit: Peachyeung316 · Wikimedia Commons · CC BY-SA 4.0
+  credit_url: https://commons.wikimedia.org/wiki/File%3AA_Vegetarian_Baked_Rice_with_tomato_sauce_and_cheese.jpg
+  license: CC BY-SA 4.0
+  license_url: https://creativecommons.org/licenses/by-sa/4.0
 difficulty: 1
 time_minutes: 25
 servings: 1

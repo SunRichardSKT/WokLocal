@@ -4,6 +4,14 @@ name:
   pinyin: Weibolu Zheng Dan
   en: Microwave Steamed Egg
 description: "没有蒸锅也能做的低油烟蛋羹，适合宿舍厨房和早餐。"
+cover_image:
+  src: /recipe-media/microwave-zhengdan-cover.jpg
+  alt: 微波炉蒸蛋真实成品图
+  caption: 微波炉蒸蛋
+  credit: yomi955 · Wikimedia Commons · CC BY 2.0
+  credit_url: https://commons.wikimedia.org/wiki/File%3AChinese_steamed_eggs_with_char_siu_by_yomi955.jpg
+  license: CC BY 2.0
+  license_url: https://creativecommons.org/licenses/by/2.0
 difficulty: 1
 time_minutes: 10
 servings: 1

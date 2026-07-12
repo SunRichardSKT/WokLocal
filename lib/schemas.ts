@@ -34,7 +34,10 @@ export const imageAssetSchema = z.object({
   src: z.string().min(1),
   alt: z.string().min(1),
   caption: z.string().min(1).optional(),
-  credit: z.string().min(1).optional()
+  credit: z.string().min(1).optional(),
+  credit_url: z.string().url().optional(),
+  license: z.string().min(1).optional(),
+  license_url: z.string().url().optional()
 });
 
 export const ingredientRefSchema = z

@@ -4,6 +4,14 @@ name:
   pinyin: Fanqie Jidan Mian
   en: Tomato Egg Noodles
 description: "比炒菜更稳的入门热汤面，适合刚落地只有小奶锅的时候。"
+cover_image:
+  src: /recipe-media/fanqie-jidan-mian-cover.jpg
+  alt: 番茄鸡蛋面真实成品图
+  caption: 番茄鸡蛋面
+  credit: Zhuo1221 · Wikimedia Commons · CC BY-SA 4.0
+  credit_url: https://commons.wikimedia.org/wiki/File%3ATomato_and_egg_noodles.jpg
+  license: CC BY-SA 4.0
+  license_url: https://creativecommons.org/licenses/by-sa/4.0
 difficulty: 1
 time_minutes: 15
 servings: 1

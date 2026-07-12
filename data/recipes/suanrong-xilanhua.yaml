@@ -4,6 +4,14 @@ name:
   pinyin: Suanrong Xilanhua
   en: Garlic Stir-fried Broccoli
 description: 英国超市西兰花便宜又新鲜，焯水后用蒜蓉和蚝油一炒，3分钟搞定一道绿色蔬菜，配任何主菜都合适。
+cover_image:
+  src: /recipe-media/suanrong-xilanhua-cover.jpg
+  alt: 蒜蓉西兰花真实成品图
+  caption: 蒜蓉西兰花
+  credit: Arnold Gatilao from Oakland, CA, USA · Wikimedia Commons · CC BY 2.0
+  credit_url: https://commons.wikimedia.org/wiki/File%3AChinese_Broccoli_with_Oyster_Sauce_-breakfast_(16402541421).jpg
+  license: CC BY 2.0
+  license_url: https://creativecommons.org/licenses/by/2.0
 difficulty: 1
 time_minutes: 10
 servings: 1

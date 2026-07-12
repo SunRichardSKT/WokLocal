@@ -4,6 +4,14 @@ name:
   pinyin: Kuaisu Chaomian
   en: Quick Stir-fried Noodles
 description: 用英国超市的蛋面或乌冬面，搭配任意蔬菜和肉类，酱油蚝油调味，10分钟出锅。面条是留子冰箱里永远的备粮。
+cover_image:
+  src: /recipe-media/kuaisu-chaomian-cover.jpg
+  alt: 简易炒面真实成品图
+  caption: 简易炒面
+  credit: Dennis Sylvester Hurd · Wikimedia Commons · CC0
+  credit_url: https://commons.wikimedia.org/wiki/File%3AChinese_stir_fry_noodles.jpg
+  license: CC0
+  license_url: http://creativecommons.org/publicdomain/zero/1.0/deed.en
 difficulty: 1
 time_minutes: 15
 servings: 1

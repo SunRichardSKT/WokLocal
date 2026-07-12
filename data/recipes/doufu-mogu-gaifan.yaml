@@ -4,6 +4,14 @@ name:
   pinyin: Doufu Mogu Gaifan
   en: Tofu Mushroom Rice Bowl
 description: "素食友好的低油烟盖饭，豆腐和蘑菇在英国超市都相对好买。"
+cover_image:
+  src: /recipe-media/doufu-mogu-gaifan-cover.jpg
+  alt: 豆腐蘑菇盖饭真实成品图
+  caption: 豆腐蘑菇盖饭
+  credit: Andy Li · Wikimedia Commons · CC0
+  credit_url: https://commons.wikimedia.org/wiki/File%3AKinoko_Tofu-don_-_MOGUMOGU_2024-04-29.jpg
+  license: CC0
+  license_url: http://creativecommons.org/publicdomain/zero/1.0/deed.en
 difficulty: 2
 time_minutes: 22
 servings: 2

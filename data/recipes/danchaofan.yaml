@@ -5,9 +5,13 @@ name:
   en: Egg Fried Rice
 description: "处理剩饭最稳的一餐，一口锅完成，适合宿舍厨房。"
 cover_image:
-  src: /recipe-media/danchaofan-cover.svg
-  alt: 蛋炒饭封面图
+  src: /recipe-media/danchaofan-cover.jpg
+  alt: 蛋炒饭真实成品图
   caption: 蛋炒饭
+  credit: Gaurav Dhwaj Khadka · Wikimedia Commons · CC BY-SA 4.0
+  credit_url: https://commons.wikimedia.org/wiki/File%3AEgg_Fried_Rice.jpg
+  license: CC BY-SA 4.0
+  license_url: https://creativecommons.org/licenses/by-sa/4.0
 difficulty: 2
 time_minutes: 12
 servings: 1

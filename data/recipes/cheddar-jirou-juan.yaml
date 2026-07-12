@@ -4,6 +4,14 @@ name:
   pinyin: Cheddar Jirou Juan
   en: Cheddar Chicken Wrap
 description: "用英国超市 tortilla、鸡肉和切达做热卷饼，适合带饭和快速晚餐。"
+cover_image:
+  src: /recipe-media/cheddar-jirou-juan-cover.jpg
+  alt: 切达鸡肉卷真实成品图
+  caption: 切达鸡肉卷
+  credit: Takeaway · Wikimedia Commons · CC BY-SA 3.0
+  credit_url: https://commons.wikimedia.org/wiki/File%3ASmoked_chicken_and_avocado_wrap.jpg
+  license: CC BY-SA 3.0
+  license_url: https://creativecommons.org/licenses/by-sa/3.0
 difficulty: 2
 time_minutes: 20
 servings: 2

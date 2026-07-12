@@ -4,6 +4,14 @@ name:
   pinyin: Gongbao Jiding
   en: Kung Pao Chicken
 description: "酸甜咸辣平衡的下饭菜，示范腌肉、调汁和替代调料。"
+cover_image:
+  src: /recipe-media/gongbao-jiding-cover.jpg
+  alt: 宫保鸡丁真实成品图
+  caption: 宫保鸡丁
+  credit: N509FZ · Wikimedia Commons · CC BY-SA 4.0
+  credit_url: https://commons.wikimedia.org/wiki/File%3AKung_Pao_Chicken_at_Yujiayan_Restaurant_(20230510123120).jpg
+  license: CC BY-SA 4.0
+  license_url: https://creativecommons.org/licenses/by-sa/4.0
 difficulty: 3
 time_minutes: 28
 servings: 2

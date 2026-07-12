@@ -4,6 +4,14 @@ name:
   pinyin: Jinqiangyu Yumi Fan
   en: Tuna Sweetcorn Rice Bowl
 description: "几乎不用开火的应急饭，适合赶作业或刚搬家厨房不全时。"
+cover_image:
+  src: /recipe-media/jinqiangyu-yumi-fan-cover.jpg
+  alt: 金枪鱼玉米饭真实成品图
+  caption: 金枪鱼玉米饭
+  credit: pelican from Tokyo, Japan · Wikimedia Commons · CC BY-SA 2.0
+  credit_url: https://commons.wikimedia.org/wiki/File%3ASpicy_tuna_rice_bowl_(35032450572).jpg
+  license: CC BY-SA 2.0
+  license_url: https://creativecommons.org/licenses/by-sa/2.0
 difficulty: 1
 time_minutes: 8
 servings: 1

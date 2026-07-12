@@ -4,6 +4,14 @@ name:
   pinyin: Tudou Cheddar Jidan Bing
   en: Potato Cheddar Egg Pancake
 description: "用英国超市最常见的土豆、鸡蛋和切达奶酪做一顿便宜顶饱的融合早午餐。"
+cover_image:
+  src: /recipe-media/tudou-cheddar-jidanbing-cover.jpg
+  alt: 土豆切达鸡蛋饼真实成品图
+  caption: 土豆切达鸡蛋饼
+  credit: Photo made by Daniel Spils and uploaded to flickr.com · Wikimedia Commons · CC BY-SA 2.0
+  credit_url: https://commons.wikimedia.org/wiki/File%3APotato_pancakes.jpg
+  license: CC BY-SA 2.0
+  license_url: https://creativecommons.org/licenses/by-sa/2.0
 difficulty: 2
 time_minutes: 22
 servings: 1

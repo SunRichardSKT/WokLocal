@@ -18,7 +18,7 @@ function difficultyText(level: number) {
 
 function RecipeMiniCard({ recipe, removable = false }: { recipe: Recipe; removable?: boolean }) {
   return (
-    <div className="surface rounded-md p-4 transition hover:border-scallion/40">
+    <div className="surface surface-interactive rounded-md p-4">
       <Link href={`/recipes/${recipe.id}/`} className="block">
         <RecipeCover recipe={recipe} className="mb-4 aspect-[16/8]" compact />
         <div className="flex items-start justify-between gap-3">

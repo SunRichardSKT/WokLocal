@@ -1,0 +1,58 @@
+id: fanqie-danhua-tang
+name:
+  zh: 番茄蛋花汤
+  pinyin: Fanqie Danhua Tang
+  en: Tomato Egg Drop Soup
+description: 最简单的中式汤品，番茄和鸡蛋的组合永远不会出错。配米饭或面条，暖胃又解乡愁。
+difficulty: 1
+time_minutes: 10
+servings: 1
+cuisine: 中式家常菜
+recipe_type: chinese
+budget_level: low
+scenarios:
+  - low_budget
+  - tesco_friendly
+  - quick_15
+  - low_smoke
+tags:
+  - 汤
+  - 新手友好
+  - 低预算
+  - 宿舍友好
+equipment:
+  required_ids:
+    - stockpot
+    - knife-board
+  required:
+    - 深汤锅/小锅
+    - 菜刀
+    - 砧板
+  substitutes_if_missing: 用微波炉也可以，但锅做汤更好喝。
+base_ingredients:
+  - ingredient_id: xihongshi
+    amount: 1 个
+  - ingredient_id: jidan
+    amount: 1 个
+  - ingredient_id: yan
+    amount: 少许
+  - ingredient_id: shiyongyou
+    amount: 少许
+  - ingredient_id: cong
+    amount: 1 根（可选）
+    optional: true
+steps:
+  - order: 1
+    instruction: 番茄切成小块。鸡蛋打散备用。
+  - order: 2
+    instruction: 小锅中倒少许油，放入番茄块中火翻炒至出汁变软（约2分钟）。
+  - order: 3
+    instruction: 加 1.5-2 碗水，大火烧开。加盐调味。
+  - order: 4
+    instruction: 转小火，将蛋液沿筷子/勺子缓慢淋入锅中，不要搅动，等蛋花凝固后轻轻一拨。关火撒葱花。
+    tip: 蛋液要缓慢淋入、水要微微沸腾，这样蛋花才大而漂亮。
+video_links: []
+common_mistakes:
+  - 蛋液直接倒进去并搅动——会变成碎蛋沫，没有漂亮的蛋花。
+  - 水太少——一碗汤大概需要1.5-2碗水。
+  - 忘了先炒番茄——直接煮水的话番茄味出不来。

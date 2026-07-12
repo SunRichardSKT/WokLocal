@@ -1,0 +1,25 @@
+ingredient_id: danaiyou
+name_zh: 淡奶油
+name_en: Double cream
+pinyin: danaiyou
+category: 乳制品
+aliases_zh:
+  - 奶油
+aliases_en:
+  - Double cream
+  - Single cream
+aliases_pinyin: []
+search_keywords:
+  - 淡奶油
+  - double cream
+  - cream
+common_uses:
+  - 意面
+  - 浓汤
+  - 焗菜
+regions:
+  uk:
+    substitute: Double cream；想清爽可用 single cream
+    where_to_buy: 所有英国超市乳制品冷藏区
+    usage_note: Double cream 脂肪高、酱汁更浓；使用 single cream 时需多收汁。
+    similarity: 5

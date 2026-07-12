@@ -13,10 +13,10 @@ export default function HomePage() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-6 sm:py-10">
       <section className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-end">
-        <div className="py-4">
-          <p className="text-sm font-medium text-scallion">给刚到海外的萌新留子</p>
-          <h1 className="mt-3 max-w-3xl text-4xl font-semibold tracking-normal text-ink-100 sm:text-5xl">就地开饭 WokLocal</h1>
-          <p className="mt-5 max-w-2xl text-base leading-7 text-ink-300">
+        <div className="py-4 sm:py-7">
+          <p className="eyebrow">给刚到海外的萌新留子</p>
+          <h1 className="display-title mt-4 max-w-3xl text-5xl font-semibold leading-[1.08] text-ink-100 sm:text-6xl">就地开饭 <span className="font-sans text-2xl font-medium text-ink-500 sm:text-3xl">WokLocal</span></h1>
+          <p className="mt-6 max-w-2xl text-base leading-8 text-ink-300">
             每道菜保留标准做法，并给出当地超市能买到的替代食材、购买位置和味道差异。欢迎世界各地留子慢慢补齐更多信息。
           </p>
           <div className="mt-6 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:gap-3">
@@ -49,38 +49,38 @@ export default function HomePage() {
         <RegionAwarePanel />
       </section>
 
-      <section className="mt-8 grid gap-3 sm:grid-cols-3">
-        <Link href="/starter/" className="surface rounded-md p-4 transition hover:border-scallion/40">
+      <section className="mt-10 grid gap-3 sm:grid-cols-3">
+        <Link href="/starter/" className="surface surface-interactive rounded-md p-5">
           <ClipboardList className="text-scallion" size={20} aria-hidden="true" />
-          <p className="mt-3 text-2xl font-semibold text-ink-100">落地清单与宝典</p>
+          <p className="display-title mt-4 text-2xl font-semibold text-ink-100">落地清单与宝典</p>
           <p className="mt-1 text-sm leading-6 text-ink-300">按地区整理刚落地要买什么、去哪买，以及如何把厨房快速搭起来。</p>
         </Link>
-        <Link href="/ingredients/" className="surface rounded-md p-4 transition hover:border-scallion/40">
+        <Link href="/ingredients/" className="surface surface-interactive rounded-md p-5">
           <Wheat className="text-scallion" size={20} aria-hidden="true" />
-          <p className="mt-3 text-2xl font-semibold text-ink-100">食材对照</p>
+          <p className="display-title mt-4 text-2xl font-semibold text-ink-100">食材对照</p>
           <p className="mt-1 text-sm leading-6 text-ink-300">输入中文、英文或拼音，查当地可以买到的替代品。</p>
         </Link>
-        <Link href="/equipment/" className="surface rounded-md p-4 transition hover:border-scallion/40">
+        <Link href="/equipment/" className="surface surface-interactive rounded-md p-5">
           <Wrench className="text-soy" size={20} aria-hidden="true" />
-          <p className="mt-3 text-2xl font-semibold text-ink-100">厨具清单</p>
+          <p className="display-title mt-4 text-2xl font-semibold text-ink-100">厨具清单</p>
           <p className="mt-1 text-sm leading-6 text-ink-300">先买必需品，再考虑升级件。</p>
         </Link>
       </section>
 
       <section className="mt-3 grid gap-3 sm:grid-cols-3">
-        <div className="surface rounded-md p-4">
+        <div className="surface rounded-md p-5">
           <ShoppingBasket className="text-scallion" size={20} aria-hidden="true" />
-          <p className="mt-3 text-2xl font-semibold text-ink-100">英国样板</p>
+          <p className="display-title mt-4 text-2xl font-semibold text-ink-100">英国样板</p>
           <p className="mt-1 text-sm leading-6 text-ink-300">当前重点覆盖英国，包含常见英超、亚超与厨房搭建场景。</p>
         </div>
-        <div className="surface rounded-md p-4">
+        <div className="surface rounded-md p-5">
           <Clock3 className="text-soy" size={20} aria-hidden="true" />
-          <p className="mt-3 text-2xl font-semibold text-ink-100">12-28</p>
+          <p className="display-title mt-4 text-2xl font-semibold text-ink-100">12-28</p>
           <p className="mt-1 text-sm leading-6 text-ink-300">分钟级快手菜，适合课后和宿舍厨房。</p>
         </div>
-        <div className="surface rounded-md p-4">
+        <div className="surface rounded-md p-5">
           <Flame className="text-chili" size={20} aria-hidden="true" />
-          <p className="mt-3 text-2xl font-semibold text-ink-100">{recipes.length}</p>
+          <p className="display-title mt-4 text-2xl font-semibold text-ink-100">{recipes.length}</p>
           <p className="mt-1 text-sm leading-6 text-ink-300">道可直接照做的菜谱，另有 {ingredients.length} 个食材和 {equipment.length} 个厨具条目。</p>
         </div>
       </section>
@@ -88,7 +88,7 @@ export default function HomePage() {
       <section className="mt-10">
         <div className="mb-4 flex items-end justify-between gap-3">
           <div>
-            <h2 className="text-2xl font-semibold text-ink-100">精选菜谱</h2>
+            <h2 className="display-title text-3xl font-semibold text-ink-100">精选菜谱</h2>
             <p className="mt-1 text-sm text-ink-300">先从高成功率的家常菜开始。</p>
           </div>
           <Link className="hidden items-center gap-1 text-sm font-medium text-scallion sm:flex" href="/recipes/">
@@ -98,7 +98,7 @@ export default function HomePage() {
         </div>
         <div className="grid gap-4 md:grid-cols-3">
           {featured.map((recipe) => (
-            <Link className="surface group rounded-md p-4 transition hover:border-scallion/40" href={`/recipes/${recipe.id}/`} key={recipe.id}>
+            <Link className="surface surface-interactive group rounded-md p-4" href={`/recipes/${recipe.id}/`} key={recipe.id}>
               <RecipeCover recipe={recipe} className="h-32" compact />
               <h3 className="mt-4 text-lg font-semibold text-ink-100">{recipe.name.zh}</h3>
               <p className="mt-1 text-sm text-ink-300">{recipe.name.en}</p>

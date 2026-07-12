@@ -1,0 +1,25 @@
+ingredient_id: guantou-fanqie
+name_zh: 罐头番茄
+name_en: Tinned tomatoes
+pinyin: guantoufanqie
+category: 罐头食品
+aliases_zh:
+  - 番茄罐头
+aliases_en:
+  - Chopped tomatoes
+  - Plum tomatoes
+aliases_pinyin: []
+search_keywords:
+  - 罐头番茄
+  - tinned tomatoes
+  - chopped tomatoes
+common_uses:
+  - 意面酱
+  - 炖菜
+  - 汤
+regions:
+  uk:
+    substitute: Chopped tomatoes 或 peeled plum tomatoes
+    where_to_buy: 所有英国超市罐头区
+    usage_note: 酸味比新鲜番茄集中，酱汁更浓；可加少量糖平衡。
+    similarity: 5

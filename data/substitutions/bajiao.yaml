@@ -1,0 +1,24 @@
+ingredient_id: bajiao
+name_zh: 八角
+name_en: Star anise
+pinyin: bajiao
+category: 香辛料
+aliases_zh:
+  - 大料
+aliases_en:
+  - Chinese star anise
+aliases_pinyin: []
+search_keywords:
+  - 八角
+  - star anise
+  - 大料
+common_uses:
+  - 红烧
+  - 卤味
+  - 炖肉
+regions:
+  uk:
+    substitute: Star anise
+    where_to_buy: 英国亚超香料区或大型超市 world foods 区
+    usage_note: 香味很强，一锅一颗通常足够。
+    similarity: 5

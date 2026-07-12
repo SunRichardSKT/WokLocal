@@ -1,0 +1,26 @@
+ingredient_id: cheddar
+name_zh: 切达奶酪
+name_en: Cheddar cheese
+pinyin: qiedanailao
+category: 乳制品
+aliases_zh:
+  - 芝士
+  - 奶酪
+aliases_en:
+  - Cheddar
+  - Cheese
+aliases_pinyin: []
+search_keywords:
+  - 切达奶酪
+  - cheddar cheese
+  - 芝士
+common_uses:
+  - 焗饭
+  - 三明治
+  - 意面
+regions:
+  uk:
+    substitute: Mild 或 Mature Cheddar
+    where_to_buy: Tesco/Sainsbury's/Lidl/Aldi 奶酪冷藏区
+    usage_note: Mature 味道更重更咸；用于焖饭时 Mild 更接近温和奶香。
+    similarity: 5

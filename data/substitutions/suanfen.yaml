@@ -1,0 +1,24 @@
+ingredient_id: suanfen
+name_zh: 蒜粉
+name_en: Garlic powder
+pinyin: suanfen
+category: 香辛料
+aliases_zh:
+  - 大蒜粉
+aliases_en:
+  - Garlic granules
+aliases_pinyin: []
+search_keywords:
+  - 蒜粉
+  - garlic powder
+  - garlic granules
+common_uses:
+  - 腌肉
+  - 空气炸锅
+  - 烤蔬菜
+regions:
+  uk:
+    substitute: Garlic granules 或 garlic powder
+    where_to_buy: 所有英国超市香料区
+    usage_note: Granules 颗粒更粗、香味释放较慢；腌制时提前拌匀。
+    similarity: 5

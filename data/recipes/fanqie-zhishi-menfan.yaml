@@ -1,0 +1,65 @@
+id: fanqie-zhishi-menfan
+name:
+  zh: 番茄芝士焖饭
+  pinyin: Fanqie Zhishi Menfan
+  en: Tomato Cheese Rice
+description: 用普通英国超市食材做一顿低门槛热饭，番茄汁渗入米饭，配上融化的切达芝士，咸香满足。
+difficulty: 1
+time_minutes: 25
+servings: 1
+cuisine: 留学生厨房菜
+recipe_type: fusion
+budget_level: low
+scenarios:
+  - low_budget
+  - tesco_friendly
+  - low_smoke
+tags:
+  - 一锅出
+  - 融合菜
+  - 低预算
+  - 新手友好
+equipment:
+  required_ids:
+    - rice-cooker
+    - knife-board
+  required:
+    - 电饭煲
+    - 菜刀
+    - 砧板
+  substitutes_if_missing: 没有电饭煲可以用深一点的平底锅加盖小火焖，注意多加少许水。
+base_ingredients:
+  - ingredient_id: dami
+    amount: 1 杯（约150g）
+  - ingredient_id: xihongshi
+    amount: 1 个（中等大小）
+  - ingredient_id: cheddar
+    amount: 2-3 片（切丝）
+  - ingredient_id: xiangchang
+    amount: 2 根香肠 或 3 片培根（可选）
+    optional: true
+  - ingredient_id: fanqiejiang
+    amount: 1 勺
+  - ingredient_id: shengchou
+    amount: 1 勺
+  - ingredient_id: yan
+    amount: 少许
+steps:
+  - order: 1
+    instruction: 大米淘洗干净，放入电饭煲内胆。加水量比平时略少一些（番茄会出汁）。
+    tip: 番茄焖饭的水要少放，否则会太软烂。
+  - order: 2
+    instruction: 番茄顶部划十字刀，不用去皮。香肠/培根切丁。
+    tip: 番茄划十字后焖熟会自动脱皮，省去皮步骤。
+  - order: 3
+    instruction: 将番茄和香肠丁铺在米饭表面。淋上生抽、番茄酱，撒少许盐。
+  - order: 4
+    instruction: 按下煮饭键，等待电饭煲自动跳闸。
+  - order: 5
+    instruction: 开盖后用饭勺把番茄捣碎，和米饭拌匀。撒上一层切达奶酪丝，盖上盖子焖 2-3 分钟至奶酪融化。
+    tip: 也可以撒上葱花或黑胡椒提味。
+video_links: []
+common_mistakes:
+  - 水加太多，焖出来像粥——番茄和调料都有水分，水量要比平时略少。
+  - 番茄没有划刀——不划刀不容易煮烂出汁。
+  - 奶酪放太早——要等饭煮好后再放，否则会沉底粘锅。

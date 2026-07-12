@@ -1,0 +1,65 @@
+id: kuaisu-chaomian
+name:
+  zh: 简易炒面
+  pinyin: Kuaisu Chaomian
+  en: Quick Stir-fried Noodles
+description: 用英国超市的蛋面或乌冬面，搭配任意蔬菜和肉类，酱油蚝油调味，10分钟出锅。面条是留子冰箱里永远的备粮。
+difficulty: 1
+time_minutes: 15
+servings: 1
+cuisine: 中式家常菜
+recipe_type: chinese
+budget_level: low
+scenarios:
+  - low_budget
+  - tesco_friendly
+  - quick_15
+  - meal_prep
+tags:
+  - 面条
+  - 低预算
+  - 快手菜
+  - 冰箱清理
+equipment:
+  required_ids:
+    - stockpot
+    - nonstick-pan
+    - wok
+    - colander
+    - knife-board
+  required:
+    - 深汤锅
+    - 不粘平底锅/炒锅
+    - 沥水篮
+    - 菜刀
+    - 砧板
+  substitutes_if_missing: 没有炒锅用不粘锅也可以，大火翻炒。
+base_ingredients:
+  - ingredient_id: jidanmian
+    amount: 1 包（约200g）
+  - ingredient_id: jidan
+    amount: 1-2 个
+  - ingredient_id: lengdongshucai
+    amount: 一把
+  - ingredient_id: shengchou
+    amount: 1.5 勺
+  - ingredient_id: haoyou
+    amount: 半勺
+  - ingredient_id: shiyongyou
+    amount: 适量
+steps:
+  - order: 1
+    instruction: 面条按包装说明煮至八成熟（比正常时间短1-2分钟），捞出过冷水沥干，拌少许油防粘。
+    tip: 面条煮到八成熟就好，后面还要炒，会继续熟。
+  - order: 2
+    instruction: 不粘锅倒油，打入鸡蛋炒散，盛出备用。同一口锅再加少许油，放入蔬菜翻炒至断生。
+  - order: 3
+    instruction: 加入沥好的面条、炒好的鸡蛋，倒入生抽和蚝油，大火快速翻炒2分钟至均匀上色。
+    tip: 大火快炒才能让面条不粘且带锅气。
+  - order: 4
+    instruction: 可以加叉烧/培根/虾仁等蛋白质，翻拌均匀即可出锅。
+video_links: []
+common_mistakes:
+  - 面条煮太软——炒的时候会继续熟，煮到八成就够了。
+  - 水没沥干——湿面条下锅会变成一坨，一定要过冷水沥干并拌油。
+  - 火太小——炒面必须大火，否则面条会粘成一团。

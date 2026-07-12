@@ -1,0 +1,23 @@
+ingredient_id: huangmenjiang
+name_zh: 黄焖鸡酱
+name_en: Huangmen chicken sauce
+pinyin: huangmenjijiang
+category: 复合调料
+aliases_zh:
+  - 黄焖酱
+aliases_en:
+  - Chinese braising sauce
+aliases_pinyin: []
+search_keywords:
+  - 黄焖鸡酱
+  - huangmen chicken sauce
+  - 黄焖酱
+common_uses:
+  - 黄焖鸡
+  - 焖肉
+regions:
+  uk:
+    substitute: 袋装黄焖鸡调味酱；买不到可用生抽、蚝油和糖调配
+    where_to_buy: 英国亚超调料区或网购
+    usage_note: 成品酱通常较咸，先不要额外加盐。
+    similarity: 4

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BookOpen, ClipboardList, Github, Heart, Home, Menu, SearchCheck, ShoppingBasket, Soup, Sparkles, Wrench, Wheat, X } from "lucide-react";
 import clsx from "clsx";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 const navItems = [
   { href: "/", label: "首页", icon: Home },
@@ -44,16 +45,19 @@ export function SiteNav() {
           <span className="truncate text-base font-semibold tracking-normal text-ink-100">就地开饭</span>
         </Link>
 
-        <button
-          aria-controls="mobile-site-nav"
-          aria-expanded={menuOpen}
-          aria-label={menuOpen ? "收起导航" : "展开导航"}
-          className="flex size-11 shrink-0 items-center justify-center rounded-md border border-white/10 text-ink-100 transition hover:bg-white/[0.08] sm:hidden"
-          onClick={() => setMenuOpen((open) => !open)}
-          type="button"
-        >
-          {menuOpen ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
-        </button>
+        <div className="flex shrink-0 items-center gap-2 sm:hidden">
+          <ThemeToggle />
+          <button
+            aria-controls="mobile-site-nav"
+            aria-expanded={menuOpen}
+            aria-label={menuOpen ? "收起导航" : "展开导航"}
+            className="flex size-11 items-center justify-center rounded-md border border-white/10 text-ink-100 transition hover:bg-white/[0.08]"
+            onClick={() => setMenuOpen((open) => !open)}
+            type="button"
+          >
+            {menuOpen ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
+          </button>
+        </div>
 
         <div className="hidden items-center gap-1.5 text-sm text-ink-300 sm:flex">
           {navItems.map((item) => {
@@ -75,11 +79,12 @@ export function SiteNav() {
               </Link>
             );
           })}
+          <ThemeToggle />
         </div>
       </div>
 
       {menuOpen ? (
-        <div className="absolute left-0 right-0 top-full z-50 max-h-[calc(100dvh-4rem)] overflow-y-auto border-y border-white/10 bg-ink-950 p-3 shadow-soft sm:hidden" id="mobile-site-nav">
+        <div className="mobile-nav-panel absolute left-0 right-0 top-full z-50 max-h-[calc(100dvh-4rem)] overflow-y-auto border-y border-white/10 bg-ink-950 p-3 shadow-soft sm:hidden" id="mobile-site-nav">
           <div className="grid grid-cols-3 gap-2">
             {navItems.map((item) => {
               const Icon = item.icon;

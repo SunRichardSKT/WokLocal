@@ -1,0 +1,27 @@
+ingredient_id: mifan
+name_zh: 熟米饭
+name_en: Cooked rice
+pinyin: mifan
+category: 主食
+aliases_zh:
+  - 隔夜饭
+  - 剩饭
+aliases_en:
+  - Cooked rice
+  - Leftover rice
+aliases_pinyin: []
+search_keywords:
+  - 熟米饭
+  - cooked rice
+  - leftover rice
+  - 隔夜饭
+common_uses:
+  - 炒饭
+  - 盖饭
+  - 便当
+regions:
+  uk:
+    substitute: 冷藏隔夜饭或 microwave rice
+    where_to_buy: 自制冷藏；也可在所有英国超市购买微波米饭
+    usage_note: 炒饭优先用冷藏米饭；熟米饭应尽快降温冷藏并在一天内彻底加热食用。
+    similarity: 5

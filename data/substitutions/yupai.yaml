@@ -1,0 +1,27 @@
+ingredient_id: yupai
+name_zh: 鱼排
+name_en: Fish fillet
+pinyin: yupai
+category: 蛋白质
+aliases_zh:
+  - 鱼柳
+  - 三文鱼排
+aliases_en:
+  - Fish fillet
+  - Salmon fillet
+  - Sea bass fillet
+aliases_pinyin: []
+search_keywords:
+  - 鱼排
+  - fish fillet
+  - salmon fillet
+common_uses:
+  - 清蒸
+  - 香煎
+  - 烤鱼
+regions:
+  uk:
+    substitute: Salmon fillet、sea bass fillet 或无皮白鱼排
+    where_to_buy: Tesco/Sainsbury's/Morrisons 鱼类冷藏区
+    usage_note: 三文鱼油脂更足、味道更浓；白鱼更接近清淡蒸鱼。
+    similarity: 4

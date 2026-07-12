@@ -4,6 +4,40 @@
 
 :root {
   color-scheme: dark;
+  --ink-950: 8 9 11;
+  --ink-900: 15 17 21;
+  --ink-850: 21 24 32;
+  --ink-800: 29 33 43;
+  --ink-700: 42 48 60;
+  --ink-500: 105 113 129;
+  --ink-300: 183 191 204;
+  --ink-100: 238 241 245;
+  --rice: 245 239 224;
+  --scallion: 142 207 158;
+  --chili: 255 122 95;
+  --soy: 185 144 99;
+  --canvas: rgb(var(--ink-950));
+  --grid-line: 255 255 255;
+  --shadow-color: 0 0 0;
+}
+
+html.light {
+  color-scheme: light;
+  --ink-950: 247 246 241;
+  --ink-900: 255 255 252;
+  --ink-850: 244 244 238;
+  --ink-800: 231 232 225;
+  --ink-700: 205 208 200;
+  --ink-500: 101 109 117;
+  --ink-300: 65 73 80;
+  --ink-100: 25 30 34;
+  --rice: 83 67 47;
+  --scallion: 54 120 75;
+  --chili: 201 79 61;
+  --soy: 141 101 61;
+  --canvas: rgb(var(--ink-950));
+  --grid-line: 20 27 32;
+  --shadow-color: 39 46 42;
 }
 
 * {
@@ -19,8 +53,8 @@ body {
   margin: 0;
   min-width: 320px;
   overflow-x: clip;
-  background: linear-gradient(180deg, #08090b 0%, #0f1115 42%, #08090b 100%);
-  color: #eef1f5;
+  background: var(--canvas);
+  color: rgb(var(--ink-100));
   font-family:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     "PingFang SC", "Microsoft YaHei", sans-serif;
@@ -32,14 +66,35 @@ body::before {
   z-index: -1;
   pointer-events: none;
   content: "";
-  background-image: linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.012) 1px, transparent 1px);
-  background-size: 36px 36px;
-  mask-image: linear-gradient(to bottom, black, transparent 72%);
+  background-image: linear-gradient(rgb(var(--grid-line) / 0.016) 1px, transparent 1px), linear-gradient(90deg, rgb(var(--grid-line) / 0.012) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: linear-gradient(to bottom, black, transparent 62%);
 }
 
 a {
   color: inherit;
   text-decoration: none;
+}
+
+main h1 {
+  font-family: "Songti SC", "STSong", "Noto Serif CJK SC", ui-serif, Georgia, serif;
+  text-wrap: pretty;
+}
+
+html.light [class*="border-white/"] {
+  border-color: rgb(25 30 34 / 0.12) !important;
+}
+
+html.light [class*="bg-white/"] {
+  background-color: rgb(25 30 34 / 0.045) !important;
+}
+
+html.light .bg-scallion.text-ink-950 {
+  color: #0c1911 !important;
+}
+
+html.light .shadow-soft {
+  box-shadow: 0 14px 38px rgb(39 46 42 / 0.12) !important;
 }
 
 button,
@@ -65,7 +120,7 @@ summary:focus-visible {
 
 @layer components {
   .surface {
-    @apply border border-white/10 bg-ink-900/[0.88] shadow-soft backdrop-blur;
+    @apply border border-white/10 bg-ink-900 shadow-soft;
   }
 
   .control {
@@ -87,6 +142,252 @@ summary:focus-visible {
   .section-summary {
     @apply rounded-sm transition hover:text-scallion;
   }
+
+  .display-title {
+    font-family: "Songti SC", "STSong", "Noto Serif CJK SC", ui-serif, Georgia, serif;
+    text-wrap: pretty;
+  }
+
+  .eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.18em] text-scallion;
+  }
+
+  .surface-interactive {
+    @apply relative isolate overflow-hidden transition duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-ink-850;
+  }
+
+  .surface-interactive::before {
+    position: absolute;
+    inset: -1px;
+    z-index: 0;
+    width: 42%;
+    content: "";
+    background: linear-gradient(90deg, transparent, rgb(var(--scallion) / 0.18), transparent);
+    pointer-events: none;
+    transform: translateX(-180%) skewX(-20deg);
+  }
+
+  .surface-interactive > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .surface-interactive:hover::before {
+    animation: card-sweep 720ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .hairline-divider {
+    @apply border-t border-white/10;
+  }
+
+  .starter-hero {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .starter-hero::before {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    content: "";
+  }
+
+  .starter-hero-uk::before {
+    background-image: repeating-linear-gradient(90deg, transparent 0 23px, rgb(var(--scallion) / 0.08) 24px 25px);
+    mask-image: linear-gradient(90deg, transparent, black 35%, black 78%, transparent);
+  }
+
+  .starter-hero-north_america::before {
+    background-image:
+      repeating-linear-gradient(135deg, transparent 0 42px, rgb(var(--chili) / 0.085) 43px 45px),
+      linear-gradient(90deg, transparent 0 58%, rgb(var(--chili) / 0.055));
+    mask-image: linear-gradient(90deg, transparent, black 24%, black 86%, transparent);
+  }
+
+  .starter-hero > * {
+    position: relative;
+  }
+
+  .recipe-deck {
+    position: relative;
+    isolation: isolate;
+    padding: 0 0.5rem 0.75rem;
+  }
+
+  .recipe-deck-layer {
+    position: absolute;
+    inset: 0.4rem 1rem 0.2rem;
+    z-index: -1;
+    border: 1px solid rgb(var(--ink-100) / 0.1);
+    border-radius: 0.375rem;
+    background: rgb(var(--ink-850) / 0.72);
+    pointer-events: none;
+  }
+
+  .recipe-deck-layer-back {
+    transform: translateY(0.55rem) rotate(-1.2deg);
+    opacity: 0.42;
+  }
+
+  .recipe-deck-layer-mid {
+    transform: translateY(0.3rem) rotate(0.8deg);
+    opacity: 0.7;
+  }
+
+  .recipe-deck-card {
+    position: relative;
+    z-index: 1;
+  }
+
+  .page-enter > * {
+    animation: page-enter 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .theme-toggle-icon {
+    animation: icon-enter 220ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .theme-toggle {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+  }
+
+  .theme-toggle::before {
+    position: absolute;
+    inset: -50%;
+    z-index: -1;
+    content: "";
+    background: conic-gradient(from 45deg, transparent, rgb(var(--scallion) / 0.26), transparent 38%);
+    animation: theme-halo 3.2s linear infinite;
+  }
+
+  .cover-motion {
+    isolation: isolate;
+  }
+
+  .cover-motion::before {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    content: "";
+    background: repeating-linear-gradient(90deg, transparent 0 13px, rgb(255 255 255 / 0.045) 14px 15px);
+    mask-image: linear-gradient(90deg, transparent, black 20%, black 80%, transparent);
+    opacity: 0.65;
+    animation: cover-lines 7s linear infinite;
+  }
+
+  .cover-motion::after {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -24%;
+    z-index: 1;
+    width: 18%;
+    content: "";
+    background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.2), transparent);
+    transform: skewX(-18deg);
+    animation: cover-scan 4.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  }
+
+  .cover-motion > * {
+    z-index: 2;
+  }
+
+  .mobile-nav-panel {
+    transform-origin: top center;
+    animation: nav-unfold 480ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .mobile-nav-panel a {
+    animation: nav-item-enter 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .mobile-nav-panel a:nth-child(1) { animation-delay: 20ms; }
+  .mobile-nav-panel a:nth-child(2) { animation-delay: 50ms; }
+  .mobile-nav-panel a:nth-child(3) { animation-delay: 80ms; }
+  .mobile-nav-panel a:nth-child(4) { animation-delay: 110ms; }
+  .mobile-nav-panel a:nth-child(5) { animation-delay: 140ms; }
+  .mobile-nav-panel a:nth-child(6) { animation-delay: 170ms; }
+  .mobile-nav-panel a:nth-child(7) { animation-delay: 200ms; }
+  .mobile-nav-panel a:nth-child(8) { animation-delay: 230ms; }
+  .mobile-nav-panel a:nth-child(9) { animation-delay: 260ms; }
+  .mobile-nav-panel a:nth-child(10) { animation-delay: 290ms; }
+}
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes icon-enter {
+  from {
+    opacity: 0;
+    transform: rotate(-24deg) scale(0.72);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(0) scale(1);
+  }
+}
+
+@keyframes lattice-shift {
+  to { background-position: 40px 40px; }
+}
+
+@keyframes card-sweep {
+  to { transform: translateX(420%) skewX(-20deg); }
+}
+
+@keyframes theme-halo {
+  to { transform: rotate(1turn); }
+}
+
+@keyframes cover-lines {
+  to { background-position: 30px 0; }
+}
+
+@keyframes cover-scan {
+  0%, 42% { transform: translateX(0) skewX(-18deg); opacity: 0; }
+  48% { opacity: 1; }
+  62%, 100% { transform: translateX(720%) skewX(-18deg); opacity: 0; }
+}
+
+@keyframes deck-deal-in {
+  from {
+    opacity: 0;
+    transform: translate(24%, -1rem) rotate(5deg) scale(0.94);
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0) rotate(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes deck-deal-out {
+  to {
+    opacity: 0;
+    transform: translate(-32%, 1rem) rotate(-7deg) scale(0.93);
+    filter: blur(2px);
+  }
+}
+
+@keyframes nav-unfold {
+  from { opacity: 0; transform: perspective(900px) rotateX(-14deg) translateY(-10px); }
+  to { opacity: 1; transform: perspective(900px) rotateX(0) translateY(0); }
+}
+
+@keyframes nav-item-enter {
+  from { opacity: 0; transform: translateY(-12px) scale(0.9); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 @media (max-width: 639px) {
@@ -98,5 +399,67 @@ summary:focus-visible {
 
   .control {
     min-height: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  body::before {
+    animation: lattice-shift 12s linear infinite;
+  }
+
+  .page-enter > * > section,
+  .page-enter > * > div > section {
+    animation: section-pop 620ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .page-enter > * > section:nth-child(2),
+  .page-enter > * > div > section:nth-child(2) {
+    animation-delay: 80ms;
+  }
+
+  .page-enter > * > section:nth-child(3),
+  .page-enter > * > div > section:nth-child(3) {
+    animation-delay: 150ms;
+  }
+
+  .starter-hero::before {
+    animation: cover-lines 8s linear infinite;
+  }
+
+  .recipe-deck-card {
+    animation: deck-deal-in 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    transform-origin: 75% 10%;
+  }
+
+  .recipe-deck-card-exit {
+    animation: deck-deal-out 280ms cubic-bezier(0.7, 0, 0.84, 0) both;
+    pointer-events: none;
+    transform-origin: 25% 90%;
+  }
+
+  main article.surface {
+    transition: transform 260ms cubic-bezier(0.16, 1, 0.3, 1), border-color 260ms ease, background-color 260ms ease;
+  }
+
+  @media (hover: hover) {
+    main article.surface:hover {
+      transform: translateY(-4px);
+      border-color: rgb(var(--scallion) / 0.38);
+    }
+  }
+}
+
+@keyframes section-pop {
+  from { opacity: 0; transform: translateY(22px) scale(0.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
   }
 }

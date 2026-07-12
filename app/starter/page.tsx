@@ -13,10 +13,10 @@ export default function StarterPage() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
       <section className="mb-6">
-        <p className="text-sm font-medium text-scallion">Landing Checklist</p>
-        <h1 className="mt-2 text-3xl font-semibold tracking-normal text-ink-100 sm:text-4xl">落地清单与新手宝典</h1>
-        <p className="mt-3 max-w-2xl text-sm leading-6 text-ink-300">
-          刚到海外先别买乱。按地区整理厨房搭建、基础食材、厨具采购和容易踩坑的注意事项，也欢迎补充你所在地区的经验。
+        <p className="eyebrow">Landing Checklist</p>
+        <h1 className="display-title mt-3 text-4xl font-semibold text-ink-100 sm:text-5xl">落地清单与新手宝典</h1>
+        <p className="mt-4 max-w-2xl text-sm leading-7 text-ink-300">
+          刚到海外先别买乱。英国与美国现已提供分地区的超市采购地图、厨房搭建、基础食材和避坑提示，也欢迎补充你所在城市的真实经验。
         </p>
       </section>
       <StarterPackView packs={packs} guides={guides} />

@@ -119,12 +119,22 @@ export const guideSectionSchema = z.object({
   items: z.array(z.string().min(1)).min(1)
 });
 
+export const supermarketSchema = z.object({
+  name: z.string().min(1),
+  kind: z.enum(["budget", "mainstream", "specialty", "premium", "bulk", "asian"]),
+  price_level: z.enum(["low", "medium", "high", "mixed"]),
+  best_for: z.array(z.string().min(1)).min(1),
+  membership: z.string().min(1).optional(),
+  note: z.string().min(1)
+});
+
 export const guideSchema = z.object({
   guide_id: z.string().min(1).regex(/^[a-z0-9-]+$/),
   region: regionKeySchema,
   title: z.string().min(1),
   summary: z.string().min(1),
-  sections: z.array(guideSectionSchema).min(1)
+  sections: z.array(guideSectionSchema).min(1),
+  supermarkets: z.array(supermarketSchema).default([])
 });
 
 export const starterPackItemSchema = z.object({
@@ -159,5 +169,6 @@ export type RecipeStep = z.infer<typeof recipeStepSchema>;
 export type Recipe = z.infer<typeof recipeSchema>;
 export type EquipmentRegion = z.infer<typeof equipmentRegionSchema>;
 export type Equipment = z.infer<typeof equipmentSchema>;
+export type Supermarket = z.infer<typeof supermarketSchema>;
 export type Guide = z.infer<typeof guideSchema>;
 export type StarterPack = z.infer<typeof starterPackSchema>;

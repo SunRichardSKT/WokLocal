@@ -1,0 +1,19 @@
+equipment_id: wok
+name_zh: 炒锅
+name_en: Wok
+category: optional_upgrade
+budget_level: medium
+is_essential: false
+use_cases:
+  - 中式炒菜
+  - 炒饭
+  - 炒面
+  - 快速收汁
+substitutes_if_missing:
+  - 不粘平底锅
+  - 深煎锅
+regions:
+  uk:
+    where_to_buy: 当地亚超、IKEA、Argos、Amazon UK
+    price_range: £15-£40
+    notes: 电磁炉需确认锅底兼容 induction；初学者优先平底炒锅。

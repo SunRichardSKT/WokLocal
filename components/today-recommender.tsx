@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Clock3, Shuffle, Star } from "lucide-react";
 import { scenarioDefinitions, scenarioLabelMap } from "@/lib/recommendations";
@@ -31,6 +31,14 @@ function reasonFor(recipe: Recipe, selected: RecommendationScenario[]) {
 export function TodayRecommender({ recipes }: TodayRecommenderProps) {
   const [selected, setSelected] = useState<RecommendationScenario[]>(["quick_15"]);
   const [shuffleSeed, setShuffleSeed] = useState(0);
+  const [isShuffling, setIsShuffling] = useState(false);
+  const shuffleTimer = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (shuffleTimer.current !== null) window.clearTimeout(shuffleTimer.current);
+    };
+  }, []);
 
   const ranked = useMemo(() => {
     return recipes
@@ -50,6 +58,16 @@ export function TodayRecommender({ recipes }: TodayRecommenderProps) {
   function toggleScenario(id: RecommendationScenario) {
     setShuffleSeed(0);
     setSelected((current) => (current.includes(id) ? current.filter((item) => item !== id) : [...current, id]));
+  }
+
+  function shuffleRecipe() {
+    if (isShuffling || visible.length <= 1) return;
+    setIsShuffling(true);
+    shuffleTimer.current = window.setTimeout(() => {
+      setShuffleSeed((value) => value + 1);
+      setIsShuffling(false);
+      shuffleTimer.current = null;
+    }, 280);
   }
 
   return (
@@ -83,7 +101,13 @@ export function TodayRecommender({ recipes }: TodayRecommenderProps) {
       </section>
 
       {pick ? (
-        <section className="surface rounded-md p-5">
+        <div className="recipe-deck">
+          <div className="recipe-deck-layer recipe-deck-layer-back" aria-hidden="true" />
+          <div className="recipe-deck-layer recipe-deck-layer-mid" aria-hidden="true" />
+          <section
+            className={`surface recipe-deck-card rounded-md p-5 ${isShuffling ? "recipe-deck-card-exit" : ""}`}
+            key={`${pick.id}-${shuffleSeed}`}
+          >
           <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
             <div className="min-w-0">
               <p className="text-sm font-medium text-scallion">今天可以吃</p>
@@ -94,12 +118,13 @@ export function TodayRecommender({ recipes }: TodayRecommenderProps) {
             </div>
             <div className="flex flex-col gap-2 sm:flex-row lg:flex-col">
               <button
-                className="inline-flex items-center justify-center gap-2 rounded-md border border-white/10 px-4 py-3 text-sm font-semibold text-ink-100 transition hover:bg-white/[0.06]"
-                onClick={() => setShuffleSeed((value) => value + 1)}
+                className="inline-flex items-center justify-center gap-2 rounded-md border border-white/10 px-4 py-3 text-sm font-semibold text-ink-100 transition hover:border-scallion/40 hover:bg-white/[0.06] disabled:cursor-wait disabled:opacity-60"
+                disabled={isShuffling || visible.length <= 1}
+                onClick={shuffleRecipe}
                 type="button"
               >
-                <Shuffle size={16} aria-hidden="true" />
-                换一个
+                <Shuffle className={isShuffling ? "animate-spin" : ""} size={16} aria-hidden="true" />
+                {isShuffling ? "切牌中" : "换一个"}
               </button>
               <Link className="inline-flex items-center justify-center gap-2 rounded-md bg-scallion px-4 py-3 text-sm font-semibold text-ink-950" href={`/recipes/${pick.id}/`}>
                 看做法
@@ -124,12 +149,13 @@ export function TodayRecommender({ recipes }: TodayRecommenderProps) {
               <p className="mt-1 font-semibold text-ink-100">{pick.budget_level === "low" ? "低" : pick.budget_level === "medium" ? "中" : "高"}</p>
             </div>
           </div>
-        </section>
+          </section>
+        </div>
       ) : null}
 
       <section className="grid gap-4 md:grid-cols-2">
         {visible.slice(0, 6).map(({ recipe, score }) => (
-          <Link className="surface rounded-md p-4 transition hover:border-scallion/40" href={`/recipes/${recipe.id}/`} key={recipe.id}>
+          <Link className="surface surface-interactive rounded-md p-4" href={`/recipes/${recipe.id}/`} key={recipe.id}>
             <div className="flex items-start justify-between gap-3">
               <div>
                 <h2 className="font-semibold text-ink-100">{recipe.name.zh}</h2>

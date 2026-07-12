@@ -1,0 +1,23 @@
+ingredient_id: kele
+name_zh: 可乐
+name_en: Cola
+pinyin: kele
+category: 饮料与调料
+aliases_zh:
+  - 含糖可乐
+aliases_en:
+  - Full-sugar cola
+aliases_pinyin: []
+search_keywords:
+  - 可乐
+  - cola
+  - coke
+common_uses:
+  - 可乐鸡翅
+  - 甜味酱汁
+regions:
+  uk:
+    substitute: Original/full-sugar cola
+    where_to_buy: 所有英国超市饮料区
+    usage_note: 不要使用 Zero 或 Diet 版本，代糖不能形成相同的焦糖汁。
+    similarity: 5

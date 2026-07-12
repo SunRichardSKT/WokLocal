@@ -1,0 +1,60 @@
+id: suanrong-xilanhua
+name:
+  zh: 蒜蓉西兰花
+  pinyin: Suanrong Xilanhua
+  en: Garlic Stir-fried Broccoli
+description: 英国超市西兰花便宜又新鲜，焯水后用蒜蓉和蚝油一炒，3分钟搞定一道绿色蔬菜，配任何主菜都合适。
+difficulty: 1
+time_minutes: 10
+servings: 1
+cuisine: 中式家常菜
+recipe_type: chinese
+budget_level: low
+scenarios:
+  - low_budget
+  - tesco_friendly
+  - quick_15
+  - low_smoke
+tags:
+  - 快手蔬菜
+  - 低预算
+  - 健康
+  - 宿舍友好
+equipment:
+  required_ids:
+    - stockpot
+    - nonstick-pan
+    - colander
+    - knife-board
+  required:
+    - 深汤锅
+    - 不粘平底锅
+    - 沥水篮
+    - 菜刀
+    - 砧板
+  substitutes_if_missing: 没有沥水篮可以用锅盖隔水沥干。
+base_ingredients:
+  - ingredient_id: xilanhua
+    amount: 1 颗（切小朵）
+  - ingredient_id: suan
+    amount: 3-4 瓣（切末）
+  - ingredient_id: haoyou
+    amount: 1 勺
+  - ingredient_id: shiyongyou
+    amount: 适量
+  - ingredient_id: yan
+    amount: 少许
+steps:
+  - order: 1
+    instruction: 西兰花切成小朵。锅中烧水，水沸后加少许盐和几滴油，放入西兰花焯水1-2分钟至翠绿，捞出沥干。
+    tip: 加盐和油可以让西兰花保持翠绿不发黄。不要焯太久，否则口感发软。
+  - order: 2
+    instruction: 不粘锅中倒少许油，小火放入蒜末炒香（约20秒）。
+    tip: 蒜末容易焦，小火是关键。
+  - order: 3
+    instruction: 倒入焯好的西兰花，加蚝油和少许盐，大火快速翻炒30秒-1分钟即可出锅。
+video_links: []
+common_mistakes:
+  - 西兰花焯太久——超过2分钟就软烂了，保持脆爽口感。
+  - 蒜炒焦了——蒜末下锅后20秒就要加西兰花，否则会苦。
+  - 蚝油加太多——蚝油本身很咸，一小勺足够。

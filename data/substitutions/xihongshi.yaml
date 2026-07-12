@@ -1,0 +1,24 @@
+ingredient_id: xihongshi
+name_zh: 西红柿
+name_en: Tomato
+pinyin: xihongshi
+category: 蔬菜
+aliases_zh:
+  - 番茄
+aliases_en:
+  - Fresh tomato
+aliases_pinyin: []
+search_keywords:
+  - 西红柿
+  - tomato
+  - 番茄
+common_uses:
+  - 炒菜
+  - 汤面
+  - 焖饭
+regions:
+  uk:
+    substitute: Loose tomatoes、salad tomatoes 或 plum tomatoes
+    where_to_buy: Tesco/Sainsbury's/Lidl/Aldi 蔬果区
+    usage_note: 英国普通番茄偏酸且汁水较少；焖煮可选罐头番茄增强风味。
+    similarity: 5

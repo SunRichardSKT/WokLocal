@@ -1,0 +1,24 @@
+ingredient_id: qiezhi-judou
+name_zh: 茄汁焗豆
+name_en: Baked beans
+pinyin: qiezhijudou
+category: 罐头食品
+aliases_zh:
+  - 番茄焗豆
+aliases_en:
+  - Beans in tomato sauce
+aliases_pinyin: []
+search_keywords:
+  - 茄汁焗豆
+  - baked beans
+  - beans in tomato sauce
+common_uses:
+  - 烤土豆
+  - 英式早餐
+  - 吐司
+regions:
+  uk:
+    substitute: Baked beans in tomato sauce
+    where_to_buy: 所有英国超市罐头区
+    usage_note: 味道偏甜，可直接加热；作为浇头时不需要再加盐。
+    similarity: 5

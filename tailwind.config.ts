@@ -6,22 +6,22 @@ const config: Config = {
     extend: {
       colors: {
         ink: {
-          950: "#08090b",
-          900: "#0f1115",
-          850: "#151820",
-          800: "#1d212b",
-          700: "#2a303c",
-          500: "#697181",
-          300: "#b7bfcc",
-          100: "#eef1f5"
+          950: "rgb(var(--ink-950) / <alpha-value>)",
+          900: "rgb(var(--ink-900) / <alpha-value>)",
+          850: "rgb(var(--ink-850) / <alpha-value>)",
+          800: "rgb(var(--ink-800) / <alpha-value>)",
+          700: "rgb(var(--ink-700) / <alpha-value>)",
+          500: "rgb(var(--ink-500) / <alpha-value>)",
+          300: "rgb(var(--ink-300) / <alpha-value>)",
+          100: "rgb(var(--ink-100) / <alpha-value>)"
         },
-        rice: "#f5efe0",
-        scallion: "#8ecf9e",
-        chili: "#ff7a5f",
-        soy: "#b99063"
+        rice: "rgb(var(--rice) / <alpha-value>)",
+        scallion: "rgb(var(--scallion) / <alpha-value>)",
+        chili: "rgb(var(--chili) / <alpha-value>)",
+        soy: "rgb(var(--soy) / <alpha-value>)"
       },
       boxShadow: {
-        soft: "0 18px 60px rgba(0, 0, 0, 0.35)"
+        soft: "0 18px 60px rgb(var(--shadow-color) / 0.35)"
       }
     }
   },

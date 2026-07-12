@@ -1,84 +1,84 @@
 pack_id: uk-first-week
 region: uk
-title: 英国落地清单与注意事项
-summary: "按优先级和购买地点整理，目标是用最低成本搭出能煮饭、煮面、做盖饭和带饭的基础厨房，同时避开刚落地最常见的采购坑。"
+title: 英国落地：前 7 天厨房搭建
+summary: "先确认宿舍规则和厨房设备，再用一套低预算采购把第一餐、带饭和后续补货跑起来。不要急着把中国厨房原样搬过去。"
 sections:
-  - title: 今天就买
+  - title: 落地当天：先能吃上一顿，也先避开规则坑
     priority: today
     items:
-      - name: 不粘平底锅
-        category: 厨具
-        where_to_buy: [IKEA, Argos, Tesco Extra, Amazon UK]
-        estimated_budget: "£10-£25"
-        note: "24-28cm 最通用，能煎蛋、炒饭、做盖饭。"
-      - name: 硅胶锅铲
-        category: 厨具
-        where_to_buy: [IKEA, Tesco, Sainsbury's]
-        estimated_budget: "£2-£8"
-        note: "保护不粘锅，不要用金属铲。"
-      - name: 洗碗套装
+      - name: 厨房与宿舍规则检查
+        category: 落地检查
+        where_to_buy: [住宿欢迎手册, 前台, 物业或室友]
+        estimated_budget: "£0"
+        note: "确认炉灶类型、是否允许电饭煲/空气炸锅、烟雾报警器位置和垃圾分类；入住时顺手拍下厨房现状。"
+      - name: 清洁与收纳基础包
         category: 清洁
-        where_to_buy: [Tesco, Sainsbury's, Lidl, Aldi]
-        estimated_budget: "£2-£8"
-        note: "洗洁精、海绵、厨房纸先买齐。"
-      - name: 鸡蛋、番茄、洋葱、鸡腿肉
+        where_to_buy: [Tesco, Sainsbury's, Lidl, Aldi, Poundland]
+        estimated_budget: "£3-£10"
+        note: "洗洁精、海绵、厨房纸、垃圾袋、密封袋先买齐。共用厨房里，清洁用品比升级厨具更早派上用场。"
+      - name: 第一餐食材包
         category: 食材
         where_to_buy: [Tesco, Sainsbury's, Lidl, Aldi]
-        estimated_budget: "£6-£12"
-        note: "能做西红柿炒鸡蛋、酱油鸡肉饭和简单盖饭。"
-      - name: 盐、食用油、生抽
+        estimated_budget: "£8-£15"
+        note: "鸡蛋、番茄、洋葱、鸡腿肉、冷冻蔬菜和主食就能完成炒蛋、盖饭或焖饭；先买容错高、能多次使用的食材。"
+      - name: 盐、食用油与生抽
         category: 调料
-        where_to_buy: [Tesco, Sainsbury's, 亚超]
-        estimated_budget: "£5-£10"
-        note: "先满足大多数基础菜。"
-  - title: 三天内补齐
+        where_to_buy: [Tesco, Sainsbury's, 当地亚超]
+        estimated_budget: "£5-£12"
+        note: "盐和油任意超市都可买；生抽优先去亚超或大型 Tesco 的世界食品区，先满足基础家常菜即可。"
+      - name: 可重复使用购物袋
+        category: 日用
+        where_to_buy: [任意超市, Poundland, IKEA]
+        estimated_budget: "£1-£4"
+        note: "英国多数超市购物袋收费。折叠购物袋从第一天起就能减少临时支出。"
+  - title: 三天内：让厨房进入稳定做饭模式
     priority: three_days
     items:
-      - name: 小电饭煲
+      - name: 适配炉灶的不粘平底锅
         category: 厨具
-        where_to_buy: [Argos, Amazon UK, 亚超]
-        estimated_budget: "£20-£45"
-        note: "长期吃米饭会省很多事，一人食 0.6L-1L 足够。"
-      - name: 小奶锅
+        where_to_buy: [IKEA, Argos, ASDA, Tesco Extra]
+        estimated_budget: "£10-£25"
+        note: "24-28cm 最通用。若宿舍是 induction hob，购买前确认锅底有电磁炉适配标识。"
+      - name: 小奶锅、滤网与硅胶锅铲
         category: 厨具
-        where_to_buy: [IKEA, Argos, Tesco Extra]
-        estimated_budget: "£8-£20"
-        note: "煮面、煮汤、热牛奶都用得上。"
-      - name: 大米、面条、微波米饭
+        where_to_buy: [IKEA, Argos, Tesco, Sainsbury's]
+        estimated_budget: "£12-£28"
+        note: "煮面、焯菜、热汤都靠它们；硅胶铲能保护不粘锅，别用金属铲硬刮。"
+      - name: 米、面条与微波米饭
         category: 主食
-        where_to_buy: [Tesco, Sainsbury's, Lidl, Aldi, 亚超]
-        estimated_budget: "£5-£15"
-        note: "没电饭煲前可用微波米饭应急。"
-      - name: 老抽、蚝油、淀粉、香油
+        where_to_buy: [Tesco, Sainsbury's, Lidl, Aldi, 当地亚超]
+        estimated_budget: "£6-£18"
+        note: "没有电饭煲前先用微波米饭或锅煮米；长期吃米饭再决定是否购入小电饭煲。"
+      - name: 中餐风味补充包
         category: 调料
-        where_to_buy: [亚超, Tesco, Sainsbury's]
-        estimated_budget: "£8-£16"
-        note: "让盖饭、炒饭和带饭菜更接近中餐味。"
-      - name: 冷冻混合蔬菜、蘑菇、胡萝卜
-        category: 食材
-        where_to_buy: [Tesco, Sainsbury's, Lidl, Aldi]
-        estimated_budget: "£4-£9"
-        note: "适合炒饭、咖喱和焖饭。"
-  - title: 有预算再买
+        where_to_buy: [当地亚超, Wing Yip, SeeWoo, 大型 Tesco]
+        estimated_budget: "£10-£22"
+        note: "老抽、蚝油、香油、淀粉和陈醋按做饭频率补，不必一次买齐。调料更适合去亚超，基础蔬菜和蛋白质留给平价超市。"
+      - name: 保鲜盒、标签贴与冰箱分区
+        category: 收纳
+        where_to_buy: [IKEA, Tesco, Sainsbury's, Poundland]
+        estimated_budget: "£4-£15"
+        note: "共用厨房把食物标上姓名和日期；剩菜分装冷藏，能显著减少点外卖和食材浪费。"
+  - title: 有预算再买：降低后续做饭摩擦
     priority: optional
     items:
-      - name: 厨房剪刀
+      - name: 小型电饭煲
+        category: 厨具
+        where_to_buy: [Argos, Amazon UK, 当地亚超, 二手群]
+        estimated_budget: "£25-£45"
+        note: "先确认宿舍是否允许。单人 0.6L-1L 足够；如果只待一学期，优先看二手转让。"
+      - name: 厨房剪刀、削皮刀与量勺
         category: 厨具
         where_to_buy: [IKEA, Argos, Amazon UK]
-        estimated_budget: "£3-£10"
-        note: "处理鸡腿肉和葱花很方便。"
-      - name: 保鲜盒
-        category: 厨具
-        where_to_buy: [IKEA, Tesco, Sainsbury's, M&S]
-        estimated_budget: "£3-£12"
-        note: "适合带饭、分装剩菜和腌肉。"
-      - name: 量勺
-        category: 厨具
-        where_to_buy: [IKEA, Tesco, Amazon UK]
-        estimated_budget: "£2-£7"
-        note: "新手控盐、控酱油更稳定。"
-      - name: 咖喱块、辣椒油、豆瓣酱
+        estimated_budget: "£6-£18"
+        note: "属于降低做饭摩擦的升级件。刀具如从国内携带，必须托运；在当地购买时按商店要求出示年龄证明。"
+      - name: 购物小推车或大容量购物袋
+        category: 日用
+        where_to_buy: [IKEA, Argos, Amazon UK, 二手平台]
+        estimated_budget: "£8-£30"
+        note: "住得离超市远或需要一次补货时很省力。和室友合伙采购大包装米、油和冷冻蔬菜更划算。"
+      - name: 风味扩展调料
         category: 调料
-        where_to_buy: [亚超, 大型 Tesco, Sainsbury's]
-        estimated_budget: "£6-£15"
-        note: "扩展风味，不是第一天必须买。"
+        where_to_buy: [当地亚超, 大型 Tesco, Sainsbury's]
+        estimated_budget: "£8-£20"
+        note: "咖喱块、辣椒油、豆瓣酱和火锅底料按自己的饮食习惯慢慢补；液体调料不建议从国内大量带。"

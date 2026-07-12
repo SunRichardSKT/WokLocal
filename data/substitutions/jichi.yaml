@@ -1,0 +1,25 @@
+ingredient_id: jichi
+name_zh: 鸡翅
+name_en: Chicken wings
+pinyin: jichi
+category: 蛋白质
+aliases_zh:
+  - 全翅
+  - 翅中
+aliases_en:
+  - Chicken wing portions
+aliases_pinyin: []
+search_keywords:
+  - 鸡翅
+  - chicken wings
+  - wing portions
+common_uses:
+  - 焖煮
+  - 空气炸锅
+  - 烤箱菜
+regions:
+  uk:
+    substitute: Chicken wings 或 chicken wing portions
+    where_to_buy: Tesco/Sainsbury's/ASDA 肉类冷藏区
+    usage_note: 整翅可在关节处分开，烹饪更均匀。
+    similarity: 5

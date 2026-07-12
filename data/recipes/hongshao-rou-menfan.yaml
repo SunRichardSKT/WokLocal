@@ -1,0 +1,67 @@
+id: hongshao-rou-menfan
+name:
+  zh: 红烧肉焖饭
+  pinyin: Hongshao Rou Menfan
+  en: Braised Pork Belly Rice
+description: 电饭煲懒人版红烧肉，肥瘦相间的五花肉配土豆，一锅出连汤带饭。在英国超市买 pork belly 即可。
+difficulty: 2
+time_minutes: 45
+servings: 2
+cuisine: 中式家常菜
+recipe_type: chinese
+budget_level: low
+scenarios:
+  - low_budget
+  - low_smoke
+  - meal_prep
+tags:
+  - 电饭煲
+  - 一锅出
+  - 治愈系
+  - 中餐
+equipment:
+  required_ids:
+    - rice-cooker
+    - knife-board
+  required:
+    - 电饭煲
+    - 菜刀
+    - 砧板
+  substitutes_if_missing: 可以用不粘锅先炒再转小火慢炖40分钟，但电饭煲更省心。
+base_ingredients:
+  - ingredient_id: wuhuarou
+    amount: 250g（切小块）
+  - ingredient_id: tudou
+    amount: 1 个（切滚刀块）
+  - ingredient_id: shengchou
+    amount: 2 勺
+  - ingredient_id: laochou
+    amount: 1 勺
+  - ingredient_id: liaojiu
+    amount: 1 勺（可选，没有可省略）
+    optional: true
+  - ingredient_id: baitang
+    amount: 1 小勺
+  - ingredient_id: jiang
+    amount: 3 片
+  - ingredient_id: bajiao
+    amount: 1-2 个（中超有售）
+  - ingredient_id: dami
+    amount: 1.5 杯
+steps:
+  - order: 1
+    instruction: 五花肉切成2-3cm见方的小块。冷水下锅焯水3分钟，捞出沥干。土豆切滚刀块。
+    tip: 焯水这一步去腥很关键，不能省。
+  - order: 2
+    instruction: 大米淘洗干净放入电饭煲，加比平时略少的水。
+  - order: 3
+    instruction: 五花肉块、土豆块、姜片、八角铺在米饭上面。加入生抽、老抽、料酒、冰糖。
+    tip: 八角在中超或 Tesco 亚洲调料区能找到，没有也可以不放。
+  - order: 4
+    instruction: 按下煮饭键。跳闸后焖10分钟，开盖翻拌均匀即可。
+    tip: 焖饭水要比平时少，因为五花肉和土豆都会出水。
+video_links: []
+common_mistakes:
+  - 五花肉没有焯水——腥味很重。
+  - 水加太多——焖饭变成粥，土豆和肉都有水分。
+  - 冰糖放太少——红烧肉的色泽和甜度主要靠糖。

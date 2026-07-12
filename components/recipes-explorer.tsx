@@ -112,7 +112,7 @@ export function RecipesExplorer({ recipes, cuisines, tags, recipeTypes }: Recipe
 
       <section className="grid gap-4 md:grid-cols-2">
         {filteredRecipes.map((recipe) => (
-          <Link href={`/recipes/${recipe.id}/`} className="surface group rounded-md p-4 transition hover:border-scallion/40" key={recipe.id}>
+          <Link href={`/recipes/${recipe.id}/`} className="surface surface-interactive group rounded-md p-4" key={recipe.id}>
             <RecipeCover recipe={recipe} className="mb-4 aspect-[16/8]" compact />
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">

@@ -183,7 +183,7 @@ export function PantryRecommender({ ingredients, recipes }: PantryRecommenderPro
               {visibleMatches.map((match) => {
                 const missingIngredients = match.missingIds.map((id) => ingredientById.get(id)?.name_zh ?? id);
                 return (
-                  <article className="surface rounded-md p-4" key={match.recipe.id}>
+                  <article className="surface surface-interactive rounded-md p-4" key={match.recipe.id}>
                     <div className="flex items-start justify-between gap-3">
                       <div className="min-w-0">
                         <h3 className="truncate text-lg font-semibold text-ink-100">{match.recipe.name.zh}</h3>

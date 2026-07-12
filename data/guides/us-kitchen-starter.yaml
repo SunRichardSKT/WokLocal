@@ -1,0 +1,70 @@
+guide_id: us-kitchen-starter
+region: north_america
+title: 美国厨房路线图：从落地到稳定补货
+summary: "美国城市尺度大、包装大、门店差异也大。先用离住处最近的主流超市建立基础，再根据交通、会员和储存空间决定是否做大采购。"
+sections:
+  - title: 出发前：注意电压与托运规则
+    items:
+      - "建议带轻便筷子、饭勺或量米杯、硅胶铲，以及少量不易漏的干调料。"
+      - "美国常用 120V；国内 220V 电饭煲、水壶等大型电器不建议携带，落地后购买当地版本。"
+      - "菜刀、削皮刀等锐器必须托运；大锅、成套碗盘和大量液体调料不值得占行李空间。"
+  - title: 没有车时：按距离而不是品牌规划
+    items:
+      - "先查看学校 shuttle、公交和 Instacart 等配送覆盖，再决定每周去哪补货。"
+      - "Walmart/Target 适合一次买齐基础厨具和日用品；Kroger 等地区主流超市更适合稳定补生鲜。"
+      - "亚洲超市只集中买中式调料、米面与冷冻点心，普通蔬果和牛奶鸡蛋留给主流超市。"
+  - title: 共享厨房与消防
+    items:
+      - "做饭时不要离开厨房；油锅起火不能用水扑灭，应关火并用锅盖覆盖。"
+      - "不要同时使用多个大功率电器；电饭煲、电火锅等设备先核对住宿合同或咨询 RA。"
+      - "微波炉里不要放金属和密封容器；生肉放冰箱下层并与即食食品分开。"
+  - title: 大包装时代的预算方法
+    items:
+      - "先按一周能吃完的量购买；大包装只有能分装、冷冻或和室友平分时才便宜。"
+      - "免费会员计划可以办，付费仓储会员先计算交通、储存和分摊，不要为了折扣冲动开卡。"
+      - "基础食材、零食、中式调料分店购买，比固定在一家超市买全部东西更省钱。"
+supermarkets:
+  - name: Walmart
+    kind: budget
+    price_level: low
+    best_for: [基础食材, 厨具, 清洁日用, 一站式落地采购]
+    note: "适合落地第一轮采购和长期基础补货。门店很大，先列清单能避免在货架间消耗太久。"
+  - name: Target
+    kind: mainstream
+    price_level: medium
+    best_for: [厨房日用, 收纳, 基础食品, 宿舍用品]
+    membership: "Target Circle 可提供促销与积分。"
+    note: "环境和家居选择通常更整齐，适合补宿舍用品；食品价格不一定始终最低。"
+  - name: Kroger 及地区同系超市
+    kind: mainstream
+    price_level: medium
+    best_for: [生鲜, 肉类, 每周促销, 日常补货]
+    membership: "免费会员卡通常关联会员价和燃油积分。"
+    note: "美国不同地区可能使用 Kroger 旗下不同品牌，适合作为稳定的每周生鲜采购点。"
+  - name: Aldi US
+    kind: budget
+    price_level: low
+    best_for: [牛奶鸡蛋, 面包, 基础蔬果, 自有品牌]
+    note: "适合低预算囤基础食材，选择比大型超市少；部分门店购物车和购物袋规则需要提前了解。"
+  - name: Trader Joe's
+    kind: specialty
+    price_level: medium
+    best_for: [冷冻食品, 零食, 酱料, 单人份快速料理]
+    note: "自有品牌和特色食品强，适合补充有趣但省事的料理；不一定适合完成全部基础采购。"
+  - name: Whole Foods Market
+    kind: premium
+    price_level: high
+    best_for: [有机食品, 高品质生鲜, 熟食, 特殊饮食]
+    membership: "Amazon Prime 会员通常有专属优惠。"
+    note: "适合定点买品质食材或特殊饮食商品，不建议把它作为学生日常全套采购的默认选项。"
+  - name: Costco / Sam's Club
+    kind: bulk
+    price_level: mixed
+    best_for: [大包装米油, 冷冻食品, 纸品日用, 合租采购]
+    membership: "付费会员制；价格和权益以门店当期政策为准。"
+    note: "有车、多人口、储存空间足够时价值最高；单人宿舍容易因为包装过大造成浪费。"
+  - name: 99 Ranch Market / H Mart
+    kind: asian
+    price_level: mixed
+    best_for: [中式调料, 亚洲蔬菜, 大米面条, 火锅与冷冻食品]
+    note: "亚洲食品选择完整。普通牛奶、鸡蛋和西式蔬果通常仍可在 Walmart、Aldi 或 Kroger 比价。"

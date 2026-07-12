@@ -1,0 +1,25 @@
+ingredient_id: zonghe-xiangcao
+name_zh: 综合干香草
+name_en: Dried mixed herbs
+pinyin: zongheganxiangcao
+category: 香辛料
+aliases_zh:
+  - 意式香草
+aliases_en:
+  - Mixed herbs
+  - Italian seasoning
+aliases_pinyin: []
+search_keywords:
+  - 综合干香草
+  - mixed herbs
+  - italian seasoning
+common_uses:
+  - 意面
+  - 烤鸡
+  - 番茄酱
+regions:
+  uk:
+    substitute: Mixed herbs 或 Italian seasoning
+    where_to_buy: 所有英国超市香料区
+    usage_note: 英国 mixed herbs 常含牛至、罗勒和百里香，少量使用即可。
+    similarity: 5

@@ -1,0 +1,25 @@
+ingredient_id: wuhuarou
+name_zh: 五花肉
+name_en: Pork belly
+pinyin: wuhuarou
+category: 蛋白质
+aliases_zh:
+  - 带皮五花肉
+aliases_en:
+  - Pork belly slices
+  - Pork belly joint
+aliases_pinyin: []
+search_keywords:
+  - 五花肉
+  - pork belly
+  - pork belly slices
+common_uses:
+  - 红烧
+  - 焖饭
+  - 烤肉
+regions:
+  uk:
+    substitute: Pork belly slices 或 pork belly joint
+    where_to_buy: 大型 Tesco/Sainsbury's、Morrisons 或当地肉店
+    usage_note: 超市切片通常较薄，焖煮时间可缩短；整块需自己切丁。
+    similarity: 5

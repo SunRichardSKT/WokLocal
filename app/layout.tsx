@@ -21,14 +21,19 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const themeScript = `try { const saved = localStorage.getItem("woklocal-theme"); const theme = saved === "light" || saved === "dark" ? saved : "dark"; document.documentElement.classList.toggle("light", theme === "light"); } catch {}`;
+
   return (
-    <html lang="zh-CN">
+    <html lang="zh-CN" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body>
         <div className="min-h-screen">
           <header className="sticky top-0 z-40 border-b border-white/10 bg-ink-950/[0.88] backdrop-blur">
             <SiteNav />
           </header>
-          <main>{children}</main>
+          <main className="page-enter">{children}</main>
           <SiteFooter />
         </div>
       </body>

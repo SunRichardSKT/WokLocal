@@ -1,0 +1,71 @@
+id: naiyou-mogu-jirou-yimian
+name:
+  zh: 奶油蘑菇鸡肉意面
+  pinyin: Naiyou Mogu Jirou Yimian
+  en: Creamy Mushroom Chicken Pasta
+description: 英式经典留子款，用英国超市随处可见的 double cream 做浓酱，搭配蘑菇和鸡肉，口口满足。
+difficulty: 2
+time_minutes: 25
+servings: 1
+cuisine: 留学生厨房菜
+recipe_type: fusion
+budget_level: medium
+scenarios:
+  - tesco_friendly
+  - meal_prep
+tags:
+  - 意面
+  - 奶油酱
+  - 英式融合
+  - 治愈系
+equipment:
+  required_ids:
+    - stockpot
+    - nonstick-pan
+    - colander
+    - knife-board
+  required:
+    - 深汤锅
+    - 不粘平底锅
+    - 沥水篮
+    - 菜刀
+    - 砧板
+  substitutes_if_missing: 没有沥水篮可以用锅盖过滤。没有不粘锅用普通锅多加油。
+base_ingredients:
+  - ingredient_id: yidali-mian
+    amount: 100g
+  - ingredient_id: jixiong
+    amount: 1 块（切丁）
+  - ingredient_id: mogu
+    amount: 150g（切片）
+  - ingredient_id: danaiyou
+    amount: 150ml（一小盒）
+  - ingredient_id: suan
+    amount: 2-3 瓣（切末）
+  - ingredient_id: parmesan
+    amount: 适量（磨碎）
+  - ingredient_id: shiyongyou
+    amount: 适量
+  - ingredient_id: yan
+    amount: 适量
+  - ingredient_id: heihujiao
+    amount: 适量
+steps:
+  - order: 1
+    instruction: 深锅烧水，水沸后加盐，放入意面按包装时间减1分钟煮至 al dente（外软内弹），捞出沥干，保留半杯面汤。
+    tip: 面汤是天然的乳化剂，能让酱汁更好地挂在面上。
+  - order: 2
+    instruction: 同时在不粘锅中倒油，中火将鸡胸肉丁煎至两面金黄熟透，盛出备用。
+  - order: 3
+    instruction: 同一口锅中加少许油，放入蒜末炒香（约30秒），加入蘑菇片翻炒3-4分钟至蘑菇出水变软、边缘微焦。
+    tip: 蘑菇要煎到微焦才香，不要急着翻动。
+  - order: 4
+    instruction: 倒入 double cream，中小火煮至微沸。加回鸡肉，撒盐和黑胡椒调味。
+    tip: double cream 煮沸时容易溅出，保持中小火。
+  - order: 5
+    instruction: 放入沥好的意面，加1-2勺面汤翻拌均匀，让奶油酱裹满意面。关火后撒上帕尔马干酪碎即可。
+video_links: []
+common_mistakes:
+  - 用 single cream 代替 double cream——single cream 煮沸会分离出油花，double cream 更稳定。
+  - 意面煮过头——按包装时间减1分钟是最佳口感，过硬也比过烂好。
+  - 蘑菇没煎到焦——大火煎蘑菇才有焦香，一直翻动只会出水变烂。

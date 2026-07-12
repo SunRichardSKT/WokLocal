@@ -1,0 +1,19 @@
+equipment_id: air-fryer
+name_zh: 空气炸锅
+name_en: Air fryer
+category: optional_upgrade
+budget_level: medium
+is_essential: false
+use_cases:
+  - 烤鸡翅
+  - 烤薯条
+  - 复热炸物
+  - 低油烟料理
+substitutes_if_missing:
+  - 带风扇烤箱
+  - 普通烤箱
+regions:
+  uk:
+    where_to_buy: Argos、Amazon UK、Currys、大型超市
+    price_range: £30-£80 入门款
+    notes: 先确认宿舍或租房电器规定；容量 3-5L 适合一至两人。

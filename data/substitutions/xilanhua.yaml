@@ -1,0 +1,24 @@
+ingredient_id: xilanhua
+name_zh: 西兰花
+name_en: Broccoli
+pinyin: xilanhua
+category: 蔬菜
+aliases_zh:
+  - 绿花椰菜
+aliases_en:
+  - Calabrese broccoli
+aliases_pinyin: []
+search_keywords:
+  - 西兰花
+  - broccoli
+  - calabrese
+common_uses:
+  - 清炒
+  - 焯水
+  - 配菜
+regions:
+  uk:
+    substitute: Broccoli 或 tenderstem broccoli
+    where_to_buy: 所有英国超市蔬果区
+    usage_note: Tenderstem 更嫩但价格较高，普通 broccoli 切小朵更划算。
+    similarity: 5

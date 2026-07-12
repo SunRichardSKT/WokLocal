@@ -1,0 +1,19 @@
+equipment_id: stockpot
+name_zh: 深汤锅
+name_en: Stockpot
+category: optional_upgrade
+budget_level: medium
+is_essential: false
+use_cases:
+  - 煮面
+  - 焯水
+  - 炖肉
+  - 煮汤
+substitutes_if_missing:
+  - 大号奶锅
+  - 带盖深煎锅
+regions:
+  uk:
+    where_to_buy: IKEA、Argos、TK Maxx、Amazon UK
+    price_range: £15-£35
+    notes: 3-5L 足够两人使用，购买前确认炉灶是否为 induction。

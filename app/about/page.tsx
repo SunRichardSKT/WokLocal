@@ -13,9 +13,9 @@ export default function AboutPage() {
   return (
     <div className="mx-auto max-w-5xl px-4 py-6 sm:py-8">
       <section className="py-4">
-        <p className="text-sm font-medium text-scallion">Upload Guide</p>
-        <h1 className="mt-2 text-3xl font-semibold tracking-normal text-ink-100 sm:text-4xl">上传指南</h1>
-        <p className="mt-4 max-w-3xl text-base leading-7 text-ink-300">
+        <p className="eyebrow">Upload Guide</p>
+        <h1 className="display-title mt-3 text-4xl font-semibold text-ink-100 sm:text-5xl">上传指南</h1>
+        <p className="mt-5 max-w-3xl text-base leading-8 text-ink-300">
           就地开饭欢迎世界各地留子补充真实经验：一道做成功过的菜、一个当地超市能买到的替代食材、一件值得买或不值得买的厨具，或者一份刚落地时的落地清单与注意事项。
         </p>
         <div className="mt-6 flex flex-col gap-3 sm:flex-row">

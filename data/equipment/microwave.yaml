@@ -1,0 +1,20 @@
+equipment_id: microwave
+name_zh: 微波炉
+name_en: Microwave oven
+category: dorm_friendly
+budget_level: medium
+is_essential: false
+use_cases:
+  - 复热
+  - 蒸蛋
+  - 烤土豆
+  - 快速蒸鱼
+substitutes_if_missing:
+  - 带盖奶锅
+  - 蒸锅
+  - 烤箱
+regions:
+  uk:
+    where_to_buy: 多数宿舍公用厨房已配；Argos、Currys、Amazon UK
+    price_range: 宿舍通常已含；自购约 £45-£100
+    notes: 只用 microwave-safe 容器，金属和锡纸不可放入。

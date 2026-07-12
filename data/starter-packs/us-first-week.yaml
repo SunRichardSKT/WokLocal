@@ -1,0 +1,79 @@
+pack_id: us-first-week
+region: north_america
+title: 美国落地：前 7 天厨房搭建
+summary: "先确认宿舍供电、消防和电器限制，再用 Walmart/Target 解决厨房基础，用主流超市与亚洲超市组合完成长期补货。"
+sections:
+  - title: 落地当天：先检查设备并解决第一餐
+    priority: today
+    items:
+      - name: 宿舍厨房、电压与消防检查
+        category: 落地检查
+        where_to_buy: [Housing Handbook, 宿舍前台, RA]
+        estimated_budget: "$0"
+        note: "确认炉灶、烤箱、微波炉、烟雾报警器和允许使用的电器。美国常用 120V，国内 220V 电器不要直接带来使用。"
+      - name: 清洁与食品收纳基础包
+        category: 清洁
+        where_to_buy: [Walmart, Target, Dollar Tree]
+        estimated_budget: "$6-$18"
+        note: "洗洁精、海绵、厨房纸、垃圾袋和密封袋先买齐；共享冰箱里给食物标姓名与日期。"
+      - name: 第一餐与早餐食材包
+        category: 食材
+        where_to_buy: [Walmart, Kroger, Aldi, Target]
+        estimated_budget: "$12-$25"
+        note: "鸡蛋、牛奶、面包、番茄、洋葱、鸡腿肉和冷冻蔬菜能覆盖早餐、盖饭与意面。"
+      - name: 盐、食用油、酱油与主食
+        category: 调料
+        where_to_buy: [Walmart, Kroger, 99 Ranch, H Mart]
+        estimated_budget: "$10-$22"
+        note: "普通超市先买盐、油和意面；酱油、大米与中式调料优先去亚洲超市。"
+  - title: 三天内：建立稳定补货与备餐能力
+    priority: three_days
+    items:
+      - name: 平底锅、小汤锅与锅铲
+        category: 厨具
+        where_to_buy: [Walmart, Target, IKEA, Amazon]
+        estimated_budget: "$25-$55"
+        note: "先看宿舍提供了什么再补。电炉和燃气炉都能用普通平底锅；若是 induction 再确认锅底适配。"
+      - name: 量杯、量勺与食品温度计
+        category: 厨具
+        where_to_buy: [Walmart, Target, Amazon]
+        estimated_budget: "$8-$22"
+        note: "美国食谱常用 cup/tbsp/tsp；温度计适合确认鸡肉等食物彻底熟透。"
+      - name: 米、意面、罐头与冷冻蔬菜
+        category: 主食
+        where_to_buy: [Walmart, Kroger, Aldi, 亚洲超市]
+        estimated_budget: "$12-$30"
+        note: "这些耐储存食材适合没有车、不能频繁去超市的学生。亚洲超市适合买大包装米。"
+      - name: 中餐风味补充包
+        category: 调料
+        where_to_buy: [99 Ranch, H Mart, 当地华人超市, Amazon]
+        estimated_budget: "$15-$35"
+        note: "生抽、老抽、蚝油、香油、陈醋和淀粉按最常做的菜补齐，不要在亚洲超市买所有普通蔬果。"
+      - name: 保鲜盒与一周备餐分装
+        category: 收纳
+        where_to_buy: [Walmart, Target, Costco, IKEA]
+        estimated_budget: "$8-$25"
+        note: "美国包装通常偏大，买回家先分装冷藏或冷冻，减少浪费和临时点外卖。"
+  - title: 有车、有室友或确定长期做饭后再买
+    priority: optional
+    items:
+      - name: 小型电饭煲
+        category: 厨具
+        where_to_buy: [Amazon, Walmart, 99 Ranch, H Mart]
+        estimated_budget: "$25-$55"
+        note: "购买美国电压版本，先确认宿舍允许。单人选择小容量即可。"
+      - name: Costco 或 Sam's Club 会员
+        category: 采购方式
+        where_to_buy: [Costco, Sam's Club]
+        estimated_budget: "按当年会员价"
+        note: "只有多人合租、有车且有储存空间时才容易回本；先和室友明确分摊。"
+      - name: 二手厨房设备
+        category: 省钱
+        where_to_buy: [Facebook Marketplace, 学校群, Craigslist, 校园二手市场]
+        estimated_budget: "$5-$40"
+        note: "电饭煲、锅具和餐具常能低价收到；电器购买前检查电源线、内胆和清洁状况。"
+      - name: 风味扩展与火锅设备
+        category: 升级
+        where_to_buy: [亚洲超市, Amazon]
+        estimated_budget: "$20-$60"
+        note: "确认宿舍允许后再买电火锅或大功率设备；不要用便携燃气炉或明火设备。"

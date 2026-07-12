@@ -12,9 +12,9 @@ export default function EquipmentPage() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
       <section className="mb-6">
-        <p className="text-sm font-medium text-scallion">Kitchen Setup</p>
-        <h1 className="mt-2 text-3xl font-semibold tracking-normal text-ink-100 sm:text-4xl">厨具库</h1>
-        <p className="mt-3 max-w-2xl text-sm leading-6 text-ink-300">先买能解决 80% 做饭需求的基础件，再根据宿舍规则和预算升级。</p>
+        <p className="eyebrow">Kitchen Setup</p>
+        <h1 className="display-title mt-3 text-4xl font-semibold text-ink-100 sm:text-5xl">厨具库</h1>
+        <p className="mt-4 max-w-2xl text-sm leading-7 text-ink-300">先买能解决 80% 做饭需求的基础件，再根据宿舍规则和预算升级。</p>
       </section>
       <EquipmentBoard equipment={equipment} />
     </div>

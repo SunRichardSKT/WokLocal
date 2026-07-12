@@ -1,0 +1,25 @@
+ingredient_id: hongjiaofen
+name_zh: 红椒粉
+name_en: Paprika
+pinyin: hongjiaofen
+category: 香辛料
+aliases_zh:
+  - 甜椒粉
+aliases_en:
+  - Sweet paprika
+  - Smoked paprika
+aliases_pinyin: []
+search_keywords:
+  - 红椒粉
+  - paprika
+  - 甜椒粉
+common_uses:
+  - 烤薯条
+  - 腌肉
+  - 炖菜
+regions:
+  uk:
+    substitute: Sweet paprika；想要烟熏味可选 smoked paprika
+    where_to_buy: 所有英国超市香料区
+    usage_note: 通常不辣，主要增加颜色和香气；不要与 cayenne pepper 混淆。
+    similarity: 5

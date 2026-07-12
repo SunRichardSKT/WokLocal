@@ -1,0 +1,26 @@
+ingredient_id: xiangchang
+name_zh: 香肠
+name_en: Sausage
+pinyin: xiangchang
+category: 蛋白质
+aliases_zh:
+  - 英式香肠
+  - 培根肠
+aliases_en:
+  - British sausage
+  - Pork sausage
+aliases_pinyin: []
+search_keywords:
+  - 香肠
+  - sausage
+  - bangers
+common_uses:
+  - 煎烤
+  - 焖饭
+  - 一锅菜
+regions:
+  uk:
+    substitute: Pork sausages 或 Cumberland sausages
+    where_to_buy: 英国超市肉类冷藏区
+    usage_note: 英式香肠香料味更明显、含盐更高，调味时少放盐。
+    similarity: 4

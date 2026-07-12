@@ -8,9 +8,9 @@ type RecipeCoverProps = {
 };
 
 const typeAccent: Record<Recipe["recipe_type"], string> = {
-  chinese: "from-chili/45 via-ink-800 to-ink-950",
-  fusion: "from-scallion/35 via-ink-800 to-ink-950",
-  local_adapted: "from-soy/35 via-ink-800 to-ink-950"
+  chinese: "border-chili/30",
+  fusion: "border-scallion/30",
+  local_adapted: "border-soy/35"
 };
 
 export function RecipeCover({ recipe, className = "", compact = false }: RecipeCoverProps) {
@@ -18,7 +18,7 @@ export function RecipeCover({ recipe, className = "", compact = false }: RecipeC
     return (
       <figure className={`relative overflow-hidden rounded-md border border-white/10 bg-ink-900 ${className}`}>
         <img className="h-full w-full object-cover" src={assetPath(recipe.cover_image.src)} alt={recipe.cover_image.alt} loading={compact ? "lazy" : "eager"} />
-        <figcaption className="absolute bottom-0 left-0 right-0 bg-ink-950/70 px-3 py-2 text-xs text-ink-300 backdrop-blur">
+        <figcaption className="absolute bottom-0 left-0 right-0 bg-black/70 px-3 py-2 text-xs text-ink-300 backdrop-blur">
           {recipe.cover_image.caption ?? recipe.name.zh}
         </figcaption>
       </figure>
@@ -26,8 +26,9 @@ export function RecipeCover({ recipe, className = "", compact = false }: RecipeC
   }
 
   return (
-    <div className={`relative overflow-hidden rounded-md border border-white/10 bg-gradient-to-br ${typeAccent[recipe.recipe_type]} ${className}`}>
-      <div className="absolute inset-0 opacity-40 [background-image:radial-gradient(circle_at_18%_18%,rgba(238,241,245,0.12),transparent_22%),linear-gradient(135deg,transparent_0_35%,rgba(255,255,255,0.07)_35%_36%,transparent_36%_100%)]" />
+    <div className={`cover-motion relative overflow-hidden rounded-md border bg-ink-850 ${typeAccent[recipe.recipe_type]} ${className}`}>
+      <div className="absolute inset-0 opacity-55 [background-image:linear-gradient(135deg,transparent_0_47%,rgba(255,255,255,0.055)_47%_48%,transparent_48%_100%)]" />
+      <div className="absolute left-0 top-0 h-full w-1 bg-current text-scallion [border-left:1px_solid_rgba(255,255,255,0.12)]" />
       <div className="relative flex h-full min-h-28 flex-col justify-between p-3">
         <span className="w-fit rounded-md bg-ink-950/75 px-2 py-1 text-xs text-ink-300">{recipe.cuisine}</span>
         <div>

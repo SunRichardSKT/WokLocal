@@ -1,0 +1,25 @@
+ingredient_id: huangyou
+name_zh: 黄油
+name_en: Butter
+pinyin: huangyou
+category: 乳制品
+aliases_zh:
+  - 牛油
+aliases_en:
+  - Unsalted butter
+  - Salted butter
+aliases_pinyin: []
+search_keywords:
+  - 黄油
+  - butter
+  - unsalted butter
+common_uses:
+  - 烘烤
+  - 意面
+  - 土豆
+regions:
+  uk:
+    substitute: Unsalted butter 或 salted butter
+    where_to_buy: 所有英国超市乳制品冷藏区
+    usage_note: 使用 salted butter 时减少额外盐。
+    similarity: 5

@@ -49,7 +49,7 @@ export function EquipmentBoard({ equipment }: EquipmentBoardProps) {
         {equipment.map((item) => {
           const localized = region ? item.regions[region] : undefined;
           return (
-            <article className="surface rounded-md p-4" key={item.equipment_id}>
+            <article className="surface surface-interactive rounded-md p-4" key={item.equipment_id}>
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <h2 className="text-lg font-semibold text-ink-100">{item.name_zh}</h2>

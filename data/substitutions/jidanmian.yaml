@@ -1,0 +1,24 @@
+ingredient_id: jidanmian
+name_zh: 鸡蛋面
+name_en: Egg noodles
+pinyin: jidanmian
+category: 主食
+aliases_zh:
+  - 炒面
+aliases_en:
+  - Medium egg noodles
+  - Fresh egg noodles
+aliases_pinyin: []
+search_keywords:
+  - 鸡蛋面
+  - egg noodles
+  - medium noodles
+common_uses:
+  - 炒面
+  - 汤面
+regions:
+  uk:
+    substitute: Medium egg noodles 或 fresh egg noodles
+    where_to_buy: 英国超市 world foods 区、冷藏区或亚超
+    usage_note: 预煮面只需短时间加热，干面需先煮至八成熟。
+    similarity: 5

@@ -1,0 +1,25 @@
+ingredient_id: parmesan
+name_zh: 帕玛森奶酪
+name_en: Parmesan
+pinyin: pamansenailao
+category: 乳制品
+aliases_zh:
+  - 帕尔马干酪
+aliases_en:
+  - Parmigiano Reggiano
+  - Grana Padano
+aliases_pinyin: []
+search_keywords:
+  - 帕玛森奶酪
+  - parmesan
+  - parmigiano
+common_uses:
+  - 意面
+  - 焗菜
+  - 沙拉
+regions:
+  uk:
+    substitute: Parmesan 或性价比更高的 Grana Padano
+    where_to_buy: 英国超市奶酪冷藏区
+    usage_note: Grana Padano 风味稍温和，二者都偏咸，使用后减少额外盐。
+    similarity: 5

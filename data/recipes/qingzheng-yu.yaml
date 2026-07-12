@@ -1,0 +1,57 @@
+id: qingzheng-yu
+name:
+  zh: 清蒸鲈鱼 / 清蒸三文鱼
+  pinyin: Qingzheng Luyu / Qingzheng Sanwenyu
+  en: Steamed Sea Bass / Steamed Salmon
+description: 英国超市鱼类品质高且价格合理。利用宿舍烤箱或微波炉简单蒸制，中式调味保留鲜味，是一道健康又体面的主菜。
+difficulty: 2
+time_minutes: 20
+servings: 1
+cuisine: 中式家常菜
+recipe_type: chinese
+budget_level: medium
+scenarios:
+  - tesco_friendly
+  - low_smoke
+  - meal_prep
+tags:
+  - 蒸菜
+  - 鱼类
+  - 健康
+  - 宿舍烤箱
+equipment:
+  required_ids:
+    - microwave
+    - knife-board
+  required:
+    - 微波炉
+    - 菜刀
+    - 砧板
+  substitutes_if_missing: 可以用烤箱 180°C 蒸烤15分钟，或用蒸锅蒸10-12分钟。
+base_ingredients:
+  - ingredient_id: yupai
+    amount: 1 块（约200g）
+  - ingredient_id: jiang
+    amount: 5-6 片
+  - ingredient_id: cong
+    amount: 2 根
+  - ingredient_id: shengchou
+    amount: 2 勺
+  - ingredient_id: shiyongyou
+    amount: 2 勺
+steps:
+  - order: 1
+    instruction: 鱼柳洗净擦干，两面各划两刀。盘底铺姜片，放上鱼柳，鱼身上再铺姜丝。
+  - order: 2
+    instruction: 微波炉高火加热 3-4 分钟（三文鱼 2-3 分钟即可），鱼身变白即为熟透。
+    tip: 微波炉蒸鱼比烤箱更快，但注意微波功率不同，第一次做可以先3分钟查看。
+  - order: 3
+    instruction: 取出后倒掉盘中蒸出的水，铺上葱丝。淋上蒸鱼豉油或生抽。
+  - order: 4
+    instruction: 另取一个小碗装2勺油，微波炉高火加热1分钟至油冒烟，趁热浇在葱丝上激出香味。
+    tip: 热油浇葱丝是这道菜的精华，会发出滋滋声和香气。
+video_links: []
+common_mistakes:
+  - 鱼没擦干水分——蒸出来水太多会稀释调味。
+  - 微波时间太长——鱼肉会变老变柴，宁可先短一点再补。
+  - 忘了倒蒸出来的水——那层水很腥，一定要倒掉再调味。

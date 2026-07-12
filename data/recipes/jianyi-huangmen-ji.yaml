@@ -1,0 +1,59 @@
+id: jianyi-huangmen-ji
+name:
+  zh: 简易黄焖鸡
+  pinyin: Jianyi Huangmenji
+  en: Simplified Braised Chicken Thighs
+description: 黄焖鸡米饭的宿舍平替版，用鸡大腿肉加土豆和黄焖酱料，在电饭煲中焖出一锅咸香浓郁的盖浇饭。
+difficulty: 2
+time_minutes: 30
+servings: 1
+cuisine: 中式家常菜
+recipe_type: chinese
+budget_level: low
+scenarios:
+  - low_budget
+  - low_smoke
+  - meal_prep
+tags:
+  - 电饭煲
+  - 一锅出
+  - 中餐
+  - 治愈系
+equipment:
+  required_ids:
+    - rice-cooker
+    - knife-board
+  required:
+    - 电饭煲
+    - 菜刀
+    - 砧板
+  substitutes_if_missing: 不粘锅先炒再盖盖焖20分钟也可以，但电饭煲免看火。
+base_ingredients:
+  - ingredient_id: jitui
+    amount: 2-3 块（切大块）
+  - ingredient_id: tudou
+    amount: 1 个（切块）
+  - ingredient_id: huangmenjiang
+    amount: 1 包（中超有售，或用生抽+老抽+糖+蚝油替代）
+  - ingredient_id: shengchou
+    amount: 1 勺（如无酱料包）
+  - ingredient_id: haoyou
+    amount: 1 勺（如无酱料包）
+  - ingredient_id: jiang
+    amount: 3 片
+  - ingredient_id: dami
+    amount: 1-1.5 杯
+steps:
+  - order: 1
+    instruction: 鸡大腿肉切成大块。如果买的是 bone-in 版本，需去骨切块。土豆切滚刀块。
+  - order: 2
+    instruction: 大米淘洗放入电饭煲，加水略少。
+  - order: 3
+    instruction: 鸡块、土豆、姜片铺在米饭上。加入黄焖鸡酱料包（或生抽+蚝油+少许糖调成的替代酱汁），再加半碗水。
+    tip: 黄焖鸡酱料包在中超（如龙凤行、大华）有售，几镑一包，超方便。
+  - order: 4
+    instruction: 按下煮饭键。跳闸后焖5分钟，开盖翻拌均匀即可。
+video_links: []
+common_mistakes:
+  - 鸡骨没去——宿舍电饭煲处理骨头不方便，建议直接买去骨鸡腿肉。
+  - 酱料包加水太少——需要额外加半碗水，否则酱汁会太干太咸。

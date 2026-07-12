@@ -1,0 +1,58 @@
+id: yingshi-kao-tudou
+name:
+  zh: 微波炉/烤箱土豆
+  pinyin: Yingshi Kao Tudou
+  en: Baked Potato
+description: 英国经典学生餐，一个土豆搞定一顿。英国超市的 baking potato 品种好，微波炉10分钟或烤箱40分钟即可。
+difficulty: 1
+time_minutes: 15
+servings: 1
+cuisine: 英式学生餐
+recipe_type: local_adapted
+budget_level: low
+scenarios:
+  - low_budget
+  - tesco_friendly
+  - quick_15
+  - low_smoke
+tags:
+  - 极简
+  - 低预算
+  - 宿舍友好
+  - 健康
+equipment:
+  required_ids:
+    - microwave
+    - knife-board
+  required:
+    - 微波炉
+    - 菜刀
+    - 叉子
+  substitutes_if_missing: 没有微波炉可以用烤箱 200°C 烤 40-50 分钟，口感更好但更慢。
+base_ingredients:
+  - ingredient_id: tudou
+    amount: 1 个
+  - ingredient_id: huangyou
+    amount: 1 小块
+  - ingredient_id: cheddar
+    amount: 一小把
+  - ingredient_id: qiezhi-judou
+    amount: 1 小罐（可选，经典搭配）
+    optional: true
+  - ingredient_id: yan
+    amount: 少许
+steps:
+  - order: 1
+    instruction: 土豆洗净擦干，用叉子在表面戳约10-15个洞（防止微波炉中炸裂）。
+  - order: 2
+    instruction: 微波炉高火加热 8-10 分钟，中途翻面一次。用叉子戳中心，能轻松穿透即熟。
+    tip: 先微波5分钟，翻面再微波3-5分钟效果更好。
+  - order: 3
+    instruction: 取出后对半切开（不要切到底），用叉子把内部捣松。加入黄油、撒盐和奶酪碎。
+  - order: 4
+    instruction: 可以再微波30秒让奶酪融化。也可以浇上一罐焗豆（Heinz Baked Beans），是英国学生经典搭配。
+video_links: []
+common_mistakes:
+  - 没戳洞——土豆在微波炉里会炸开，一定要多戳几个洞。
+  - 选错了土豆——要买标有 baking potato 的品种（如 Maris Piper），普通土豆口感不同。
+  - 没翻面——只加热一面会受热不均。

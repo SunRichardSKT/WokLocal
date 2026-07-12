@@ -1,0 +1,62 @@
+id: kele-jichi
+name:
+  zh: 可乐鸡翅
+  pinyin: Kele Jichi
+  en: Cola Chicken Wings
+description: 零失败留子招牌菜，甜咸微焦，电饭煲一锅搞定。可乐在英国任何超市都能买到。
+difficulty: 2
+time_minutes: 35
+servings: 2
+cuisine: 留学生厨房菜
+recipe_type: fusion
+budget_level: low
+scenarios:
+  - tesco_friendly
+  - low_smoke
+tags:
+  - 电饭煲
+  - 一锅出
+  - 低预算
+  - 聚会上菜
+equipment:
+  required_ids:
+    - rice-cooker
+    - knife-board
+  required:
+    - 电饭煲
+    - 菜刀
+    - 砧板
+  substitutes_if_missing: 没有电饭煲可以用不粘锅加盖小火焖煮，水收干即可。
+base_ingredients:
+  - ingredient_id: jichi
+    amount: 8-10 个鸡翅 或 4 个鸡腿
+  - ingredient_id: kele
+    amount: 半罐（约 150ml）
+  - ingredient_id: shengchou
+    amount: 2 勺
+  - ingredient_id: laochou
+    amount: 半勺
+  - ingredient_id: jiang
+    amount: 3-4 片
+  - ingredient_id: cong
+    amount: 2 根（可选）
+    optional: true
+steps:
+  - order: 1
+    instruction: 鸡翅洗净，正反各划两刀至骨头，方便入味。冷水下锅焯水2-3分钟，捞出沥干。
+    tip: 划刀很关键，不仅方便入味还能防止夹生。
+  - order: 2
+    instruction: 电饭煲内胆底部铺上葱段和姜片，放入鸡翅，摆整齐。
+  - order: 3
+    instruction: 加入生抽、老抽、半罐可乐。可乐刚好没过鸡翅即可，不够可加少许水。
+    tip: 一定要用含糖可乐，健怡可乐 / Zero 可乐没有糖分做不出焦糖色。
+  - order: 4
+    instruction: 按下煮饭键，等自动跳闸后开盖，翻面再按一次煮饭键收汁。
+    tip: 收汁阶段注意翻动，避免糊底。电饭煲最后几分钟可以在内胆上盖一层锡纸防溅。
+  - order: 5
+    instruction: 汁水收浓、鸡翅表面焦亮即可出锅。撒白芝麻或葱花装饰。
+video_links: []
+common_mistakes:
+  - 用了健怡可乐——必须用含糖可乐，否则没有甜味和焦糖色。
+  - 可乐加太多——太多会太甜，半罐到一罐之间根据鸡翅量调整。
+  - 不收汁直接吃——收汁才能让酱汁浓稠裹在鸡翅表面。

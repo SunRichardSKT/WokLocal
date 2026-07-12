@@ -99,7 +99,7 @@ export function IngredientsExplorer({ ingredients }: IngredientsExplorerProps) {
           {filtered.map((item) => {
             const regionKeys = showAllRegions ? supportedRegionKeys : region ? [region] : [];
             return (
-              <article className="surface rounded-md p-4" key={item.ingredient_id}>
+              <article className="surface surface-interactive rounded-md p-4" key={item.ingredient_id}>
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
                   <div>
                     <h2 className="text-lg font-semibold text-ink-100">{item.name_zh}</h2>

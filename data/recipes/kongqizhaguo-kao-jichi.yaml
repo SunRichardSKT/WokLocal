@@ -1,0 +1,60 @@
+id: kongqizhaguo-kao-jichi
+name:
+  zh: 空气炸锅烤鸡翅
+  pinyin: Kongqizhaguo Kao Jichi
+  en: Air Fryer Chicken Wings
+description: 宿舍空气炸锅的神级用法。只用生抽、蚝油和黑胡椒三样调料，就能做出外焦里嫩的烤鸡翅。
+difficulty: 1
+time_minutes: 30
+servings: 1
+cuisine: 留学生厨房菜
+recipe_type: fusion
+budget_level: low
+scenarios:
+  - tesco_friendly
+  - low_smoke
+tags:
+  - 空气炸锅
+  - 低预算
+  - 宿舍友好
+  - 高蛋白
+equipment:
+  required_ids:
+    - air-fryer
+    - knife-board
+    - prep-bowl
+  required:
+    - 空气炸锅
+    - 菜刀
+    - 拌碗
+  substitutes_if_missing: 没有空气炸锅可以用烤箱 200°C 烤 25-30 分钟，中途翻面。
+base_ingredients:
+  - ingredient_id: jichi
+    amount: 6-8 个
+  - ingredient_id: shengchou
+    amount: 1 勺
+  - ingredient_id: haoyou
+    amount: 半勺
+  - ingredient_id: heihujiao
+    amount: 适量
+  - ingredient_id: suanfen
+    amount: 少许（可选）
+    optional: true
+steps:
+  - order: 1
+    instruction: 鸡翅洗净，正反各划两刀至骨头。这一步让调料入味，也能防止内部夹生。
+  - order: 2
+    instruction: 放入碗中，加生抽、蚝油、黑胡椒（和蒜粉）抓匀，腌制15分钟。无需加油。
+    tip: 冷藏过夜更入味。中午腌制好放冰箱，晚上回来直接炸。
+  - order: 3
+    instruction: 鸡翅表面用厨房纸轻轻吸干水分（湿的鸡翅不容易上色），放入空气炸锅。
+    tip: 不要叠放，尽量单层平铺。
+  - order: 4
+    instruction: 200°C 烤 15 分钟，中途翻面一次。翻面后再烤 3-5 分钟，直到表皮金黄焦脆。
+  - order: 5
+    instruction: 出炉后可撒辣椒粉或孜然粉。配米饭或直接当零食吃。
+video_links: []
+common_mistakes:
+  - 鸡翅没划刀——调料进不去，里面可能夹生。
+  - 表面太湿直接放炸锅——水分会阻止上色，记得用厨房纸吸干。
+  - 温度太低时间太长——200°C 是最佳温度，低于 180°C 烤出来的鸡翅干硬不脆。

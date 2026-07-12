@@ -1,0 +1,25 @@
+ingredient_id: jidan
+name_zh: 鸡蛋
+name_en: Egg
+pinyin: jidan
+category: 蛋白质
+aliases_zh:
+  - 蛋
+aliases_en:
+  - Eggs
+aliases_pinyin: []
+search_keywords:
+  - 鸡蛋
+  - egg
+  - eggs
+common_uses:
+  - 炒蛋
+  - 炒饭
+  - 蒸蛋
+  - 烘焙
+regions:
+  uk:
+    substitute: Medium 或 Large free-range eggs
+    where_to_buy: 所有英国超市冷藏区或常温蛋架
+    usage_note: 英国鸡蛋常按 Medium/Large 标注；一道菜按个数使用即可。
+    similarity: 5

@@ -25,7 +25,7 @@ export function SiteFooter() {
             落地清单与宝典
           </Link>
           <Link className="text-scallion hover:text-scallion/80" href="/contribute/">
-            补充内容
+            我要投稿
           </Link>
           <Link className="text-scallion hover:text-scallion/80" href="/about/">
             上传指南

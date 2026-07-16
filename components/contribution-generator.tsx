@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Clipboard, Download, ExternalLink, ImagePlus, Plus, RotateCcw, Search, Trash2 } from "lucide-react";
+import { CheckCircle2, Clipboard, Download, ExternalLink, ImagePlus, Mail, Plus, RotateCcw, Save, Search, Trash2 } from "lucide-react";
+import { RequiredLabel, TextArea, TextInput } from "@/components/form-controls";
 import { scenarioDefinitions } from "@/lib/recommendations";
 import type { Equipment, RecommendationScenario, Substitution } from "@/lib/schemas";
 
@@ -10,7 +11,6 @@ type RecipeType = "chinese" | "fusion" | "local_adapted";
 type BudgetLevel = "low" | "medium" | "high";
 type IngredientSource = "library" | "custom";
 type SectionKey = "basic" | "scenarios" | "equipment" | "ingredients" | "steps" | "mistakes" | "media" | "region";
-type StarterPriority = "today" | "three_days" | "optional";
 type ImageMode = "none" | "upload" | "url";
 
 type PreparedImage = {
@@ -27,6 +27,7 @@ type ImageDraft = {
   alt: string;
   caption: string;
   credit: string;
+  rightsConfirmed: boolean;
   file?: PreparedImage;
 };
 
@@ -63,14 +64,22 @@ type ContributionGeneratorProps = {
   equipmentItems: Equipment[];
 };
 
-const tabs: Array<{ id: ContributionKind; label: string }> = [
-  { id: "recipe", label: "新增菜谱" },
-  { id: "substitution", label: "新增食材替代" },
-  { id: "equipment", label: "新增厨具建议" },
-  { id: "starter", label: "落地清单" }
+const tabs: Array<{ id: ContributionKind; label: string; description: string }> = [
+  { id: "recipe", label: "分享一道菜", description: "食材、步骤和成品图" },
+  { id: "substitution", label: "补充一种食材", description: "当地叫什么、去哪里买" },
+  { id: "equipment", label: "推荐一件厨具", description: "价格、用途和替代方案" },
+  { id: "starter", label: "分享落地经验", description: "超市、采购与避坑" }
 ];
 
 const regionOptions = ["uk", "north_america", "europe", "australia", "japan_korea"];
+const regionLabels: Record<string, string> = {
+  uk: "英国",
+  north_america: "美国 / 北美",
+  europe: "欧洲其他地区",
+  australia: "澳大利亚 / 新西兰",
+  japan_korea: "日本 / 韩国"
+};
+const DRAFT_STORAGE_KEY = "woklocal-contribution-draft-v1";
 
 const defaultRecipe = {
   id: "tomato-cheese-rice",
@@ -91,11 +100,11 @@ const defaultRecipe = {
 };
 
 const defaultIngredients: RecipeIngredientDraft[] = [
-  { source: "custom", ingredientId: "xihongshi", nameZh: "番茄", nameEn: "Tomato", amount: "1 个", optional: false, note: "" },
-  { source: "custom", ingredientId: "cheddar", nameZh: "切达奶酪", nameEn: "Cheddar cheese", amount: "一小把", optional: false, note: "" }
+  { source: "library", ingredientId: "xihongshi", nameZh: "番茄", nameEn: "Tomato", amount: "1 个", optional: false, note: "" },
+  { source: "library", ingredientId: "cheddar", nameZh: "切达奶酪", nameEn: "Cheddar cheese", amount: "一小把", optional: false, note: "" }
 ];
 
-const emptyImageDraft = (): ImageDraft => ({ mode: "none", url: "", alt: "", caption: "", credit: "" });
+const emptyImageDraft = (): ImageDraft => ({ mode: "none", url: "", alt: "", caption: "", credit: "", rightsConfirmed: false });
 
 const defaultSteps: RecipeStepDraft[] = [
   { instruction: "把主要食材切好。", tip: "新手先把所有食材放在手边。", image: emptyImageDraft() },
@@ -143,6 +152,13 @@ const defaultStarterPack = {
   content:
     "## 今天就买\n- 不粘平底锅：IKEA、Argos、Tesco Extra 或 Amazon UK，约 £10-£25。24-28cm 最通用。\n- 洗碗套装：洗洁精、海绵、厨房纸先买齐。\n\n## 三天内补齐\n- 小电饭煲：Argos、Amazon UK 或亚超，约 £20-£45。一人食 0.6L-1L 足够。\n\n## 注意事项\n- 宿舍先确认是否允许使用电饭煲、空气炸锅等高功率电器。\n- 不确定会不会长期做饭时，先别一次买太多升级厨具。"
 };
+
+const emptyRecipe = { ...defaultRecipe, id: "", nameZh: "", pinyin: "", nameEn: "", description: "", cuisine: "", tags: "", equipmentSubstitute: "", videoUrl: "", mistakes: "" };
+const emptySubstitution = { ...defaultSubstitution, id: "", nameZh: "", nameEn: "", pinyin: "", category: "", aliasesZh: "", aliasesEn: "", aliasesPinyin: "", keywords: "", uses: "", substitute: "", where: "", note: "", similarity: "" };
+const emptyEquipment = { ...defaultEquipment, id: "", nameZh: "", nameEn: "", uses: "", substitutes: "", where: "", priceRange: "", note: "", essential: false };
+const emptyStarterPack = { ...defaultStarterPack, id: "", title: "", summary: "", content: "" };
+const emptyIngredient = (): RecipeIngredientDraft => ({ source: "library", ingredientId: "", nameZh: "", nameEn: "", amount: "", optional: false, note: "" });
+const emptyStep = (): RecipeStepDraft => ({ instruction: "", tip: "", image: emptyImageDraft() });
 
 function slugify(value: string) {
   return value
@@ -256,7 +272,17 @@ function firstNonEmpty(...values: string[]) {
 }
 
 function generatedId(...values: string[]) {
-  return slugify(firstNonEmpty(...values));
+  const source = firstNonEmpty(...values);
+  const slug = slugify(source);
+  if (slug) return slug;
+  if (!source) return "";
+
+  let hash = 2166136261;
+  for (const character of source) {
+    hash ^= character.charCodeAt(0);
+    hash = Math.imul(hash, 16777619);
+  }
+  return `entry-${(hash >>> 0).toString(36)}`;
 }
 
 function addError(sectionErrors: Partial<Record<SectionKey, string[]>>, section: SectionKey, message: string) {
@@ -280,7 +306,7 @@ function deriveIssueBaseUrl() {
     return `https://github.com/${owner}/${firstPath}/issues/new`;
   }
 
-  return "";
+  return "https://github.com/SunRichardSKT/WokLocal/issues/new";
 }
 
 function buildIssueUrl(title: string, body: string, labels: string[]) {
@@ -289,63 +315,6 @@ function buildIssueUrl(title: string, body: string, labels: string[]) {
 
   const params = new URLSearchParams({ title, body, labels: labels.join(",") });
   return `${base}?${params.toString()}`;
-}
-
-function RequiredLabel({ label, required = true }: { label: string; required?: boolean }) {
-  return (
-    <span className="flex min-w-0 flex-wrap items-center gap-1.5">
-      <span className="min-w-0 break-words">{label}</span>
-      <span className={required ? "rounded-full bg-chili/[0.14] px-2 py-0.5 text-[11px] text-chili" : "rounded-full bg-white/[0.06] px-2 py-0.5 text-[11px] text-ink-500"}>
-        {required ? "必填" : "选填"}
-      </span>
-    </span>
-  );
-}
-
-function TextInput({
-  label,
-  value,
-  onChange,
-  required = true,
-  hint,
-  placeholder
-}: {
-  label: string;
-  value: string;
-  onChange: (value: string) => void;
-  required?: boolean;
-  hint?: string;
-  placeholder?: string;
-}) {
-  return (
-    <label className="grid min-w-0 gap-1 text-sm text-ink-300">
-      <RequiredLabel label={label} required={required} />
-      <input className="control" value={value} onChange={(event) => onChange(event.target.value)} placeholder={placeholder} />
-      {hint ? <span className="break-words text-xs text-ink-500">{hint}</span> : null}
-    </label>
-  );
-}
-
-function TextArea({
-  label,
-  value,
-  onChange,
-  required = true,
-  hint
-}: {
-  label: string;
-  value: string;
-  onChange: (value: string) => void;
-  required?: boolean;
-  hint?: string;
-}) {
-  return (
-    <label className="grid min-w-0 gap-1 text-sm text-ink-300">
-      <RequiredLabel label={label} required={required} />
-      <textarea className="control min-h-24" value={value} onChange={(event) => onChange(event.target.value)} />
-      {hint ? <span className="break-words text-xs text-ink-500">{hint}</span> : null}
-    </label>
-  );
 }
 
 function ImageEditor({
@@ -426,7 +395,7 @@ function ImageEditor({
 
       {image.mode === "url" ? (
         <div className="mt-3">
-          <TextInput label="图片链接" value={image.url} onChange={(url) => onChange({ ...image, url })} placeholder="https://..." hint="仅使用你有权使用、且长期稳定的图片链接；站内本地图片更可靠。" />
+          <TextInput inputMode="url" label="图片链接" value={image.url} onChange={(url) => onChange({ ...image, url })} placeholder="https://..." hint="仅使用你有权使用、且长期稳定的图片链接；站内本地图片更可靠。" />
         </div>
       ) : null}
 
@@ -437,6 +406,10 @@ function ImageEditor({
           <div className="sm:col-span-2">
             <TextInput label="图片图注" required={false} value={image.caption} onChange={(caption) => onChange({ ...image, caption })} hint="选填，会显示在图片下方。" />
           </div>
+          <label className="flex min-h-11 items-start gap-3 rounded-md border border-white/10 bg-white/[0.03] p-3 text-sm leading-6 text-ink-300 sm:col-span-2">
+            <input className="mt-1 size-4 shrink-0 accent-scallion" checked={image.rightsConfirmed} onChange={(event) => onChange({ ...image, rightsConfirmed: event.target.checked })} type="checkbox" />
+            <span>我确认这是本人拍摄、公共领域，或已经获得允许公开使用的图片，并愿意提供来源信息。</span>
+          </label>
         </div>
       ) : null}
       {error ? <p className="mt-3 text-sm text-chili">{error}</p> : null}
@@ -478,16 +451,25 @@ function SectionPanel({
   );
 }
 
-function CompletionSummary({ generated }: { generated: GeneratedContribution }) {
+function CompletionSummary({ generated, validationVisible }: { generated: GeneratedContribution; validationVisible: boolean }) {
   const complete = generated.validationErrors.length === 0;
 
+  if (!validationVisible && !complete) {
+    return (
+      <section className="rounded-md border border-white/10 bg-white/[0.035] p-3" aria-live="polite">
+        <p className="text-sm font-semibold text-ink-100">{generated.completedRequired}/{generated.totalRequired} 项基本信息已完成</p>
+        <p className="mt-1 text-sm leading-6 text-ink-300">从你最确定的内容开始填。准备提交时，页面会统一检查遗漏。</p>
+      </section>
+    );
+  }
+
   return (
-    <section className={complete ? "rounded-md border border-scallion/25 bg-scallion/[0.08] p-3" : "rounded-md border border-chili/25 bg-chili/[0.08] p-3"}>
+    <section aria-live="polite" className={complete ? "rounded-md border border-scallion/25 bg-scallion/[0.08] p-3" : "rounded-md border border-chili/25 bg-chili/[0.08] p-3"}>
       <p className={complete ? "text-sm font-semibold text-scallion" : "text-sm font-semibold text-chili"}>
         {generated.completedRequired}/{generated.totalRequired} 必填项已完成
       </p>
       <p className="mt-1 text-sm leading-6 text-ink-300">
-        {complete ? "格式看起来可以提交。复制 YAML 或 Issue 内容后发给维护者即可。" : `还有 ${generated.validationErrors.length} 个问题需要修正。`}
+        {complete ? "内容已经可以提交。你可以选择 GitHub 或邮件投稿。" : `还有 ${generated.validationErrors.length} 个问题需要修正。`}
       </p>
     </section>
   );
@@ -575,11 +557,13 @@ function ingredientSearchText(item: Substitution) {
 function IngredientPicker({
   library,
   value,
-  onSelect
+  onSelect,
+  onCreateCustom
 }: {
   library: Substitution[];
   value: RecipeIngredientDraft;
   onSelect: (ingredient: RecipeIngredientDraft) => void;
+  onCreateCustom: (query: string) => void;
 }) {
   const [query, setQuery] = useState("");
   const matches = useMemo(() => {
@@ -590,11 +574,18 @@ function IngredientPicker({
 
   return (
     <div className="grid gap-2">
+      {value.ingredientId ? (
+        <p className="rounded-md border border-scallion/25 bg-scallion/[0.08] px-3 py-2 text-sm text-ink-300">
+          已选择：<strong className="text-scallion">{value.nameZh || value.nameEn}</strong>
+          <span className="ml-2 font-mono text-xs text-ink-500">{value.ingredientId}</span>
+        </p>
+      ) : null}
       <label className="relative block">
         <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-ink-500" size={16} aria-hidden="true" />
-        <input className="control w-full pl-9" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="搜索已有食材：生抽 / soy sauce / shengchou" />
+        <span className="sr-only">搜索已有食材</span>
+        <input aria-label="搜索已有食材" className="control w-full pl-9" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="输入中文或英文，例如：生抽、soy sauce" />
       </label>
-      <div className="grid max-h-44 gap-2 overflow-auto rounded-md border border-white/10 bg-ink-950 p-2">
+      <div aria-label="食材搜索结果" className="grid max-h-52 gap-2 overflow-auto rounded-md border border-white/10 bg-ink-950 p-2" role="listbox">
         {matches.map((item) => {
           const active = value.source === "library" && value.ingredientId === item.ingredient_id;
           return (
@@ -602,14 +593,16 @@ function IngredientPicker({
               className={active ? "rounded-md border border-scallion bg-scallion/[0.12] p-2 text-left" : "rounded-md border border-white/10 bg-white/[0.035] p-2 text-left hover:border-scallion/40"}
               key={item.ingredient_id}
               onClick={() =>
-                onSelect({
+                { onSelect({
                   ...value,
                   source: "library",
                   ingredientId: item.ingredient_id,
                   nameZh: item.name_zh,
                   nameEn: item.name_en
-                })
+                }); setQuery(item.name_zh); }
               }
+              role="option"
+              aria-selected={active}
               type="button"
             >
               <span className="block text-sm font-medium text-ink-100">{item.name_zh}</span>
@@ -619,6 +612,14 @@ function IngredientPicker({
             </button>
           );
         })}
+        {matches.length === 0 ? (
+          <div className="p-3 text-center text-sm leading-6 text-ink-300">
+            <p>食材库里暂时没找到“{query.trim()}”。</p>
+            <button className="mt-2 min-h-11 rounded-md border border-scallion/30 px-3 py-2 font-semibold text-scallion" onClick={() => onCreateCustom(query.trim())} type="button">
+              作为新食材填写
+            </button>
+          </div>
+        ) : null}
       </div>
     </div>
   );
@@ -629,28 +630,75 @@ export function ContributionGenerator({ ingredients: ingredientLibrary, equipmen
   const [copied, setCopied] = useState(false);
   const [copiedPath, setCopiedPath] = useState(false);
   const [copiedIssue, setCopiedIssue] = useState(false);
-  const [previewOpen, setPreviewOpen] = useState(false);
+  const [validationVisible, setValidationVisible] = useState(false);
+  const [draftReady, setDraftReady] = useState(false);
+  const [draftStatus, setDraftStatus] = useState("草稿会自动保存在这台设备上");
+  const [actionMessage, setActionMessage] = useState("");
 
-  const [recipe, setRecipe] = useState(defaultRecipe);
-  const [recipeScenarios, setRecipeScenarios] = useState<RecommendationScenario[]>(["low_budget", "tesco_friendly"]);
-  const [selectedEquipmentIds, setSelectedEquipmentIds] = useState<string[]>(["nonstick-pan", "spatula"]);
-  const [ingredients, setIngredients] = useState<RecipeIngredientDraft[]>(defaultIngredients);
-  const [steps, setSteps] = useState<RecipeStepDraft[]>(defaultSteps);
+  const [recipe, setRecipe] = useState(emptyRecipe);
+  const [recipeScenarios, setRecipeScenarios] = useState<RecommendationScenario[]>([]);
+  const [selectedEquipmentIds, setSelectedEquipmentIds] = useState<string[]>([]);
+  const [ingredients, setIngredients] = useState<RecipeIngredientDraft[]>([emptyIngredient()]);
+  const [steps, setSteps] = useState<RecipeStepDraft[]>([emptyStep()]);
   const [coverImage, setCoverImage] = useState<ImageDraft>(emptyImageDraft);
-  const [substitution, setSubstitution] = useState(defaultSubstitution);
-  const [equipment, setEquipment] = useState(defaultEquipment);
-  const [starterPack, setStarterPack] = useState(defaultStarterPack);
+  const [substitution, setSubstitution] = useState(emptySubstitution);
+  const [equipment, setEquipment] = useState(emptyEquipment);
+  const [starterPack, setStarterPack] = useState(emptyStarterPack);
 
   useEffect(() => {
+    try {
+      const saved = window.localStorage.getItem(DRAFT_STORAGE_KEY);
+      if (saved) {
+        const draft = JSON.parse(saved);
+        setKind(draft.kind ?? "recipe");
+        setRecipe(draft.recipe ?? emptyRecipe);
+        setRecipeScenarios(draft.recipeScenarios ?? []);
+        setSelectedEquipmentIds(draft.selectedEquipmentIds ?? []);
+        setIngredients(draft.ingredients?.length ? draft.ingredients : [emptyIngredient()]);
+        setSteps(draft.steps?.length ? draft.steps : [emptyStep()]);
+        setCoverImage(draft.coverImage ?? emptyImageDraft());
+        setSubstitution(draft.substitution ?? emptySubstitution);
+        setEquipment(draft.equipment ?? emptyEquipment);
+        setStarterPack(draft.starterPack ?? emptyStarterPack);
+        setDraftStatus("已恢复上次未提交的草稿");
+      }
+    } catch {
+      window.localStorage.removeItem(DRAFT_STORAGE_KEY);
+    }
+
     const params = new URLSearchParams(window.location.search);
     const query = params.get("q");
     if (query) {
-      setSubstitution((current) => ({ ...current, nameZh: query, id: slugify(query) }));
+      setSubstitution((current) => ({ ...current, nameZh: query, id: "" }));
       setKind("substitution");
     }
+    setDraftReady(true);
   }, []);
 
-  function resetExample() {
+  useEffect(() => {
+    if (!draftReady) return;
+    setDraftStatus("正在保存草稿…");
+    const timer = window.setTimeout(() => {
+      const withoutFile = (image: ImageDraft): ImageDraft => image.mode === "upload" ? emptyImageDraft() : { ...image, file: undefined };
+      const draft = {
+        kind,
+        recipe,
+        recipeScenarios,
+        selectedEquipmentIds,
+        ingredients,
+        steps: steps.map((step) => ({ ...step, image: withoutFile(step.image) })),
+        coverImage: withoutFile(coverImage),
+        substitution,
+        equipment,
+        starterPack
+      };
+      window.localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(draft));
+      setDraftStatus("草稿已自动保存（图片除外）");
+    }, 350);
+    return () => window.clearTimeout(timer);
+  }, [coverImage, draftReady, equipment, ingredients, kind, recipe, recipeScenarios, selectedEquipmentIds, starterPack, steps, substitution]);
+
+  function loadExample() {
     setRecipe(defaultRecipe);
     setRecipeScenarios(["low_budget", "tesco_friendly"]);
     setSelectedEquipmentIds(["nonstick-pan", "spatula"]);
@@ -660,6 +708,28 @@ export function ContributionGenerator({ ingredients: ingredientLibrary, equipmen
     setSubstitution(defaultSubstitution);
     setEquipment(defaultEquipment);
     setStarterPack(defaultStarterPack);
+    setValidationVisible(false);
+    setActionMessage("已填入示例，可以直接修改成自己的内容。");
+  }
+
+  function clearCurrent() {
+    if (!window.confirm("确定清空当前类型的草稿吗？此操作无法撤销。")) return;
+    if (kind === "recipe") {
+      setRecipe(emptyRecipe);
+      setRecipeScenarios([]);
+      setSelectedEquipmentIds([]);
+      setIngredients([emptyIngredient()]);
+      setSteps([emptyStep()]);
+      setCoverImage(emptyImageDraft());
+    } else if (kind === "substitution") {
+      setSubstitution(emptySubstitution);
+    } else if (kind === "equipment") {
+      setEquipment(emptyEquipment);
+    } else {
+      setStarterPack(emptyStarterPack);
+    }
+    setValidationVisible(false);
+    setActionMessage("当前表单已清空。");
   }
 
   const generated = useMemo<GeneratedContribution>(() => {
@@ -672,7 +742,7 @@ export function ContributionGenerator({ ingredients: ingredientLibrary, equipmen
     let totalRequired = 0;
 
     if (kind === "recipe") {
-      const id = generatedId(recipe.pinyin, recipe.id, recipe.nameEn) || "new-recipe";
+      const id = generatedId(recipe.id, recipe.pinyin, recipe.nameEn, recipe.nameZh) || "new-recipe";
       const displayName = firstNonEmpty(recipe.nameZh, recipe.nameEn, "未命名菜谱");
       const recipePinyin = firstNonEmpty(recipe.pinyin, recipe.nameEn, recipe.nameZh, "未填写");
       const recipeNameEn = firstNonEmpty(recipe.nameEn, recipe.nameZh, recipe.pinyin, "Untitled recipe");
@@ -730,6 +800,7 @@ export function ContributionGenerator({ ingredients: ingredientLibrary, equipmen
       imageEntries.forEach((entry) => {
         if (!entry.image.alt.trim()) addError(sectionErrors, "media", `${entry.label}需要填写图片说明。`);
         if (entry.image.mode === "url" && !validateUrl(entry.image.url)) addError(sectionErrors, "media", `${entry.label}的外部图片链接无效。`);
+        if (!entry.image.rightsConfirmed) addError(sectionErrors, "media", `${entry.label}需要确认图片使用权。`);
       });
 
       targetPath = `data/recipes/${id}.yaml`;
@@ -742,7 +813,7 @@ export function ContributionGenerator({ ingredients: ingredientLibrary, equipmen
         : "video_links: []";
       const ingredientBlock = usableIngredients
         .map((item, index) => {
-          const ingredientId = item.source === "library" ? item.ingredientId : generatedId(item.nameEn, item.ingredientId, item.nameZh) || `custom-ingredient-${index + 1}`;
+          const ingredientId = item.source === "library" ? item.ingredientId : generatedId(item.ingredientId, item.nameEn, item.nameZh) || `custom-ingredient-${index + 1}`;
           const fallbackName = firstNonEmpty(item.nameZh, item.nameEn, `临时食材 ${index + 1}`);
           const lines = [`  - ingredient_id: ${ingredientId}`, `    amount: ${quote(item.amount)}`];
           if (item.source === "custom") {
@@ -778,7 +849,6 @@ name:
   en: ${quote(recipeNameEn)}
 description: ${quote(recipe.description)}
 ${coverBlock ? `${coverBlock}\n` : ""}difficulty: ${numericDifficulty || 2}
-difficulty: ${numericDifficulty || 2}
 time_minutes: ${numericTime || 20}
 servings: ${numericServings || 1}
 cuisine: ${cuisine}
@@ -798,7 +868,7 @@ ${videoBlock}
 common_mistakes: ${mistakes.length > 0 ? `\n${mistakes.map((mistake) => `  - ${quote(mistake)}`).join("\n")}` : "[]"}
 `;
     } else if (kind === "substitution") {
-      const id = generatedId(substitution.pinyin, substitution.nameEn, substitution.id) || "new-ingredient";
+      const id = generatedId(substitution.id, substitution.pinyin, substitution.nameEn, substitution.nameZh) || "new-ingredient";
       const substitutionName = firstNonEmpty(substitution.nameZh, substitution.nameEn, "未命名食材");
       const substitutionNameZh = firstNonEmpty(substitution.nameZh, substitution.nameEn, "未命名食材");
       const substitutionNameEn = firstNonEmpty(substitution.nameEn, substitution.nameZh, "Unnamed ingredient");
@@ -838,7 +908,7 @@ common_uses: ${yamlList(splitList(substitution.uses))}
 ${regionBlock}
 `;
     } else if (kind === "equipment") {
-      const id = generatedId(equipment.nameEn, equipment.id, equipment.nameZh) || "new-equipment";
+      const id = generatedId(equipment.id, equipment.nameEn, equipment.nameZh) || "new-equipment";
       const equipmentName = firstNonEmpty(equipment.nameZh, equipment.nameEn, "未命名厨具");
       const equipmentNameZh = firstNonEmpty(equipment.nameZh, equipment.nameEn, "未命名厨具");
       const equipmentNameEn = firstNonEmpty(equipment.nameEn, equipment.nameZh, "Unnamed equipment");
@@ -912,20 +982,31 @@ ${yamlBlockScalar(content || "请补充主要内容。", 10)}
       ? buildIssueUrl(generated.issueTitle, generated.issueBody, [kind === "recipe" ? "recipe" : kind === "substitution" ? "substitution" : kind === "equipment" ? "equipment" : "starter-pack"])
       : "";
 
+  async function writeClipboard(text: string, successMessage: string) {
+    try {
+      await navigator.clipboard.writeText(text);
+      setActionMessage(successMessage);
+      return true;
+    } catch {
+      setActionMessage("浏览器没有允许复制。请在下方高级选项中展开内容后手动选择复制。");
+      return false;
+    }
+  }
+
   async function copyYaml() {
-    await navigator.clipboard.writeText(generated.yaml);
+    if (!await writeClipboard(generated.yaml, "YAML 已复制。")) return;
     setCopied(true);
     window.setTimeout(() => setCopied(false), 1400);
   }
 
   async function copyPath() {
-    await navigator.clipboard.writeText(generated.targetPath);
+    if (!await writeClipboard(generated.targetPath, "目标路径已复制。")) return;
     setCopiedPath(true);
     window.setTimeout(() => setCopiedPath(false), 1400);
   }
 
   async function copyIssueBody() {
-    await navigator.clipboard.writeText(generated.issueBody);
+    if (!await writeClipboard(generated.issueBody, "投稿内容已复制，可以粘贴到 Issue 或邮件正文。")) return;
     setCopiedIssue(true);
     window.setTimeout(() => setCopiedIssue(false), 1400);
   }
@@ -941,8 +1022,27 @@ ${yamlBlockScalar(content || "请补充主要内容。", 10)}
   }
 
   const disabled = generated.validationErrors.length > 0;
+  const visibleErrors = (section: SectionKey) => validationVisible ? generated.sectionErrors[section] : [];
 
-  const previewActions = (
+  function checkContent() {
+    setValidationVisible(true);
+    setActionMessage(disabled ? `还需要处理 ${generated.validationErrors.length} 个问题，已在对应区块标出。` : "内容检查通过，可以选择 GitHub 或邮件投稿。");
+  }
+
+  async function submitByEmail() {
+    setValidationVisible(true);
+    if (disabled) {
+      setActionMessage(`还需要处理 ${generated.validationErrors.length} 个问题，已在对应区块标出。`);
+      return;
+    }
+    const copiedSuccessfully = await writeClipboard(generated.issueBody, "投稿内容已复制，正在打开邮箱。请粘贴到邮件正文并发送。");
+    if (!copiedSuccessfully) return;
+    const subject = encodeURIComponent(`就地开饭投稿 - ${generated.issueTitle}`);
+    const body = encodeURIComponent("投稿内容已复制到剪贴板，请在这里粘贴。\n\n如有菜谱图片，也请作为附件添加。\n");
+    window.location.href = `mailto:guyanrichard@qq.com?subject=${subject}&body=${body}`;
+  }
+
+  const advancedActions = (
     <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
       <button className="inline-flex items-center justify-center gap-2 rounded-md bg-scallion px-3 py-2 text-sm font-semibold text-ink-950 disabled:cursor-not-allowed disabled:opacity-45" disabled={disabled} onClick={copyYaml} type="button">
         <Clipboard size={16} aria-hidden="true" />
@@ -960,64 +1060,72 @@ ${yamlBlockScalar(content || "请补充主要内容。", 10)}
         <Download size={16} aria-hidden="true" />
         下载 YAML
       </button>
-      {issueUrl ? (
-        <a className="inline-flex items-center justify-center gap-2 rounded-md border border-white/10 px-3 py-2 text-sm font-semibold text-ink-100 hover:bg-white/[0.06]" href={issueUrl} target="_blank" rel="noreferrer">
-          <ExternalLink size={16} aria-hidden="true" />
-          打开 Issue
-        </a>
-      ) : (
-        <span className="rounded-md border border-white/10 px-3 py-2 text-sm text-ink-500">部署到 GitHub Pages 后可生成 Issue 链接</span>
-      )}
     </div>
   );
 
   return (
-    <div className="space-y-5">
-      <div className="surface rounded-md p-2">
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+    <div className="contribution-editor space-y-5">
+      <div className="surface rounded-md p-2" aria-label="选择投稿类型">
+        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 xl:grid-cols-4">
           {tabs.map((tab) => (
             <button
-              className={tab.id === kind ? "rounded-md bg-scallion px-3 py-2 text-sm font-semibold text-ink-950" : "rounded-md px-3 py-2 text-sm text-ink-300 hover:bg-white/[0.06]"}
+              aria-pressed={tab.id === kind}
+              className={tab.id === kind ? "min-h-16 rounded-md bg-scallion px-3 py-2 text-left text-ink-950" : "min-h-16 rounded-md px-3 py-2 text-left text-ink-300 hover:bg-white/[0.06]"}
               key={tab.id}
-              onClick={() => setKind(tab.id)}
+              onClick={() => {
+                setKind(tab.id);
+                setValidationVisible(false);
+                setActionMessage("");
+              }}
               type="button"
             >
-              {tab.label}
+              <span className="block text-sm font-semibold">{tab.label}</span>
+              <span className={tab.id === kind ? "mt-1 block text-xs text-ink-950/70" : "mt-1 block text-xs text-ink-500"}>{tab.description}</span>
             </button>
           ))}
         </div>
       </div>
 
-      <CompletionSummary generated={generated} />
+      <div className="grid gap-2 text-sm text-ink-300 sm:grid-cols-3" aria-label="投稿步骤">
+        {["1. 填写你知道的内容", "2. 检查有没有遗漏", "3. 用 GitHub 或邮件提交"].map((step, index) => (
+          <div className={"rounded-md border px-3 py-2 " + (index === 0 ? "border-scallion/35 bg-scallion/[0.08] text-ink-100" : "border-white/10 bg-white/[0.025]")} key={step}>{step}</div>
+        ))}
+      </div>
 
-      <div className="grid gap-5 2xl:grid-cols-[minmax(0,1fr)_minmax(26rem,0.78fr)]">
-        <section className="space-y-4">
+      <CompletionSummary generated={generated} validationVisible={validationVisible} />
+
+      <div className="grid min-w-0 gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(22rem,0.62fr)]">
+        <section className="min-w-0 space-y-4">
           <div className="flex flex-col gap-3 rounded-md border border-white/10 bg-white/[0.035] p-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <h2 className="text-lg font-semibold text-ink-100">可视化编辑</h2>
-              <p className="mt-1 text-sm leading-6 text-ink-300">不会直接写入仓库；菜谱图片会在本地压缩，供你下载后附到 Issue 或邮件。</p>
+              <h2 className="text-lg font-semibold text-ink-100">填写投稿内容</h2>
+              <p className="mt-1 text-sm leading-6 text-ink-300">只填你确定的信息即可。技术字段会自动生成，草稿会保存在当前浏览器。</p>
+              <p className="mt-1 flex items-center gap-1.5 text-xs text-ink-500" aria-live="polite"><Save size={14} aria-hidden="true" />{draftStatus}</p>
             </div>
-            <button className="inline-flex items-center justify-center gap-2 rounded-md border border-white/10 px-3 py-2 text-sm font-semibold text-ink-100 hover:bg-white/[0.06]" onClick={resetExample} type="button">
-              <RotateCcw size={16} aria-hidden="true" />
-              重置示例
-            </button>
+            <div className="flex flex-col gap-2 sm:flex-row">
+              <button className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-white/10 px-3 py-2 text-sm font-semibold text-ink-100 hover:bg-white/[0.06]" onClick={loadExample} type="button">
+                <RotateCcw size={16} aria-hidden="true" />
+                填入示例
+              </button>
+              <button className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-chili/30 px-3 py-2 text-sm font-semibold text-chili hover:bg-chili/[0.08]" onClick={clearCurrent} type="button">
+                <Trash2 size={16} aria-hidden="true" />
+                清空当前表单
+              </button>
+            </div>
           </div>
 
           {kind === "recipe" ? (
             <>
-              <SectionPanel title="基础信息" errors={generated.sectionErrors.basic}>
+              <SectionPanel title="基础信息" errors={visibleErrors("basic")}>
                 <div className="grid gap-3 sm:grid-cols-2">
                   <TextInput label="中文名" required={false} value={recipe.nameZh} onChange={(value) => setRecipe({ ...recipe, nameZh: value })} hint="中文名和英文名至少填一个。" />
-                  <TextInput label="拼音" required={false} value={recipe.pinyin} onChange={(value) => setRecipe({ ...recipe, pinyin: value })} hint="选填；填写后会优先用于自动生成菜谱 ID。" />
                   <TextInput label="英文名" required={false} value={recipe.nameEn} onChange={(value) => setRecipe({ ...recipe, nameEn: value })} hint="选填；没有英文名时会用中文名兜底。" />
                 </div>
-                <TextInput label="自定义菜谱 ID" required={false} value={recipe.id} onChange={(value) => setRecipe({ ...recipe, id: value })} hint="选填；留空时优先用拼音自动生成文件名和 URL。" />
                 <TextArea label="简介" value={recipe.description} onChange={(value) => setRecipe({ ...recipe, description: value })} />
                 <div className="grid gap-3 sm:grid-cols-2">
-                  <TextInput label="难度 1-5" value={recipe.difficulty} onChange={(value) => setRecipe({ ...recipe, difficulty: value })} />
-                  <TextInput label="耗时/分钟" value={recipe.timeMinutes} onChange={(value) => setRecipe({ ...recipe, timeMinutes: value })} />
-                  <TextInput label="份量" value={recipe.servings} onChange={(value) => setRecipe({ ...recipe, servings: value })} />
-                  <TextInput label="菜系" required={false} value={recipe.cuisine} onChange={(value) => setRecipe({ ...recipe, cuisine: value })} hint="选填；留空默认留学生厨房菜。" />
+                  <TextInput inputMode="numeric" label="难度 1-5" value={recipe.difficulty} onChange={(value) => setRecipe({ ...recipe, difficulty: value })} />
+                  <TextInput inputMode="numeric" label="耗时/分钟" value={recipe.timeMinutes} onChange={(value) => setRecipe({ ...recipe, timeMinutes: value })} />
+                  <TextInput inputMode="numeric" label="份量" value={recipe.servings} onChange={(value) => setRecipe({ ...recipe, servings: value })} />
                 </div>
                 <div className="grid gap-3 sm:grid-cols-2">
                   <label className="grid gap-1 text-sm text-ink-300">
@@ -1038,15 +1146,23 @@ ${yamlBlockScalar(content || "请补充主要内容。", 10)}
                   </label>
                   <TextInput label="标签，逗号分隔" value={recipe.tags} onChange={(value) => setRecipe({ ...recipe, tags: value })} />
                 </div>
-                <TextInput label="视频链接" required={false} value={recipe.videoUrl} onChange={(value) => setRecipe({ ...recipe, videoUrl: value })} placeholder="https://..." />
+                <details className="rounded-md border border-white/10 bg-white/[0.025] p-3">
+                  <summary className="cursor-pointer text-sm font-semibold text-ink-300">更多信息（全部选填）</summary>
+                  <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                    <TextInput label="拼音" required={false} value={recipe.pinyin} onChange={(value) => setRecipe({ ...recipe, pinyin: value })} hint="可帮助生成更易读的网址，不会拼音也可以留空。" />
+                    <TextInput label="菜系" required={false} value={recipe.cuisine} onChange={(value) => setRecipe({ ...recipe, cuisine: value })} hint="留空时归为留学生厨房菜。" />
+                    <TextInput inputMode="url" label="视频链接" required={false} value={recipe.videoUrl} onChange={(value) => setRecipe({ ...recipe, videoUrl: value })} placeholder="https://..." />
+                    <TextInput label="自定义菜谱 ID" required={false} value={recipe.id} onChange={(value) => setRecipe({ ...recipe, id: value })} hint="给熟悉仓库结构的贡献者使用，通常无需填写。" />
+                  </div>
+                </details>
               </SectionPanel>
 
-              <SectionPanel title="图片" errors={generated.sectionErrors.media} optional>
+              <SectionPanel title="图片" errors={visibleErrors("media")} optional>
                 <ImageEditor image={coverImage} onChange={setCoverImage} suggestedName={suggestedImageName(generated.fileName.replace(/\.yaml$/, "") || "new-recipe", "cover")} title="菜谱封面" />
                 <p className="text-sm leading-6 text-ink-300">封面图推荐拍成横图，步骤图推荐只放关键动作。选择本地图片后，请下载压缩图；提交 Issue 时把图片拖入正文，邮件投稿则直接添加附件。</p>
               </SectionPanel>
 
-              <SectionPanel title="推荐场景" errors={generated.sectionErrors.scenarios}>
+              <SectionPanel title="推荐场景" errors={visibleErrors("scenarios")}>
                 <div className="grid gap-2 sm:grid-cols-2">
                   {scenarioDefinitions.map((scenario) => (
                     <label className="flex items-center gap-2 text-sm text-ink-300" key={scenario.id}>
@@ -1064,7 +1180,7 @@ ${yamlBlockScalar(content || "请补充主要内容。", 10)}
                 </div>
               </SectionPanel>
 
-              <SectionPanel title="厨具" errors={generated.sectionErrors.equipment}>
+              <SectionPanel title="厨具" errors={visibleErrors("equipment")}>
                 <div className="grid gap-2 sm:grid-cols-2">
                   {equipmentItems.map((item) => (
                     <label className="rounded-md border border-white/10 bg-white/[0.035] p-2 text-sm text-ink-300" key={item.equipment_id}>
@@ -1090,7 +1206,7 @@ ${yamlBlockScalar(content || "请补充主要内容。", 10)}
                 <TextInput label="缺少厨具时怎么替代" required={false} value={recipe.equipmentSubstitute} onChange={(value) => setRecipe({ ...recipe, equipmentSubstitute: value })} />
               </SectionPanel>
 
-              <SectionPanel title="食材" errors={generated.sectionErrors.ingredients}>
+              <SectionPanel title="食材" errors={visibleErrors("ingredients")}>
                 <div className="flex justify-end">
                   <button
                     className="inline-flex items-center gap-1 rounded-md border border-white/10 px-2 py-1 text-xs text-ink-300 hover:bg-white/[0.06]"
@@ -1132,10 +1248,10 @@ ${yamlBlockScalar(content || "请补充主要内容。", 10)}
                             library={ingredientLibrary}
                             value={ingredient}
                             onSelect={(next) => setIngredients(ingredients.map((item, i) => (i === index ? next : item)))}
+                            onCreateCustom={(query) => setIngredients(ingredients.map((item, i) => (i === index ? { ...item, source: "custom", nameZh: item.nameZh || query } : item)))}
                           />
                         ) : (
                           <div className="grid gap-3 sm:grid-cols-2">
-                            <TextInput label="食材 ID" required={false} value={ingredient.ingredientId} onChange={(value) => setIngredients(ingredients.map((item, i) => (i === index ? { ...item, ingredientId: value } : item)))} hint="选填；留空会自动生成。" />
                             <TextInput label="中文名" required={false} value={ingredient.nameZh} onChange={(value) => setIngredients(ingredients.map((item, i) => (i === index ? { ...item, nameZh: value } : item)))} hint="中文名和英文名至少填一个。" />
                             <TextInput label="英文名" required={false} value={ingredient.nameEn} onChange={(value) => setIngredients(ingredients.map((item, i) => (i === index ? { ...item, nameEn: value } : item)))} hint="选填；没有英文名时会用中文名兜底。" />
                           </div>
@@ -1154,7 +1270,7 @@ ${yamlBlockScalar(content || "请补充主要内容。", 10)}
                 </div>
               </SectionPanel>
 
-              <SectionPanel title="步骤" errors={generated.sectionErrors.steps}>
+              <SectionPanel title="步骤" errors={visibleErrors("steps")}>
                 <div className="flex justify-end">
                   <button className="inline-flex items-center gap-1 rounded-md border border-white/10 px-2 py-1 text-xs text-ink-300 hover:bg-white/[0.06]" onClick={() => setSteps([...steps, { instruction: "", tip: "", image: emptyImageDraft() }])} type="button">
                     <Plus size={14} aria-hidden="true" />
@@ -1183,36 +1299,39 @@ ${yamlBlockScalar(content || "请补充主要内容。", 10)}
                 </div>
               </SectionPanel>
 
-              <SectionPanel title="新手踩坑" errors={generated.sectionErrors.mistakes} optional>
+              <SectionPanel title="新手踩坑" errors={visibleErrors("mistakes")} optional>
                 <TextArea label="踩坑提示，每行一个" required={false} value={recipe.mistakes} onChange={(value) => setRecipe({ ...recipe, mistakes: value })} />
               </SectionPanel>
             </>
           ) : kind === "substitution" ? (
             <>
-              <SectionPanel title="食材基础信息" errors={generated.sectionErrors.basic}>
+              <SectionPanel title="食材基础信息" errors={visibleErrors("basic")}>
                 <div className="grid gap-3 sm:grid-cols-2">
                   <TextInput label="中文名" required={false} value={substitution.nameZh} onChange={(value) => setSubstitution({ ...substitution, nameZh: value })} hint="中文名和英文名至少填一个。" />
                   <TextInput label="英文名" required={false} value={substitution.nameEn} onChange={(value) => setSubstitution({ ...substitution, nameEn: value })} hint="选填；没有英文名时会用中文名兜底。" />
-                  <TextInput label="拼音" required={false} value={substitution.pinyin} onChange={(value) => setSubstitution({ ...substitution, pinyin: value })} hint="选填；填写后会优先用于自动生成食材 ID。" />
                 </div>
-                <div className="grid gap-3 sm:grid-cols-2">
-                  <TextInput label="自定义食材 ID" required={false} value={substitution.id} onChange={(value) => setSubstitution({ ...substitution, id: value })} hint="选填；留空自动生成。" />
-                  <TextInput label="分类" required={false} value={substitution.category} onChange={(value) => setSubstitution({ ...substitution, category: value })} hint="选填；留空为未分类。" />
-                </div>
-                <TextInput label="搜索关键词，逗号分隔" required={false} value={substitution.keywords} onChange={(value) => setSubstitution({ ...substitution, keywords: value })} hint="选填；留空会用名称生成基础关键词。" />
-                <TextInput label="中文别名，逗号分隔" required={false} value={substitution.aliasesZh} onChange={(value) => setSubstitution({ ...substitution, aliasesZh: value })} />
-                <TextInput label="英文别名，逗号分隔" required={false} value={substitution.aliasesEn} onChange={(value) => setSubstitution({ ...substitution, aliasesEn: value })} />
-                <TextInput label="拼音别名，逗号分隔" required={false} value={substitution.aliasesPinyin} onChange={(value) => setSubstitution({ ...substitution, aliasesPinyin: value })} />
                 <TextInput label="常见用途，逗号分隔" required={false} value={substitution.uses} onChange={(value) => setSubstitution({ ...substitution, uses: value })} />
+                <details className="rounded-md border border-white/10 bg-white/[0.025] p-3">
+                  <summary className="cursor-pointer text-sm font-semibold text-ink-300">搜索与分类信息（全部选填）</summary>
+                  <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                    <TextInput label="分类" required={false} value={substitution.category} onChange={(value) => setSubstitution({ ...substitution, category: value })} hint="留空时归为未分类。" />
+                    <TextInput label="拼音" required={false} value={substitution.pinyin} onChange={(value) => setSubstitution({ ...substitution, pinyin: value })} />
+                    <TextInput label="中文别名，逗号分隔" required={false} value={substitution.aliasesZh} onChange={(value) => setSubstitution({ ...substitution, aliasesZh: value })} />
+                    <TextInput label="英文别名，逗号分隔" required={false} value={substitution.aliasesEn} onChange={(value) => setSubstitution({ ...substitution, aliasesEn: value })} />
+                    <TextInput label="拼音别名，逗号分隔" required={false} value={substitution.aliasesPinyin} onChange={(value) => setSubstitution({ ...substitution, aliasesPinyin: value })} />
+                    <TextInput label="搜索关键词，逗号分隔" required={false} value={substitution.keywords} onChange={(value) => setSubstitution({ ...substitution, keywords: value })} />
+                    <TextInput label="自定义食材 ID" required={false} value={substitution.id} onChange={(value) => setSubstitution({ ...substitution, id: value })} hint="通常无需填写，网站会自动生成。" />
+                  </div>
+                </details>
               </SectionPanel>
-              <SectionPanel title="地区替代信息" errors={generated.sectionErrors.region} optional>
+              <SectionPanel title="地区替代信息" errors={visibleErrors("region")} optional>
                 <div className="grid gap-3 sm:grid-cols-2">
                   <label className="grid gap-1 text-sm text-ink-300">
                     <RequiredLabel label="地区" required={false} />
                     <select className="control" value={substitution.region} onChange={(event) => setSubstitution({ ...substitution, region: event.target.value })}>
                       {regionOptions.map((region) => (
                         <option value={region} key={region}>
-                          {region}
+                          {regionLabels[region]}
                         </option>
                       ))}
                     </select>
@@ -1221,14 +1340,13 @@ ${yamlBlockScalar(content || "请补充主要内容。", 10)}
                 </div>
                 <TextInput label="哪里买" required={false} value={substitution.where} onChange={(value) => setSubstitution({ ...substitution, where: value })} />
                 <TextArea label="使用差异" required={false} value={substitution.note} onChange={(value) => setSubstitution({ ...substitution, note: value })} />
-                <TextInput label="相似度 1-5" required={false} value={substitution.similarity} onChange={(value) => setSubstitution({ ...substitution, similarity: value })} />
+                <TextInput inputMode="numeric" label="相似度 1-5" required={false} value={substitution.similarity} onChange={(value) => setSubstitution({ ...substitution, similarity: value })} />
               </SectionPanel>
             </>
           ) : kind === "equipment" ? (
             <>
-              <SectionPanel title="厨具基础信息" errors={generated.sectionErrors.basic}>
+              <SectionPanel title="厨具基础信息" errors={visibleErrors("basic")}>
                 <div className="grid gap-3 sm:grid-cols-2">
-                  <TextInput label="自定义厨具 ID" required={false} value={equipment.id} onChange={(value) => setEquipment({ ...equipment, id: value })} hint="选填；留空自动生成。" />
                   <TextInput label="中文名" required={false} value={equipment.nameZh} onChange={(value) => setEquipment({ ...equipment, nameZh: value })} hint="中文名和英文名至少填一个。" />
                   <TextInput label="英文名" required={false} value={equipment.nameEn} onChange={(value) => setEquipment({ ...equipment, nameEn: value })} hint="选填；没有英文名时会用中文名兜底。" />
                 </div>
@@ -1257,15 +1375,19 @@ ${yamlBlockScalar(content || "请补充主要内容。", 10)}
                 </div>
                 <TextInput label="使用场景，逗号分隔" required={false} value={equipment.uses} onChange={(value) => setEquipment({ ...equipment, uses: value })} hint="选填；留空会用厨具名称兜底。" />
                 <TextInput label="没有时可替代，逗号分隔" required={false} value={equipment.substitutes} onChange={(value) => setEquipment({ ...equipment, substitutes: value })} />
+                <details className="rounded-md border border-white/10 bg-white/[0.025] p-3">
+                  <summary className="cursor-pointer text-sm font-semibold text-ink-300">技术信息（选填）</summary>
+                  <div className="mt-3"><TextInput label="自定义厨具 ID" required={false} value={equipment.id} onChange={(value) => setEquipment({ ...equipment, id: value })} hint="通常无需填写，网站会自动生成。" /></div>
+                </details>
               </SectionPanel>
-              <SectionPanel title="地区购买信息" errors={generated.sectionErrors.region} optional>
+              <SectionPanel title="地区购买信息" errors={visibleErrors("region")} optional>
                 <div className="grid gap-3 sm:grid-cols-2">
                   <label className="grid gap-1 text-sm text-ink-300">
                     <RequiredLabel label="地区" required={false} />
                     <select className="control" value={equipment.region} onChange={(event) => setEquipment({ ...equipment, region: event.target.value })}>
                       {regionOptions.map((region) => (
                         <option value={region} key={region}>
-                          {region}
+                          {regionLabels[region]}
                         </option>
                       ))}
                     </select>
@@ -1278,7 +1400,7 @@ ${yamlBlockScalar(content || "请补充主要内容。", 10)}
             </>
           ) : (
             <>
-              <SectionPanel title="清单基础信息" errors={generated.sectionErrors.basic}>
+              <SectionPanel title="清单基础信息" errors={visibleErrors("basic")}>
                 <div className="grid gap-3 sm:grid-cols-2">
                   <TextInput label="清单标题" value={starterPack.title} onChange={(value) => setStarterPack({ ...starterPack, title: value })} placeholder="英国落地清单与注意事项" />
                   <label className="grid gap-1 text-sm text-ink-300">
@@ -1286,17 +1408,16 @@ ${yamlBlockScalar(content || "请补充主要内容。", 10)}
                     <select className="control" value={starterPack.region} onChange={(event) => setStarterPack({ ...starterPack, region: event.target.value })}>
                       {regionOptions.map((region) => (
                         <option value={region} key={region}>
-                          {region}
+                          {regionLabels[region]}
                         </option>
                       ))}
                     </select>
                   </label>
                 </div>
-                <TextInput label="自定义清单 ID" required={false} value={starterPack.id} onChange={(value) => setStarterPack({ ...starterPack, id: value })} hint="选填；用于文件名，留空也会自动生成。" />
                 <TextArea label="清单简介" required={false} value={starterPack.summary} onChange={(value) => setStarterPack({ ...starterPack, summary: value })} hint="选填；说明这个地区刚落地时最重要的购买策略和注意事项。" />
               </SectionPanel>
 
-              <SectionPanel title="主要内容" errors={generated.sectionErrors.basic}>
+              <SectionPanel title="主要内容" errors={visibleErrors("basic")}>
                 <p className="text-sm leading-6 text-ink-300">
                   这里可以自由写 Markdown，不需要拆成固定条目。建议写清地区、购买地点、价格、优先级和注意事项；维护者后续会整理成结构化清单。
                 </p>
@@ -1315,18 +1436,42 @@ ${yamlBlockScalar(content || "请补充主要内容。", 10)}
           )}
         </section>
 
-        <aside className="surface rounded-md p-4 xl:sticky xl:top-20 xl:self-start">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <h2 className="text-lg font-semibold text-ink-100">YAML 预览</h2>
-            {previewActions}
-          </div>
-          <p className="mt-3 rounded-md border border-white/10 bg-white/[0.035] px-3 py-2 text-xs text-ink-300">目标文件：{generated.targetPath}</p>
-          <button className="mt-3 w-full rounded-md border border-white/10 px-3 py-2 text-sm text-ink-300 xl:hidden" onClick={() => setPreviewOpen((value) => !value)} type="button">
-            {previewOpen ? "收起 YAML 预览" : "展开 YAML 预览"}
-          </button>
-          <pre className={(previewOpen ? "block" : "hidden") + " mt-4 max-h-[42rem] overflow-auto rounded-md border border-white/10 bg-ink-950 p-4 text-xs leading-5 text-ink-300 xl:block"}>
-            <code>{generated.yaml}</code>
-          </pre>
+        <aside className="min-w-0 space-y-4 xl:sticky xl:top-20 xl:self-start">
+          <section className="surface rounded-md p-4 sm:p-5">
+            <p className="eyebrow">最后一步</p>
+            <h2 className="mt-2 text-xl font-semibold text-ink-100">检查并提交</h2>
+            <p className="mt-2 text-sm leading-6 text-ink-300">本站不会自动公开你的内容。提交后，维护者会检查格式、图片来源和内容，再整理进网站。</p>
+            <div className="mt-4 grid gap-2">
+              <button className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-scallion/40 px-3 py-2 text-sm font-semibold text-scallion hover:bg-scallion/[0.08]" onClick={checkContent} type="button">
+                <CheckCircle2 size={17} aria-hidden="true" />
+                检查填写内容
+              </button>
+              {disabled ? (
+                <button className="inline-flex min-h-11 items-center justify-center rounded-md bg-scallion px-3 py-2 text-sm font-semibold text-ink-950" onClick={checkContent} type="button">先查看需要补充的内容</button>
+              ) : (
+                <a className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-scallion px-3 py-2 text-sm font-semibold text-ink-950 hover:brightness-105" href={issueUrl} target="_blank" rel="noreferrer">
+                  <ExternalLink size={17} aria-hidden="true" />
+                  用 GitHub 提交
+                </a>
+              )}
+              <button className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-white/10 px-3 py-2 text-sm font-semibold text-ink-100 hover:bg-white/[0.06] disabled:cursor-not-allowed disabled:opacity-45" disabled={disabled} onClick={submitByEmail} type="button">
+                <Mail size={17} aria-hidden="true" />
+                没有 GitHub，使用邮件投稿
+              </button>
+            </div>
+            <p className="mt-3 text-xs leading-5 text-ink-500">邮件投稿会先复制内容，再打开邮件客户端。请在正文粘贴，并将图片作为附件添加。</p>
+            {actionMessage ? <p className="mt-3 rounded-md border border-white/10 bg-white/[0.035] px-3 py-2 text-sm leading-6 text-ink-300" aria-live="polite">{actionMessage}</p> : null}
+          </section>
+
+          <details className="surface min-w-0 rounded-md p-4">
+            <summary className="cursor-pointer select-none text-sm font-semibold text-ink-100">高级选项：YAML 与文件路径</summary>
+            <p className="mt-2 text-xs leading-5 text-ink-500">普通投稿不需要理解这里。熟悉 GitHub 的贡献者可以复制结构化数据或下载文件。</p>
+            <div className="mt-4">{advancedActions}</div>
+            <p className="mt-3 break-all rounded-md border border-white/10 bg-white/[0.035] px-3 py-2 text-xs text-ink-300">目标文件：{generated.targetPath}</p>
+            <pre className="mt-4 max-h-[36rem] max-w-full overflow-auto rounded-md border border-white/10 bg-ink-950 p-4 text-xs leading-5 text-ink-300">
+              <code>{generated.yaml}</code>
+            </pre>
+          </details>
         </aside>
       </div>
     </div>

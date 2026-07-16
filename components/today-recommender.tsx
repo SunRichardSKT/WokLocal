@@ -111,7 +111,7 @@ export function TodayRecommender({ recipes }: TodayRecommenderProps) {
           <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
             <div className="min-w-0">
               <p className="text-sm font-medium text-scallion">今天可以吃</p>
-              <h1 className="mt-2 text-3xl font-semibold tracking-normal text-ink-100">{pick.name.zh}</h1>
+              <h2 className="mt-2 text-3xl font-semibold tracking-normal text-ink-100">{pick.name.zh}</h2>
               <p className="mt-1 text-sm text-ink-300">{pick.name.en}</p>
               <p className="mt-4 max-w-2xl text-sm leading-6 text-ink-300">{pick.description}</p>
               <p className="mt-3 text-sm text-soy">{reasonFor(pick, selected)}</p>

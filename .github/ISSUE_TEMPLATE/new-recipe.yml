@@ -3,6 +3,10 @@ description: 建议新增一道适合留学生的厨房菜谱
 title: "新菜谱："
 labels: ["recipe"]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        不懂代码也可以投稿。推荐先使用 [可视化投稿助手](https://SunRichardSKT.github.io/WokLocal/contribute/)，页面会检查遗漏并自动生成本 Issue 的内容。
   - type: input
     id: recipe-name
     attributes:
@@ -42,3 +46,10 @@ body:
       label: 图片（可选）
       description: 请优先使用可视化贡献页压缩后的 WebP 图片，并直接拖入本 Issue。请说明图片来源和是否允许本站使用。
       placeholder: 封面图 / 步骤图拖到这里；本人拍摄、授权来源或作者说明写在下方。
+  - type: checkboxes
+    id: content-rights
+    attributes:
+      label: 内容与图片授权
+      options:
+        - label: 菜谱做法由我用自己的语言整理；如有图片，图片为本人拍摄、公共领域或已获得公开使用许可，并已写明来源。
+          required: true

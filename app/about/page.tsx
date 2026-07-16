@@ -37,7 +37,7 @@ export default function AboutPage() {
         <div className="surface rounded-md p-4">
           <ShieldCheck className="text-soy" size={21} aria-hidden="true" />
           <h2 className="mt-3 text-lg font-semibold text-ink-100">用可视化贡献页</h2>
-          <p className="mt-2 text-sm leading-6 text-ink-300">菜谱、食材替代和厨具建议都可以在表单里写，页面会生成可复制的提交内容。</p>
+          <p className="mt-2 text-sm leading-6 text-ink-300">像填写普通问卷一样写内容，页面会自动保存草稿、检查遗漏并整理提交格式。</p>
         </div>
         <div className="surface rounded-md p-4">
           <GitPullRequestArrow className="text-chili" size={21} aria-hidden="true" />
@@ -52,8 +52,8 @@ export default function AboutPage() {
           {[
             ["1. 选择类型", "先判断你要补充的是菜谱、食材替代、厨具建议，还是落地清单与注意事项。"],
             ["2. 写真实经验", "能写多少写多少，优先写清地区、购买地点、价格、做法、替代差异和踩坑点。"],
-            ["3. 生成内容", "优先去可视化贡献页填写表单，复制生成的 YAML 或 Issue 内容。落地清单也可以自由文字提交。"],
-            ["4. 选择提交方式", "有 GitHub 账号就提交 Issue；没有账号就把内容发邮件到 guyanrichard@qq.com。"]
+            ["3. 检查遗漏", "点击检查按钮，页面会把需要补充的内容直接标在对应表单区块，不需要理解任何技术格式。"],
+            ["4. 选择提交方式", "有 GitHub 账号就用 GitHub 提交；没有账号就使用邮件投稿到 guyanrichard@qq.com。"]
           ].map(([title, body]) => (
             <div className="rounded-md border border-white/10 bg-white/[0.035] p-4" key={title}>
               <h3 className="font-semibold text-ink-100">{title}</h3>
@@ -97,12 +97,12 @@ export default function AboutPage() {
         <h2 className="text-xl font-semibold text-ink-100">如何提交 Issue</h2>
         <p className="mt-2 text-sm leading-6 text-ink-300">适合有 GitHub 账号的同学。Issue 是公开提交记录，维护者会根据内容整理进站点数据。</p>
         <div className="mt-4 grid gap-3 text-sm leading-6 text-ink-300 md:grid-cols-2">
-          <p>1. 打开可视化贡献页，选择“新增菜谱 / 新增食材替代 / 新增厨具建议”。</p>
-          <p>2. 填写你知道的信息，表单会提示哪些内容建议补充。</p>
-          <p>3. 复制 YAML 或 Issue 内容，也可以直接点击“打开 Issue”。</p>
-          <p>4. 标题写清类型和地区，例如“新菜谱：番茄鸡蛋面”或“英国食材替代：生抽”。</p>
-          <p>5. 提交后等待维护者审核、整理和合并。</p>
-          <p>6. 如果是落地清单，可直接在 Issue 正文里用自由文字补充完整经验。</p>
+          <p>1. 打开可视化贡献页，选择要分享的内容类型。</p>
+          <p>2. 填写你知道的信息；不确定的选填项直接留空。</p>
+          <p>3. 点击“检查填写内容”，按页面提示补齐必要信息。</p>
+          <p>4. 点击“用 GitHub 提交”，登录后确认标题和正文。</p>
+          <p>5. 图片请拖入 Issue 正文，并保留图片来源说明。</p>
+          <p>6. 点击 GitHub 的“Submit new issue”，等待维护者审核整理。</p>
         </div>
         <div className="mt-5">
           <Link className="inline-flex items-center justify-center gap-2 rounded-md bg-scallion px-4 py-3 text-sm font-semibold text-ink-950 hover:bg-scallion/90" href="/contribute/">
@@ -127,7 +127,7 @@ export default function AboutPage() {
           <div>
             <h3 className="font-medium text-ink-100">邮件正文</h3>
             <p className="mt-2 text-sm leading-6 text-ink-300">
-              可以粘贴可视化贡献页生成的内容，也可以直接写普通文字。建议包含地区、购买地点、价格、步骤、注意事项和图片来源说明。
+              点击表单里的邮件投稿按钮后，内容会自动复制并打开邮件客户端。只需在正文粘贴，再添加图片附件；也可以直接写普通文字。
             </p>
           </div>
         </div>

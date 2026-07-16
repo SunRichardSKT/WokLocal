@@ -129,7 +129,7 @@ function StepHighlight({ highlight }: { highlight: HighlightInfo }) {
       >
         {highlight.label}
       </button>
-      <span className="pointer-events-none absolute left-1/2 top-full z-20 mt-2 hidden w-72 max-w-[calc(100vw-2rem)] -translate-x-1/2 rounded-md border border-white/10 bg-ink-950 p-3 text-left text-sm leading-6 text-ink-300 shadow-soft group-hover:block group-focus-within:block">
+      <span className="pointer-events-none absolute left-1/2 top-full z-20 mt-2 hidden w-72 max-w-[calc(100vw-2rem)] -translate-x-1/2 rounded-md border border-white/10 bg-ink-950 p-3 text-left text-sm leading-6 text-ink-300 shadow-soft md:group-hover:block md:group-focus-within:block">
         <span className="block font-semibold text-ink-100">{highlight.title}</span>
         {highlight.subtitle ? <span className="mt-1 block text-xs text-ink-500">{highlight.subtitle}</span> : null}
         <span className="mt-2 block">{highlight.body}</span>
@@ -287,7 +287,7 @@ export function RecipeDetail({ recipe, substitutions, equipment }: RecipeDetailP
       <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_22rem]">
         <article className="space-y-5">
           <section className="py-3">
-            <RecipeCover recipe={recipe} className="mb-5 aspect-[16/9] min-h-52 sm:min-h-64" />
+            <RecipeCover recipe={recipe} className="mb-5 aspect-[16/9] sm:min-h-64" />
             <div className="flex flex-wrap gap-2 text-sm text-ink-300">
               <span className="pill">{recipe.cuisine}</span>
               <span className="pill">预算 {recipe.budget_level === "low" ? "低" : recipe.budget_level === "medium" ? "中" : "高"}</span>

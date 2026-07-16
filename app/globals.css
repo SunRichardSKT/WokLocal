@@ -313,6 +313,7 @@ summary:focus-visible {
   .mobile-nav-panel a:nth-child(8) { animation-delay: 230ms; }
   .mobile-nav-panel a:nth-child(9) { animation-delay: 260ms; }
   .mobile-nav-panel a:nth-child(10) { animation-delay: 290ms; }
+  .mobile-nav-panel a:nth-child(11) { animation-delay: 320ms; }
 }
 
 @keyframes page-enter {
@@ -381,13 +382,13 @@ summary:focus-visible {
 }
 
 @keyframes nav-unfold {
-  from { opacity: 0; transform: perspective(900px) rotateX(-14deg) translateY(-10px); }
-  to { opacity: 1; transform: perspective(900px) rotateX(0) translateY(0); }
+  from { transform: perspective(900px) rotateX(-10deg) translateY(-8px); }
+  to { transform: perspective(900px) rotateX(0) translateY(0); }
 }
 
 @keyframes nav-item-enter {
-  from { opacity: 0; transform: translateY(-12px) scale(0.9); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  from { transform: translateY(-10px) scale(0.94); }
+  to { transform: translateY(0) scale(1); }
 }
 
 @media (max-width: 639px) {
@@ -399,6 +400,37 @@ summary:focus-visible {
 
   .control {
     min-height: 44px;
+  }
+
+  .contribution-editor button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+details,
+pre,
+code {
+  min-width: 0;
+}
+
+pre {
+  max-width: 100%;
+}
+
+textarea {
+  font: inherit;
+}
+
+@media (max-width: 374px) {
+  .mobile-nav-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 

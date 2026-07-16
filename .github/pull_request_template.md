@@ -5,6 +5,7 @@
 ## 数据校验
 
 - [ ] 已运行 `npm run validate:data`
+- [ ] 已运行 `npm run typecheck`
 - [ ] 已运行 `npm run build`
 
 ## 说明

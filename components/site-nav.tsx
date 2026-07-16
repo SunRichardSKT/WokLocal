@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BookOpen, ClipboardList, Github, Heart, Home, Menu, SearchCheck, ShoppingBasket, Soup, Sparkles, Wrench, Wheat, X } from "lucide-react";
+import { BookOpen, ClipboardList, Github, Heart, Home, Menu, PenLine, SearchCheck, ShoppingBasket, Soup, Sparkles, Wrench, Wheat, X } from "lucide-react";
 import clsx from "clsx";
 import { ThemeToggle } from "@/components/theme-toggle";
 
@@ -17,6 +17,7 @@ const navItems = [
   { href: "/recipes/", label: "菜谱", icon: BookOpen },
   { href: "/ingredients/", label: "食材对照", icon: Wheat },
   { href: "/equipment/", label: "厨具", icon: Wrench },
+  { href: "/contribute/", label: "我要投稿", icon: PenLine },
   { href: "/about/", label: "上传指南", icon: Github }
 ];
 
@@ -45,7 +46,7 @@ export function SiteNav() {
           <span className="truncate text-base font-semibold tracking-normal text-ink-100">就地开饭</span>
         </Link>
 
-        <div className="flex shrink-0 items-center gap-2 sm:hidden">
+        <div className="flex shrink-0 items-center gap-2 lg:hidden">
           <ThemeToggle />
           <button
             aria-controls="mobile-site-nav"
@@ -59,7 +60,7 @@ export function SiteNav() {
           </button>
         </div>
 
-        <div className="hidden items-center gap-1.5 text-sm text-ink-300 sm:flex">
+        <div className="hidden items-center gap-1.5 text-sm text-ink-300 lg:flex">
           {navItems.map((item) => {
             const Icon = item.icon;
             const active = isActive(pathname, item.href);
@@ -84,8 +85,8 @@ export function SiteNav() {
       </div>
 
       {menuOpen ? (
-        <div className="mobile-nav-panel absolute left-0 right-0 top-full z-50 max-h-[calc(100dvh-4rem)] overflow-y-auto border-y border-white/10 bg-ink-950 p-3 shadow-soft sm:hidden" id="mobile-site-nav">
-          <div className="grid grid-cols-3 gap-2">
+        <div className="mobile-nav-panel absolute left-0 right-0 top-full z-50 max-h-[calc(100dvh-4rem)] overflow-y-auto border-y border-white/10 bg-ink-950 p-3 shadow-soft lg:hidden" id="mobile-site-nav">
+          <div className="mobile-nav-grid grid grid-cols-3 gap-2">
             {navItems.map((item) => {
               const Icon = item.icon;
               const active = isActive(pathname, item.href);

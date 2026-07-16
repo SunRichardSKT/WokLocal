@@ -3,6 +3,10 @@ description: 为某个地区补充厨具购买建议或宿舍替代方案
 title: "厨具建议："
 labels: ["equipment"]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        只知道名称也可以提交。推荐先使用 [可视化投稿助手](https://SunRichardSKT.github.io/WokLocal/contribute/)，购买地点和价格等信息均可选填。
   - type: input
     id: equipment
     attributes:
@@ -15,20 +19,17 @@ body:
     attributes:
       label: 地区
       options:
+        - 暂不指定
         - uk
         - north_america
         - europe
         - australia
         - japan_korea
-    validations:
-      required: true
   - type: textarea
     id: where
     attributes:
       label: 哪里能买到
       placeholder: Argos、IKEA、Amazon UK、亚超等
-    validations:
-      required: true
   - type: input
     id: price
     attributes:

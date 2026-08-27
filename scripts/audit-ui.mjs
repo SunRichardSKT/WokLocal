@@ -52,6 +52,24 @@ const browser = await chromium.launch({ headless: true, executablePath });
 const findings = [];
 let checks = 0;
 
+async function openPage(page, url) {
+  let lastError;
+
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    try {
+      return await page.goto(url, {
+        waitUntil: "domcontentloaded",
+        timeout: 60_000
+      });
+    } catch (error) {
+      lastError = error;
+      await page.waitForTimeout(1_000);
+    }
+  }
+
+  throw lastError;
+}
+
 for (const viewport of viewports) {
   const context = await browser.newContext({
     viewport: { width: viewport.width, height: viewport.height },
@@ -68,10 +86,16 @@ for (const viewport of viewports) {
     });
     page.on("pageerror", (error) => runtimeErrors.push(error.message));
 
-    const response = await page.goto(`${baseUrl}${route}`, {
-      waitUntil: "domcontentloaded",
-      timeout: 60_000
-    });
+    let response;
+    try {
+      response = await openPage(page, `${baseUrl}${route}`);
+    } catch (error) {
+      const message = error instanceof Error ? error.message.split("\n")[0] : String(error);
+      findings.push({ viewport: viewport.name, route, issues: [`页面加载失败（已重试）：${message}`] });
+      checks += 1;
+      await page.close();
+      continue;
+    }
     await page.waitForTimeout(800);
 
     const result = await page.evaluate(() => {

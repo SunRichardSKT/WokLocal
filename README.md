@@ -6,6 +6,8 @@
 
 线上地址：[SunRichardSKT.github.io/WokLocal](https://SunRichardSKT.github.io/WokLocal/)
 
+[![使用 EdgeOne Makers 部署](https://cdnstatic.tencentcs.com/edgeone/pages/deploy.svg)](https://console.cloud.tencent.com/edgeone/pages/new?repository-url=https%3A%2F%2Fgithub.com%2FSunRichardSKT%2FWokLocal&project-name=woklocal&build-command=npm%20run%20build&install-command=npm%20ci&output-directory=out)
+
 ## 技术栈
 
 - Next.js App Router
@@ -37,6 +39,12 @@ npm run build
 ```
 
 构建结果会输出到 `out/`，GitHub Actions 会把它发布到 GitHub Pages。
+
+运行全页面响应式检查时，保持本地开发服务运行，并在另一个终端执行：
+
+```bash
+npm run audit:ui
+```
 
 ## 数据目录
 
@@ -82,6 +90,12 @@ npm run build
 4. 发布 `out/` 到 GitHub Pages。
 
 如果仓库是项目页，构建会自动使用 `/<仓库名>` 作为 base path；如果仓库名是 `<用户名>.github.io`，则使用根路径。
+
+## 大陆备用站
+
+仓库已加入 `edgeone.json`，可直接导入 Tencent EdgeOne Makers。首次在 EdgeOne 控制台关联本 GitHub 仓库后，`main` 分支每次 push 都会与 GitHub Pages 分别自动构建、同步更新。EdgeOne 使用根路径部署，不会继承 GitHub Pages 的 `/WokLocal` 基础路径。
+
+完整接入步骤见 [DEPLOYMENT.md](./DEPLOYMENT.md)。
 
 ## 维护者提交前检查
 

@@ -152,7 +152,7 @@ export function ShoppingListView({ recipes, substitutions }: ShoppingListViewPro
           <div className="flex flex-col gap-2 sm:flex-row lg:flex-col">
             <RegionSelector value={region} onChange={setRegion} compact />
             <button
-              className="inline-flex items-center justify-center gap-2 rounded-md border border-white/10 px-3 py-2 text-sm font-semibold text-ink-100 transition hover:bg-white/[0.06] disabled:cursor-not-allowed disabled:opacity-45"
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-white/10 px-3 py-2 text-sm font-semibold text-ink-100 transition hover:bg-white/[0.06] disabled:cursor-not-allowed disabled:opacity-45"
               disabled={groups.length === 0}
               onClick={copyList}
               type="button"

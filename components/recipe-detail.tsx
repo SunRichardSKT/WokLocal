@@ -123,7 +123,7 @@ function StepHighlight({ highlight }: { highlight: HighlightInfo }) {
       <button
         aria-label={`${highlight.label} 的本地替代信息`}
         aria-expanded={open}
-        className="cursor-pointer rounded bg-scallion/[0.16] px-1 py-0.5 text-left text-scallion underline decoration-scallion/50 decoration-dotted underline-offset-4 outline-none transition focus-visible:ring-2 focus-visible:ring-scallion/60"
+        className="inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center rounded bg-scallion/[0.16] px-1 py-0.5 text-left align-middle text-scallion underline decoration-scallion/50 decoration-dotted underline-offset-4 outline-none transition focus-visible:ring-2 focus-visible:ring-scallion/60"
         onClick={() => setOpen((value) => !value)}
         type="button"
       >

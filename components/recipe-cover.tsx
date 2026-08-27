@@ -21,7 +21,7 @@ export function RecipeCover({ recipe, className = "", compact = false }: RecipeC
         <figcaption className="absolute bottom-0 left-0 right-0 flex flex-wrap items-center justify-between gap-x-3 gap-y-1 bg-black/75 px-3 py-2 text-xs text-white/80 backdrop-blur">
           <span>{recipe.cover_image.caption ?? recipe.name.zh}</span>
           {recipe.cover_image.credit ? (
-            recipe.cover_image.credit_url ? (
+            recipe.cover_image.credit_url && !compact ? (
               <a className="truncate underline decoration-white/30 underline-offset-2 transition hover:text-white" href={recipe.cover_image.credit_url} rel="noreferrer" target="_blank">
                 {recipe.cover_image.credit}
               </a>

@@ -108,7 +108,7 @@ export function IngredientsExplorer({ ingredients }: IngredientsExplorerProps) {
                   </div>
                   <div className="flex flex-wrap justify-end gap-2">
                     <button
-                      className="inline-flex items-center gap-1 rounded-md border border-white/10 px-2 py-1 text-xs text-ink-300 hover:bg-white/[0.06]"
+                      className="inline-flex min-h-11 items-center gap-1 rounded-md border border-white/10 px-2 py-2 text-xs text-ink-300 hover:bg-white/[0.06]"
                       onClick={async () => {
                         await navigator.clipboard.writeText(item.ingredient_id);
                         setCopiedId(item.ingredient_id);

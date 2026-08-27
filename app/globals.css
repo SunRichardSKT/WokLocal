@@ -211,6 +211,7 @@ summary:focus-visible {
   .recipe-deck {
     position: relative;
     isolation: isolate;
+    overflow-x: clip;
     padding: 0 0.5rem 0.75rem;
   }
 

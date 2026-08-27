@@ -3,7 +3,10 @@ import path from "node:path";
 import process from "node:process";
 import { chromium } from "playwright-core";
 
-const baseUrl = (process.env.AUDIT_BASE_URL ?? "http://127.0.0.1:3000").replace(/\/$/, "");
+const configuredBaseUrl = new URL(process.env.AUDIT_BASE_URL ?? "http://127.0.0.1:3000");
+const auditQuery = configuredBaseUrl.search;
+configuredBaseUrl.search = "";
+const baseUrl = configuredBaseUrl.toString().replace(/\/$/, "");
 const viewports = [
   { name: "mobile-small", width: 320, height: 844 },
   { name: "mobile", width: 375, height: 844 },
@@ -88,7 +91,7 @@ for (const viewport of viewports) {
 
     let response;
     try {
-      response = await openPage(page, `${baseUrl}${route}`);
+      response = await openPage(page, `${baseUrl}${route}${auditQuery}`);
     } catch (error) {
       const message = error instanceof Error ? error.message.split("\n")[0] : String(error);
       findings.push({ viewport: viewport.name, route, issues: [`页面加载失败（已重试）：${message}`] });
@@ -122,6 +125,7 @@ for (const viewport of viewports) {
         const x = Math.max(0, Math.min(innerWidth - 1, box.left + box.width / 2));
         const y = Math.max(0, Math.min(innerHeight - 1, box.top + box.height / 2));
         const hit = document.elementFromPoint(x, y);
+        if (hit?.closest("#edgeone-watermark")) return false;
         return Boolean(hit && hit !== element && !element.contains(hit) && !hit.contains(element));
       });
 
